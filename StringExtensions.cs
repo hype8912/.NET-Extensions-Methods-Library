@@ -40,4 +40,25 @@ public static class StringExtensions {
     public static string FormatWith(this string value, params object[] parameters) {
         return string.Format(value, parameters);
     }
+
+    /// <summary>
+    /// Trims the text to a provided maximum length.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="maxLength">Maximum length.</param>
+    /// <returns></returns>
+    public static string TrimToMaxLength(this string value, int maxLength) {
+        return (value == null || value.Length <= maxLength ? value : value.Substring(0, maxLength));
+    }
+
+    /// <summary>
+    /// Trims the text to a provided maximum length and adds a suffix if required.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="maxLength">Maximum length.</param>
+    /// <param name="suffix">The suffix.</param>
+    /// <returns></returns>
+    public static string TrimToMaxLength(this string value, int maxLength, string suffix) {
+        return (value == null || value.Length <= maxLength ? value : string.Concat(value.Substring(0, maxLength), suffix));
+    }
 }
