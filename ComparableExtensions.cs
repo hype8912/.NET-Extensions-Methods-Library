@@ -15,6 +15,12 @@ public static class ComparableExtensions {
     /// <returns>
     /// 	<c>true</c> if the specified value is between min and max; otherwise, <c>false</c>.
     /// </returns>
+    /// <example>
+    /// var value = 5;
+    /// if(value.IsBetween(1, 10)) { 
+    ///     // ... 
+    /// }
+    /// </example>
     public static bool IsBetween<T>(this T value, T minValue, T maxValue) where T : IComparable<T> {
         return ((value.CompareTo(minValue) >= 0) && (value.CompareTo(maxValue) <= 0));
     }
