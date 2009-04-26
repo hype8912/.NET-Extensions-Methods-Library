@@ -13,12 +13,13 @@ public static class TextReaderExtensions {
     /// <param name="reader">The text reader.</param>
     /// <returns>The iterator</returns>
     /// <example>
+    /// <code>
     /// using(var reader = fileInfo.OpenText()) {
     ///  foreach(var line in reader.IterateLines()) {
     ///   // ...
     ///  }
     /// }
-    /// </example>
+    /// </code></example>
     /// <remarks>Contributed by OlivierJ</remarks>
     public static IEnumerable<string> IterateLines(this TextReader reader) {
         string line = null;
