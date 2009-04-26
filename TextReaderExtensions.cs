@@ -27,5 +27,23 @@ public static class TextReaderExtensions {
             yield return line;
         }
     }
+
+    /// <summary>
+    /// The method executes the passed delegate /lambda expression) for all lines of the text reader.
+    /// </summary>
+    /// <param name="reader">The text reader.</param>
+    /// <param name="action">The action.</param>
+    /// <example>
+    /// 	<code>
+    /// using(var reader = fileInfo.OpenText()) {
+    ///  reader.IterateLines(l => Console.WriteLine(l));
+    /// }
+    /// </code></example>
+    /// <remarks>Contributed by OlivierJ</remarks>
+    public static void IterateLines(this TextReader reader, Action<string> action) {
+        foreach(var line in reader.IterateLines()) {
+            action(line);
+        }
+    }
 }
 

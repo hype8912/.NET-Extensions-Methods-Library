@@ -1,4 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 /// <summary>
 /// Extension methods for the string data type
@@ -60,5 +64,35 @@ public static class StringExtensions {
     /// <returns></returns>
     public static string TrimToMaxLength(this string value, int maxLength, string suffix) {
         return (value == null || value.Length <= maxLength ? value : string.Concat(value.Substring(0, maxLength), suffix));
+    }
+
+    /// <summary>
+    /// Loads the string into a LINQ to XML XDocument
+    /// </summary>
+    /// <param name="xml">The XML string.</param>
+    /// <returns>The XML document object model (XDocument)</returns>
+    public static XDocument ToXDocument(this string xml) {
+        return XDocument.Parse(xml);
+    }
+
+    /// <summary>
+    /// Loads the string into a XML DOM object (XmlDocument)
+    /// </summary>
+    /// <param name="xml">The XML string.</param>
+    /// <returns>The XML document object model (XmlDocument)</returns>
+    public static XmlDocument ToXmlDOM(this string xml) {
+        var document = new XmlDocument();
+        document.LoadXml(xml);
+        return document;
+    }
+
+    /// <summary>
+    /// Loads the string into a XML XPath DOM (XPathDocument)
+    /// </summary>
+    /// <param name="xml">The XML string.</param>
+    /// <returns>The XML XPath document object model (XPathNavigator)</returns>
+    public static XPathNavigator ToXPath(this string xml) {
+        var document = new XPathDocument(new StringReader(xml));
+        return document.CreateNavigator();
     }
 }
