@@ -51,6 +51,7 @@ public static class StringExtensions {
     /// <param name="value">The value.</param>
     /// <param name="maxLength">Maximum length.</param>
     /// <returns></returns>
+    /// <remarks>Proposed by Rene Schulte</remarks>
     public static string TrimToMaxLength(this string value, int maxLength) {
         return (value == null || value.Length <= maxLength ? value : value.Substring(0, maxLength));
     }
@@ -62,6 +63,7 @@ public static class StringExtensions {
     /// <param name="maxLength">Maximum length.</param>
     /// <param name="suffix">The suffix.</param>
     /// <returns></returns>
+    /// <remarks>Proposed by Rene Schulte</remarks>
     public static string TrimToMaxLength(this string value, int maxLength, string suffix) {
         return (value == null || value.Length <= maxLength ? value : string.Concat(value.Substring(0, maxLength), suffix));
     }
