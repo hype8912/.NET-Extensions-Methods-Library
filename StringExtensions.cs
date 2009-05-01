@@ -97,4 +97,17 @@ public static class StringExtensions {
         var document = new XPathDocument(new StringReader(xml));
         return document.CreateNavigator();
     }
+
+    /// <summary>
+    /// Reverses / mirrors a string.
+    /// </summary>
+    /// <param name="value">The string to be reversed.</param>
+    /// <returns>The reversed string</returns>
+    public static string Reverse(this string value) {
+        if(value.IsEmpty() || (value.Length == 1)) return value;
+
+        var chars = value.ToCharArray();
+        Array.Reverse(chars);
+        return new string(chars);
+    }
 }
