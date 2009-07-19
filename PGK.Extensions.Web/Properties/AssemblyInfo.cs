@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PGK.Extensions")]
+[assembly: AssemblyTitle("PGK.Extensions.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("PGK GmbH")]
-[assembly: AssemblyProduct("PGK.Extensions")]
+[assembly: AssemblyProduct("PGK.Extensions.Web")]
 [assembly: AssemblyCopyright("Copyright © PGK GmbH 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6cc8660b-6bb3-4af6-bb50-78e7a0e657e8")]
+[assembly: Guid("7b50e5b6-e2c8-422f-96cb-84b1c65df688")]
 
 // Version information for an assembly consists of the following four values:
 //
