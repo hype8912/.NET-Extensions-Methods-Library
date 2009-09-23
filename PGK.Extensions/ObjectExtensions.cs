@@ -99,8 +99,8 @@ public static class ObjectExtensions {
     /// <code>
     /// var type = Type.GetType("System.IO.FileInfo, mscorlib");
     /// var file = type.CreateInstance(@"c:\autoexec.bat");
-    /// if(file.GetPropertyValue<bool>("Exists")) {
-    ///  var reader = file.InvokeMethod<StreamReader>("OpenText");
+    /// if(file.GetPropertyValue&lt;bool&gt;("Exists")) {
+    ///  var reader = file.InvokeMethod&lt;StreamReader&gt;("OpenText");
     ///  Console.WriteLine(reader.ReadToEnd());
     ///  reader.Close();
     /// }
@@ -122,8 +122,8 @@ public static class ObjectExtensions {
     /// <code>
     /// var type = Type.GetType("System.IO.FileInfo, mscorlib");
     /// var file = type.CreateInstance(@"c:\autoexec.bat");
-    /// if(file.GetPropertyValue<bool>("Exists")) {
-    ///  var reader = file.InvokeMethod<StreamReader>("OpenText");
+    /// if(file.GetPropertyValue&lt;bool&gt;("Exists")) {
+    ///  var reader = file.InvokeMethod&lt;StreamReader&gt;("OpenText");
     ///  Console.WriteLine(reader.ReadToEnd());
     ///  reader.Close();
     /// }
@@ -149,8 +149,8 @@ public static class ObjectExtensions {
     /// <code>
     /// var type = Type.GetType("System.IO.FileInfo, mscorlib");
     /// var file = type.CreateInstance(@"c:\autoexec.bat");
-    /// if(file.GetPropertyValue<bool>("Exists")) {
-    ///  var reader = file.InvokeMethod<StreamReader>("OpenText");
+    /// if(file.GetPropertyValue&lt;bool&gt;("Exists")) {
+    ///  var reader = file.InvokeMethod&lt;StreamReader&gt;("OpenText");
     ///  Console.WriteLine(reader.ReadToEnd());
     ///  reader.Close();
     /// }
@@ -171,8 +171,8 @@ public static class ObjectExtensions {
     /// <code>
     /// var type = Type.GetType("System.IO.FileInfo, mscorlib");
     /// var file = type.CreateInstance(@"c:\autoexec.bat");
-    /// if(file.GetPropertyValue<bool>("Exists")) {
-    ///  var reader = file.InvokeMethod<StreamReader>("OpenText");
+    /// if(file.GetPropertyValue&lt;bool&gt;("Exists")) {
+    ///  var reader = file.InvokeMethod&lt;StreamReader&gt;("OpenText");
     ///  Console.WriteLine(reader.ReadToEnd());
     ///  reader.Close();
     /// }
@@ -194,8 +194,8 @@ public static class ObjectExtensions {
     /// <code>
     /// var type = Type.GetType("System.IO.FileInfo, mscorlib");
     /// var file = type.CreateInstance(@"c:\autoexec.bat");
-    /// if(file.GetPropertyValue<bool>("Exists")) {
-    ///  var reader = file.InvokeMethod<StreamReader>("OpenText");
+    /// if(file.GetPropertyValue&lt;bool&gt;("Exists")) {
+    ///  var reader = file.InvokeMethod&lt;StreamReader&gt;("OpenText");
     ///  Console.WriteLine(reader.ReadToEnd());
     ///  reader.Close();
     /// }
