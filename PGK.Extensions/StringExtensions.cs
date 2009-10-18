@@ -279,4 +279,38 @@ public static class StringExtensions {
             if(match.Success) yield return match.Value;
         }
     }
+
+    /// <summary>
+    /// Ensures that a string starts with a given prefix.
+    /// </summary>
+    /// <param name="value">The string value to check.</param>
+    /// <param name="prefix">The prefix value to check for.</param>
+    /// <returns>The string value including the prefix</returns>
+    /// <example>
+    /// <code>
+    /// var extension = "txt";
+    /// var fileName = string.Concat(file.Name, extension.EnsureStartsWith("."));
+    /// </code>
+    /// </example>
+    public static string EnsureStartsWith(this string value, string prefix) {
+        if(value.StartsWith(prefix)) return value;
+        return string.Concat(prefix, value);
+    }
+
+    /// <summary>
+    /// Ensures that a string ends with a given suffix.
+    /// </summary>
+    /// <param name="value">The string value to check.</param>
+    /// <param name="suffix">The suffix value to check for.</param>
+    /// <returns>The string value including the suffix</returns>
+    /// <example>
+    /// <code>
+    /// var url = "http://www.pgk.de";
+    /// url = url.EnsureEndsWith("/"));
+    /// </code>
+    /// </example>
+    public static string EnsureEndsWith(this string value, string suffix) {
+        if(value.EndsWith(suffix)) return value;
+        return string.Concat(value, suffix);
+    }
 }
