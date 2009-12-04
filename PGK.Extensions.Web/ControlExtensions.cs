@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -87,6 +88,23 @@ public static class ControlExtensions {
         return null;
     }
 
+    /// <summary>
+    /// Returns all direct child controls matching to the supplied type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="control">The control.</param>
+    /// <returns></returns>
+    /// <example><code>
+    /// foreach(var textControl in this.GetChildControlsByType&lt;ITextControl&gt;()) {
+    ///  textControl.Text = "...";
+    /// }
+    /// </code></example>
+    public static IEnumerable<T> GetChildControlsByType<T>(this Control control) where T : class {
+        foreach(Control childControl in control.Controls) {
+            if(childControl is T) yield return (childControl as T);
+        }
+    }
+
     #endregion
 
     #region Visiblity
@@ -95,7 +113,7 @@ public static class ControlExtensions {
     /// Sets the visibility of one or more controls
     /// </summary>
     /// <param name="control">The root control.</param>
-        
+    /// <param name="controls">The controls to be set visible.</param>
     public static void SetVisibility(this Control control, params Control[] controls) {
         control.SetVisibility(true, controls);
     }

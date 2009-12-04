@@ -64,6 +64,26 @@ public static class ObjectExtensions {
     }
 
     /// <summary>
+    /// Converts an object to the specified target type or returns the default value. Any exceptions are optionally ignored.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value">The value.</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <param name="ignoreException">if set to <c>true</c> ignore any exception.</param>
+    /// <returns>The target type</returns>
+    public static T ConvertTo<T>(this object value, T defaultValue, bool ignoreException) {
+        if(ignoreException) {
+            try {
+                return value.ConvertTo<T>();
+            }
+            catch {
+                return defaultValue;
+            }
+        }
+        return value.ConvertTo<T>();
+    }
+
+    /// <summary>
     /// Determines whether the value can (in theory) be converted to the specified target type.
     /// </summary>
     /// <typeparam name="T"></typeparam>
