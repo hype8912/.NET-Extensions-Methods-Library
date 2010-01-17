@@ -142,7 +142,10 @@ public static class StreamExtensions {
     /// </summary>
     /// <param name="stream">The stream.</param>
     /// <returns>The byte array</returns>
+    /// <remarks>Thanks to EsbenCarlsen  for providing an update to this method.</remarks>
     public static byte[] ReadAllBytes(this Stream stream) {
-        return stream.CopyToMemory().ToArray();
+        using(var memoryStream = stream.CopyToMemory()) {
+            return memoryStream.ToArray();
+        }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+
+using PGK.Extensions;
 
 /// <summary>
 /// Extension methods for the string data type
@@ -68,6 +71,19 @@ public static class StringExtensions {
     /// <remarks>Proposed by Rene Schulte</remarks>
     public static string TrimToMaxLength(this string value, int maxLength, string suffix) {
         return (value == null || value.Length <= maxLength ? value : string.Concat(value.Substring(0, maxLength), suffix));
+    }
+
+    /// <summary>
+    /// Determines whether the comparison value strig is contained within the input value string
+    /// </summary>
+    /// <param name="inputValue">The input value.</param>
+    /// <param name="comparisonValue">The comparison value.</param>
+    /// <param name="comparisonType">Type of the comparison to allow case sensitive or insensitive comparison.</param>
+    /// <returns>
+    /// 	<c>true</c> if input value contains the specified value, otherwise, <c>false</c>.
+    /// </returns>
+    public static bool Contains(this string inputValue, string comparisonValue, StringComparison comparisonType) {
+        return (inputValue.IndexOf(comparisonValue, comparisonType) != -1);
     }
 
     /// <summary>
@@ -281,6 +297,28 @@ public static class StringExtensions {
     }
 
     /// <summary>
+    /// Uses regular expressions to split a string into parts.
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="regexPattern">The regular expression pattern.</param>
+    /// <returns>The splitted string array</returns>
+    public static string[] Split(this string value, string regexPattern) {
+        return value.Split(regexPattern, RegexOptions.None);
+    }
+
+
+    /// <summary>
+    /// Uses regular expressions to split a string into parts.
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="regexPattern">The regular expression pattern.</param>
+    /// <param name="options">The regular expression options.</param>
+    /// <returns>The splitted string array</returns>
+    public static string[] Split(this string value, string regexPattern, RegexOptions options) {
+        return Regex.Split(value, regexPattern, options);
+    }
+
+    /// <summary>
     /// Ensures that a string starts with a given prefix.
     /// </summary>
     /// <param name="value">The string value to check.</param>
@@ -312,5 +350,101 @@ public static class StringExtensions {
     public static string EnsureEndsWith(this string value, string suffix) {
         if(value.EndsWith(suffix)) return value;
         return string.Concat(value, suffix);
+    }
+
+    /// <summary>
+    /// Splits the given string into words and returns a string array.
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <returns>The splitted string array</returns>
+    public static string[] GetWords(this string value) {
+        return value.Split(@"\W");
+    }
+
+    /// <summary>
+    /// Gets the nth "word" of a given string, where "words" are substrings separated by a given separator
+    /// </summary>
+    /// <param name="value">The string from which the word should be retrieved.</param>
+    /// <param name="index">Index of the word (0-based).</param>
+    /// <returns>
+    /// The word at position n of the string.
+    /// Trying to retrieve a word at a position lower than 0 or at a position where no word exists results in an exception.
+    /// </returns>
+    /// <remarks>Originally contributed by MMathews</remarks>
+    public static string GetWordByIndex(this string value, int index) {
+        var words = value.GetWords();
+
+        if((index < 0) || (index > words.Length - 1)) {
+            throw new IndexOutOfRangeException("The word number is out of range.");
+        }
+
+        return words[index];
+    }
+
+    /// <summary>
+    /// Converts the string to a byte-array using the default encoding
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <returns>The created byte array</returns>
+    public static byte[] ToBytes(this string value) {
+        return value.ToBytes(null);
+    }
+
+    /// <summary>
+    /// Converts the string to a byte-array using the supplied encoding
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="encoding">The encoding to be used.</param>
+    /// <returns>The created byte array</returns>
+    /// <example><code>
+    /// var value = "Hello World";
+    /// var ansiBytes = value.ToBytes(Encoding.GetEncoding(1252)); // 1252 = ANSI
+    /// var utf8Bytes = value.ToBytes(Encoding.UTF8);
+    /// </code></example>
+    public static byte[] ToBytes(this string value, Encoding encoding) {
+        encoding = (encoding ?? Encoding.Default);
+        return encoding.GetBytes(value);
+    }
+
+    /// <summary>
+    /// Encodes the input value to a Base64 string using the default encoding.
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <returns>The Base 64 encoded string</returns>
+    public static string EncodeBase64(this string value) {
+        return value.EncodeBase64(null);
+    }
+
+    /// <summary>
+    /// Encodes the input value to a Base64 string using the supplied encoding.
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <param name="encoding">The encoding.</param>
+    /// <returns>The Base 64 encoded string</returns>
+    public static string EncodeBase64(this string value, Encoding encoding) {
+        encoding = (encoding ?? Encoding.UTF8);
+        var bytes = encoding.GetBytes(value);
+        return Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    /// Decodes a Base 64 encoded value to a string using the default encoding.
+    /// </summary>
+    /// <param name="encodedValue">The Base 64 encoded value.</param>
+    /// <returns>The decoded string</returns>
+    public static string DecodeBase64(this string encodedValue) {
+        return encodedValue.DecodeBase64(null);
+    }
+
+    /// <summary>
+    /// Decodes a Base 64 encoded value to a string using the supplied encoding.
+    /// </summary>
+    /// <param name="encodedValue">The Base 64 encoded value.</param>
+    /// <param name="encoding">The encoding.</param>
+    /// <returns>The decoded string</returns>
+    public static string DecodeBase64(this string encodedValue, Encoding encoding) {
+        encoding = (encoding ?? Encoding.UTF8);
+        var bytes = Convert.FromBase64String(encodedValue);
+        return encoding.GetString(bytes);
     }
 }
