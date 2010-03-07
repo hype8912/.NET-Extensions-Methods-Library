@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
+    <Compile Include="DataReaderExtensions.cs" />
+    <Compile Include="DataRowExtensions.cs" />
+    <Compile Include="DataRowViewExtensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DateTimeOffsetExtensions.cs" />
     <Compile Include="DirectoryInfoExtensions.cs" />
