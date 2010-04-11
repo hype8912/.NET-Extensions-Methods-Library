@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="DataReaderExtensions.cs" />
     <Compile Include="DataRowExtensions.cs" />
     <Compile Include="DataRowViewExtensions.cs" />
@@ -57,7 +58,9 @@
     <Compile Include="DirectoryInfoExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
+    <Compile Include="IConverter.cs" />
     <Compile Include="StreamExtensions.cs" />
+    <Compile Include="StringConverter.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

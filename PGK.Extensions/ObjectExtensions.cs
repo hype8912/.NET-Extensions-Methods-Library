@@ -109,6 +109,20 @@ public static class ObjectExtensions {
     }
 
     /// <summary>
+    /// Converts the specified value to a different type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value">The value.</param>
+    /// <returns>An universal converter suppliying additional target conversion methods</returns>
+    /// <example><code>
+    /// var value = "123";
+    /// var numeric = value.Convert().ToInt32();
+    /// </code></example>
+    public static IConverter<T> Convert<T>(this T value) {
+        return new PGK.Extensions.Converter<T>(value);
+    }
+
+    /// <summary>
     /// Dynamically invokes a method using reflection
     /// </summary>
     /// <param name="obj">The object to perform on.</param>

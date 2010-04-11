@@ -14,6 +14,8 @@ using PGK.Extensions;
 /// </summary>
 public static class StringExtensions {
 
+    #region Common string extensions
+
     /// <summary>
     /// Determines whether the specified string is null or empty.
     /// </summary>
@@ -128,6 +130,46 @@ public static class StringExtensions {
         Array.Reverse(chars);
         return new string(chars);
     }
+
+    /// <summary>
+    /// Ensures that a string starts with a given prefix.
+    /// </summary>
+    /// <param name="value">The string value to check.</param>
+    /// <param name="prefix">The prefix value to check for.</param>
+    /// <returns>The string value including the prefix</returns>
+    /// <example>
+    /// <code>
+    /// var extension = "txt";
+    /// var fileName = string.Concat(file.Name, extension.EnsureStartsWith("."));
+    /// </code>
+    /// </example>
+    public static string EnsureStartsWith(this string value, string prefix) {
+        if(value.StartsWith(prefix))
+            return value;
+        return string.Concat(prefix, value);
+    }
+
+    /// <summary>
+    /// Ensures that a string ends with a given suffix.
+    /// </summary>
+    /// <param name="value">The string value to check.</param>
+    /// <param name="suffix">The suffix value to check for.</param>
+    /// <returns>The string value including the suffix</returns>
+    /// <example>
+    /// <code>
+    /// var url = "http://www.pgk.de";
+    /// url = url.EnsureEndsWith("/"));
+    /// </code>
+    /// </example>
+    public static string EnsureEndsWith(this string value, string suffix) {
+        if(value.EndsWith(suffix))
+            return value;
+        return string.Concat(value, suffix);
+    }
+
+    #endregion
+
+    #region Regex based extension methods
 
     /// <summary>
     /// Uses regular expressions to determine if the string matches to a given regex pattern.
@@ -306,7 +348,6 @@ public static class StringExtensions {
         return value.Split(regexPattern, RegexOptions.None);
     }
 
-
     /// <summary>
     /// Uses regular expressions to split a string into parts.
     /// </summary>
@@ -316,40 +357,6 @@ public static class StringExtensions {
     /// <returns>The splitted string array</returns>
     public static string[] Split(this string value, string regexPattern, RegexOptions options) {
         return Regex.Split(value, regexPattern, options);
-    }
-
-    /// <summary>
-    /// Ensures that a string starts with a given prefix.
-    /// </summary>
-    /// <param name="value">The string value to check.</param>
-    /// <param name="prefix">The prefix value to check for.</param>
-    /// <returns>The string value including the prefix</returns>
-    /// <example>
-    /// <code>
-    /// var extension = "txt";
-    /// var fileName = string.Concat(file.Name, extension.EnsureStartsWith("."));
-    /// </code>
-    /// </example>
-    public static string EnsureStartsWith(this string value, string prefix) {
-        if(value.StartsWith(prefix)) return value;
-        return string.Concat(prefix, value);
-    }
-
-    /// <summary>
-    /// Ensures that a string ends with a given suffix.
-    /// </summary>
-    /// <param name="value">The string value to check.</param>
-    /// <param name="suffix">The suffix value to check for.</param>
-    /// <returns>The string value including the suffix</returns>
-    /// <example>
-    /// <code>
-    /// var url = "http://www.pgk.de";
-    /// url = url.EnsureEndsWith("/"));
-    /// </code>
-    /// </example>
-    public static string EnsureEndsWith(this string value, string suffix) {
-        if(value.EndsWith(suffix)) return value;
-        return string.Concat(value, suffix);
     }
 
     /// <summary>
@@ -380,6 +387,10 @@ public static class StringExtensions {
 
         return words[index];
     }
+
+    #endregion
+
+    #region Bytes & Base64
 
     /// <summary>
     /// Converts the string to a byte-array using the default encoding
@@ -447,4 +458,6 @@ public static class StringExtensions {
         var bytes = Convert.FromBase64String(encodedValue);
         return encoding.GetString(bytes);
     }
+
+    #endregion
 }
