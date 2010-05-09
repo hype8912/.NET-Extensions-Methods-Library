@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
     <Compile Include="Converter.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
     <Compile Include="IConverter.cs" />
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringConverter.cs" />
     <Compile Include="StringExtensions.cs" />

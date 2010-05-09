@@ -46,7 +46,7 @@ public static class ControlExtensions {
     /// <param name="control">The root parent control.</param>
     /// <param name="id">The id of the control to be found.</param>
     /// <returns>The found control</returns>
-    private static Control FindControlRecursive(this Control control, string id) {
+    public static Control FindControlRecursive(this Control control, string id) {
         foreach(Control child in control.Controls) {
             if((child.ID != null) && string.Equals(child.ID, id, StringComparison.InvariantCultureIgnoreCase)) return child;
 
@@ -63,7 +63,7 @@ public static class ControlExtensions {
     /// <param name="control">The root parent control.</param>
     /// <param name="id">The id of the control to be found.</param>
     /// <returns>The found control</returns>
-    private static T FindControlRecursive<T>(this Control control, string id) where T : class {
+    public static T FindControlRecursive<T>(this Control control, string id) where T : class {
         foreach(Control child in control.Controls) {
             if((child.ID != null) && string.Equals(child.ID, id, StringComparison.InvariantCultureIgnoreCase) && (child is T)) return (child as T);
 
