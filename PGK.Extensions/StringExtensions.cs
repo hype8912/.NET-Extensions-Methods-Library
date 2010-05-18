@@ -222,7 +222,7 @@ public static class StringExtensions {
     /// </code>
     /// </example>
     public static string ReplaceWith(this string value, string regexPattern, string replaceValue) {
-        return ReplaceWith(value, regexPattern, regexPattern, RegexOptions.None);
+        return ReplaceWith(value, regexPattern, replaceValue, RegexOptions.None);
     }
 
     /// <summary>
