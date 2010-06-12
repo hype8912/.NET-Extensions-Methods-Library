@@ -37,4 +37,18 @@ public static class ListExtensions {
         }
         return (index - startIndex);
     }
+
+    /// <summary>
+    /// Return the index of the first matching item or -1.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list">The list.</param>
+    /// <param name="comparison">The comparison.</param>
+    /// <returns>The item index</returns>
+    public static int IndexOf<T>(this IList<T> list, Func<T, bool> comparison) {
+        for(var i = 0; i < list.Count; i++) {
+            if(comparison(list[i])) return i;
+        }
+        return -1;
+    }
 }
