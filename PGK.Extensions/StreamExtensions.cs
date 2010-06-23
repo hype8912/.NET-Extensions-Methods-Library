@@ -115,10 +115,10 @@ public static class StreamExtensions {
     /// <returns>The source stream.</returns>
     public static Stream CopyTo(this Stream stream, Stream targetStream, int bufferSize) {
         if(stream.CanRead == false) throw new InvalidOperationException("Source stream does not support reading.");
-        if(targetStream.CanRead == false) throw new InvalidOperationException("Target stream does not support writing.");
+        if(targetStream.CanWrite == false) throw new InvalidOperationException("Target stream does not support writing.");
 
         var buffer = new byte[bufferSize];
-        var bytesRead = 0;
+        int bytesRead;
         
         while((bytesRead = stream.Read(buffer, 0, bufferSize)) > 0) {
             targetStream.Write(buffer, 0, bytesRead);
