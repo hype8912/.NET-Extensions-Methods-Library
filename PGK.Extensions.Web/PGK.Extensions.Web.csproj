@@ -37,6 +37,12 @@
     <DocumentationFile>bin\Release\PGK.Extensions.Web.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PGK.Extensions.Web.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -58,7 +64,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateBagExtensions.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PGK.Extensions.Web.snk" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "$(SolutionDir)CurrentVersions\"
+xcopy /y /d "$(TargetDir)*.xml" "$(SolutionDir)CurrentVersions\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

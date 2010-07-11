@@ -1,0 +1,253 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PGK.Extensions.Web</name>
+    </assembly>
+    <members>
+        <member name="T:HttpSessionStateExtensions">
+            <summary>
+            Extensions classes for the ASP.NET Session State class
+            </summary>
+        </member>
+        <member name="M:HttpSessionStateExtensions.Get``1(System.Web.SessionState.HttpSessionState,System.String)">
+            <summary>
+            Returns a typed value from the ASP.NET session state
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The session state.</param>
+            <param name="key">The session state key.</param>
+            <returns>The session state value.</returns>
+            <example><code>
+            public List&lt;string&gt; StringValues {
+             get { return this.Session.Ensure&lt;List&lt;string&gt;&gt;("StringValues"); }
+             set { this.ViewState.Set("StringValues", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:HttpSessionStateExtensions.Get``1(System.Web.SessionState.HttpSessionState,System.String,``0)">
+            <summary>
+            Returns a typed value from the ASP.NET session state or the provided default value
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The session state.</param>
+            <param name="key">The session state key.</param>
+            <param name="defaultValue">The default value to be returned.</param>
+            <returns>The session state value.</returns>
+            <example><code>
+            public List&lt;string&gt; StringValues {
+             get { return this.Session.Ensure&lt;List&lt;string&gt;&gt;("StringValues"); }
+             set { this.ViewState.Set("StringValues", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:HttpSessionStateExtensions.Ensure``1(System.Web.SessionState.HttpSessionState,System.String)">
+            <summary>
+            Ensures a specific key to be either already in the ASP.NET session state or to be newly created
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The session state.</param>
+            <param name="key">The session state key.</param>
+            <returns>The session state value.</returns>
+            <example><code>
+            public List&lt;string&gt; StringValues {
+             get { return this.Session.Ensure&lt;List&lt;string&gt;&gt;("StringValues"); }
+             set { this.ViewState.Set("StringValues", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:HttpSessionStateExtensions.Set(System.Web.SessionState.HttpSessionState,System.String,System.Object)">
+            <summary>
+            Sets the specified value into the ASP.NET session state.
+            </summary>
+            <param name="state">The session state.</param>
+            <param name="key">The session state key.</param>
+            <param name="value">The new session state value.</param>
+            <example><code>
+            public List&lt;string&gt; StringValues {
+             get { return this.Session.Ensure&lt;List&lt;string&gt;&gt;("StringValues"); }
+             set { this.ViewState.Set("StringValues", value); }
+            }
+            </code></example>
+        </member>
+        <member name="T:StateBagExtensions">
+            <summary>
+            Extensions classes for the ASP.NET ViewState StateBag class
+            </summary>
+        </member>
+        <member name="M:StateBagExtensions.Get``1(System.Web.UI.StateBag,System.String)">
+            <summary>
+            Returns a typed value from the ASP.NET ViewState
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The ViewState.</param>
+            <param name="key">The ViewState key.</param>
+            <returns>The ViewState value.</returns>
+            <example><code>
+            public string Text {
+             get { return this.ViewState.Get&lt;string&gt;("Text", "DefaultText"); }
+             set { this.ViewState.Set("Text", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:StateBagExtensions.Get``1(System.Web.UI.StateBag,System.String,``0)">
+            <summary>
+            Returns a typed value from the ASP.NET ViewState or the provided default value
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The ViewState.</param>
+            <param name="key">The ViewState key.</param>
+            <param name="defaultValue">The default value to be returned.</param>
+            <returns>The ViewState value.</returns>
+            <example><code>
+            public string Text {
+             get { return this.ViewState.Get&lt;string&gt;("Text", "DefaultText"); }
+             set { this.ViewState.Set("Text", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:StateBagExtensions.Ensure``1(System.Web.UI.StateBag,System.String)">
+            <summary>
+            Ensures a specific key to be either already in the ASP.NET ViewState or to be newly created
+            </summary>
+            <typeparam name="T">The generic type to be returned</typeparam>
+            <param name="state">The ViewState.</param>
+            <param name="key">The ViewState key.</param>
+            <returns>The ViewState value.</returns>
+            <example><code>
+            public string Text {
+             get { return this.ViewState.Get&lt;string&gt;("Text", "DefaultText"); }
+             set { this.ViewState.Set("Text", value); }
+            }
+            </code></example>
+        </member>
+        <member name="M:StateBagExtensions.Set(System.Web.UI.StateBag,System.String,System.Object)">
+            <summary>
+            Sets the specified value into the ASP.NET ViewState.
+            </summary>
+            <param name="state">The ViewState.</param>
+            <param name="key">The ViewState key.</param>
+            <param name="value">The new ViewState value.</param>
+            <example><code>
+            public string Text {
+             get { return this.ViewState.Get&lt;string&gt;("Text", "DefaultText"); }
+             set { this.ViewState.Set("Text", value); }
+            }
+            </code></example>
+        </member>
+        <member name="T:ControlExtensions">
+            <summary>
+            Extensions for ASP.NET Controls
+            </summary>
+        </member>
+        <member name="M:ControlExtensions.FindControl``1(System.Web.UI.Control,System.String)">
+            <summary>
+            Performs a typed search of a control within the current naming container.
+            </summary>
+            <typeparam name="T">The control type</typeparam>
+            <param name="control">The parent control / naming container to search within.</param>
+            <param name="id">The id of the control to be found.</param>
+            <returns>The found control</returns>
+        </member>
+        <member name="M:ControlExtensions.FindControl``1(System.Web.UI.Control,System.Func{``0,System.Boolean})">
+            <summary>
+            Finds the control.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="control">The root control.</param>
+            <param name="comparison">The comparison.</param>
+            <returns>The T</returns>
+        </member>
+        <member name="M:ControlExtensions.FindControlRecursive(System.Web.UI.Control,System.String)">
+            <summary>
+            Finds a control by its ID recursively
+            </summary>
+            <param name="control">The root parent control.</param>
+            <param name="id">The id of the control to be found.</param>
+            <returns>The found control</returns>
+        </member>
+        <member name="M:ControlExtensions.FindControlRecursive``1(System.Web.UI.Control,System.String)">
+            <summary>
+            Finds a control by its ID recursively
+            </summary>
+            <typeparam name="T">The control type</typeparam>
+            <param name="control">The root parent control.</param>
+            <param name="id">The id of the control to be found.</param>
+            <returns>The found control</returns>
+        </member>
+        <member name="M:ControlExtensions.GetParent``1(System.Web.UI.Control)">
+            <summary>
+            Returns the first matching parent control.
+            </summary>
+            <typeparam name="T">The typ of the requested parent control.</typeparam>
+            <param name="control">The control to start the search on.</param>
+            <returns>The found control</returns>
+        </member>
+        <member name="M:ControlExtensions.GetChildControlsByType``1(System.Web.UI.Control)">
+            <summary>
+            Returns all direct child controls matching to the supplied type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="control">The control.</param>
+            <returns></returns>
+            <example><code>
+            foreach(var textControl in this.GetChildControlsByType&lt;ITextControl&gt;()) {
+             textControl.Text = "...";
+            }
+            </code></example>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.Web.UI.Control[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="controls">The controls to be set visible.</param>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.Boolean,System.Web.UI.Control[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="visible">if set to <c>true</c> [visible].</param>
+            <param name="controls">The controls to be set visible.</param>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.String[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="controlIDs">The control IDs.</param>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.Boolean,System.String[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="visible">if set to <c>true</c> [visible].</param>
+            <param name="controlIDs">The control IDs.</param>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.Predicate{System.Web.UI.Control},System.Web.UI.Control[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="condition">The condition.</param>
+            <param name="controls">The controls to be set visible.</param>
+        </member>
+        <member name="M:ControlExtensions.SetVisibility(System.Web.UI.Control,System.Predicate{System.Web.UI.Control},System.String[])">
+            <summary>
+            Sets the visibility of one or more controls
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="condition">The condition.</param>
+            <param name="controlIDs">The control IDs.</param>
+        </member>
+        <member name="M:ControlExtensions.SwitchVisibility(System.Web.UI.Control,System.Web.UI.Control,System.Web.UI.Control)">
+            <summary>
+            Switches the visibility of two controls.
+            </summary>
+            <param name="control">The root control.</param>
+            <param name="visible">The visible control.</param>
+            <param name="notVisible">The not visible control.</param>
+        </member>
+    </members>
+</doc>
