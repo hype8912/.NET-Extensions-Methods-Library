@@ -342,8 +342,8 @@ public static class ObjectExtensions {
     /// <returns>
     /// 	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsOfTypeOrInherited<T>(this object obj) {
-        return obj.IsOfTypeOrInherited(typeof(T));
+    public static bool IsOfTypeOrInherits<T>(this object obj) {
+        return obj.IsOfTypeOrInherits(typeof(T));
     }
 
     /// <summary>
@@ -354,7 +354,7 @@ public static class ObjectExtensions {
     /// <returns>
     /// 	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsOfTypeOrInherited(this object obj, Type type) {
+    public static bool IsOfTypeOrInherits(this object obj, Type type) {
         var objectType = obj.GetType();
 
         do {

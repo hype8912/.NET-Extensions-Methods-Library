@@ -2341,7 +2341,7 @@
             	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:ObjectExtensions.IsOfTypeOrInherited``1(System.Object)">
+        <member name="M:ObjectExtensions.IsOfTypeOrInherits``1(System.Object)">
             <summary>
             Determines whether the object is of the passed generic type or inherits from it.
             </summary>
@@ -2351,7 +2351,7 @@
             	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:ObjectExtensions.IsOfTypeOrInherited(System.Object,System.Type)">
+        <member name="M:ObjectExtensions.IsOfTypeOrInherits(System.Object,System.Type)">
             <summary>
             Determines whether the object is of the passed type or inherits from it.
             </summary>
