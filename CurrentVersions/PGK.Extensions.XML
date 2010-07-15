@@ -2321,6 +2321,66 @@
             <param name="includeInherited">if set to <c>true</c> includes inherited attributes.</param>
             <returns>The found attributes</returns>
         </member>
+        <member name="M:ObjectExtensions.IsOfType``1(System.Object)">
+            <summary>
+            Determines whether the object is excactly of the passed generic type.
+            </summary>
+            <typeparam name="T">The target type.</typeparam>
+            <param name="obj">The object to check.</param>
+            <returns>
+            	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ObjectExtensions.IsOfType(System.Object,System.Type)">
+            <summary>
+            Determines whether the object is excactly of the passed type
+            </summary>
+            <param name="obj">The object to check.</param>
+            <param name="type">The target type.</param>
+            <returns>
+            	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ObjectExtensions.IsOfTypeOrInherited``1(System.Object)">
+            <summary>
+            Determines whether the object is of the passed generic type or inherits from it.
+            </summary>
+            <typeparam name="T">The target type.</typeparam>
+            <param name="obj">The object to check.</param>
+            <returns>
+            	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ObjectExtensions.IsOfTypeOrInherited(System.Object,System.Type)">
+            <summary>
+            Determines whether the object is of the passed type or inherits from it.
+            </summary>
+            <param name="obj">The object to check.</param>
+            <param name="type">The target type.</param>
+            <returns>
+            	<c>true</c> if the object is of the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ObjectExtensions.IsAssignableTo``1(System.Object)">
+            <summary>
+            Determines whether the object is assignable to the passed generic type.
+            </summary>
+            <typeparam name="T">The target type.</typeparam>
+            <param name="obj">The object to check.</param>
+            <returns>
+            	<c>true</c> if the object is assignable to the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ObjectExtensions.IsAssignableTo(System.Object,System.Type)">
+            <summary>
+            Determines whether the object is assignable to the passed type.
+            </summary>
+            <param name="obj">The object to check.</param>
+            <param name="type">The target type.</param>
+            <returns>
+            	<c>true</c> if the object is assignable to the specified type; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="T:CollectionExtensions">
             <summary>
             Extension methods for all kind of Collections implementing the ICollection&lt;T&gt; interface
