@@ -249,5 +249,128 @@
             <param name="visible">The visible control.</param>
             <param name="notVisible">The not visible control.</param>
         </member>
+        <member name="T:HttpResponseExtensions">
+            <summary>
+            Extension methods for the HttpResponse class
+            </summary>
+        </member>
+        <member name="M:HttpResponseExtensions.Reload(System.Web.HttpResponse)">
+            <summary>
+            Reloads the current page / handler by performing a redirect to the current url
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.Redirect(System.Web.HttpResponse,System.String,System.Object[])">
+            <summary>
+            Performs a response redirect and allows the url to be populated with string format parameters.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="urlFormat">The URL including string.Format placeholders.</param>
+            <param name="values">The values to the populated.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.Redirect(System.Web.HttpResponse,System.String,System.Boolean,System.Object[])">
+            <summary>
+            Performs a response redirect and allows the url to be populated with string format parameters.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="urlFormat">The URL including string.Format placeholders.</param>
+            <param name="endResponse">If set to <c>true</c> the response will be terminated.</param>
+            <param name="values">The values to the populated.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.Redirect(System.Web.HttpResponse,System.String,UriQueryString)">
+            <summary>
+            Performs a response redirect and allows the url to be populated with a query string.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="url">The URL.</param>
+            <param name="queryString">The query string.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.Redirect(System.Web.HttpResponse,System.String,UriQueryString,System.Boolean)">
+            <summary>
+            Performs a response redirect and allows the url to be populated with a query string.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="url">The URL.</param>
+            <param name="queryString">The query string.</param>
+            <param name="endResponse">If set to <c>true</c> the response will be terminated.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.SetFileNotFound(System.Web.HttpResponse)">
+            <summary>
+            Returns a 404 to the client and ends the response.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.SetFileNotFound(System.Web.HttpResponse,System.Boolean)">
+            <summary>
+            Returns a 404 to the client and optionally ends the response.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="endResponse">If set to <c>true</c> the response will be terminated.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.SetInternalServerError(System.Web.HttpResponse)">
+            <summary>
+            Returns a 500 to the client and ends the response.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.SetInternalServerError(System.Web.HttpResponse,System.Boolean)">
+            <summary>
+            Returns a 500 to the client and optionally ends the response.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="endResponse">If set to <c>true</c> the response will be terminated.</param>
+        </member>
+        <member name="M:HttpResponseExtensions.SetStatus(System.Web.HttpResponse,System.Int32,System.String,System.Boolean)">
+            <summary>
+            Set the specified HTTP status code and description and optionally ends the response.
+            </summary>
+            <param name="response">The HttpResponse to perform on.</param>
+            <param name="code">The status code.</param>
+            <param name="description">The status description.</param>
+            <param name="endResponse">If set to <c>true</c> the response will be terminated.</param>
+        </member>
+        <member name="T:UriQueryString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:UriQueryString.values">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UriQueryString.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.ToString(System.Uri)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="baseUrl">The base URL.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.ToString(System.String)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="baseUrl">The base URL.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.Add(System.String,System.String)">
+            <summary>
+            Adds the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
     </members>
 </doc>

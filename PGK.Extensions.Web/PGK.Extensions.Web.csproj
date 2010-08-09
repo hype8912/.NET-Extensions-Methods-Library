@@ -44,6 +44,9 @@
     <AssemblyOriginatorKeyFile>PGK.Extensions.Web.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PGK.Extensions">
+      <HintPath>..\CurrentVersions\PGK.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -60,9 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlExtensions.cs" />
+    <Compile Include="HttpResponseExtensions.cs" />
     <Compile Include="HttpSessionStateExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateBagExtensions.cs" />
+    <Compile Include="UriQueryString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PGK.Extensions.Web.snk" />
