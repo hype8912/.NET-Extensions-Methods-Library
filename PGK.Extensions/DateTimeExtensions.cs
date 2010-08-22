@@ -241,5 +241,28 @@ public static class DateTimeExtensions {
         while(date.DayOfWeek != weekday) date = date.AddDays(-1);
         return date;
     }
-}
 
+    /// <summary>
+    /// Determines whether the date only part of twi DateTime values are equal.
+    /// </summary>
+    /// <param name="date">The date.</param>
+    /// <param name="dateToCompare">The date to compare with.</param>
+    /// <returns>
+    /// 	<c>true</c> if both date values are equal; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsDateEqual(this DateTime date, DateTime dateToCompare) {
+        return (date.Date == dateToCompare.Date);
+    }
+
+    /// <summary>
+    /// Determines whether the time only part of twi DateTime values are equal.
+    /// </summary>
+    /// <param name="time">The time.</param>
+    /// <param name="timeToCompare">The time to compare.</param>
+    /// <returns>
+    /// 	<c>true</c> if both time values are equal; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsTimeEqual(this DateTime time, DateTime timeToCompare) {
+        return (time.TimeOfDay == timeToCompare.TimeOfDay);
+    }
+}
