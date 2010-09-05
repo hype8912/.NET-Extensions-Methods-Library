@@ -1121,6 +1121,26 @@
             var lastMonday = DateTime.Now.GetPreviousWeekday(DayOfWeek.Monday);
             </code></example>
         </member>
+        <member name="M:DateTimeExtensions.IsDateEqual(System.DateTime,System.DateTime)">
+            <summary>
+            Determines whether the date only part of twi DateTime values are equal.
+            </summary>
+            <param name="date">The date.</param>
+            <param name="dateToCompare">The date to compare with.</param>
+            <returns>
+            	<c>true</c> if both date values are equal; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:DateTimeExtensions.IsTimeEqual(System.DateTime,System.DateTime)">
+            <summary>
+            Determines whether the time only part of twi DateTime values are equal.
+            </summary>
+            <param name="time">The time.</param>
+            <param name="timeToCompare">The time to compare.</param>
+            <returns>
+            	<c>true</c> if both time values are equal; otherwise, <c>false</c>.
+            </returns>
+        </member>
         <member name="T:DataRowViewViewExtensions">
             <summary>
             Extension methods for ADO.NET DataRowViewViews (DataView / DataTable / DataSet)
@@ -2381,6 +2401,22 @@
             	<c>true</c> if the object is assignable to the specified type; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:ObjectExtensions.GetTypeDefaultValue``1(``0)">
+            <summary>
+            Gets the type default value for the underlying data type, in case of reference types: null
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>The default value</returns>
+        </member>
+        <member name="M:ObjectExtensions.ToDatabaseValue``1(``0)">
+            <summary>
+            Converts the specified value to a database value and returns DBNull.Value if the value equals its default.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
         <member name="T:CollectionExtensions">
             <summary>
             Extension methods for all kind of Collections implementing the ICollection&lt;T&gt; interface
@@ -2407,6 +2443,39 @@
             <param name="collection">The collection.</param>
             <param name="values">The values to be added.</param>
             <returns>The amount if values that were added.</returns>
+        </member>
+        <member name="T:ValueTypeExtensions">
+            <summary>
+            Extension methods for all kind of value types (structs)
+            </summary>
+        </member>
+        <member name="M:ValueTypeExtensions.IsEmpty``1(``0)">
+            <summary>
+            Determines whether the specified value is empty.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            	<c>true</c> if the specified value is empty; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ValueTypeExtensions.IsNotEmpty``1(``0)">
+            <summary>
+            Determines whether the specified value is not empty.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            	<c>true</c> if the specified value is not empty; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ValueTypeExtensions.ToNullable``1(``0)">
+            <summary>
+            Converts the specified value to a corresponding nullable type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>The nullable type</returns>
         </member>
     </members>
 </doc>

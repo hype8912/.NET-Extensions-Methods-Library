@@ -388,4 +388,24 @@ public static class ObjectExtensions {
         var objectType = obj.GetType();
         return type.IsAssignableFrom(objectType);
     }
+
+    /// <summary>
+    /// Gets the type default value for the underlying data type, in case of reference types: null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value">The value.</param>
+    /// <returns>The default value</returns>
+    public static T GetTypeDefaultValue<T>(this T value) {
+        return default(T);
+    }
+
+    /// <summary>
+    /// Converts the specified value to a database value and returns DBNull.Value if the value equals its default.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value">The value.</param>
+    /// <returns></returns>
+    public static object ToDatabaseValue<T>(this T value) {
+        return (value.Equals(value.GetTypeDefaultValue()) ? DBNull.Value : (object) value);
+    }
 }
