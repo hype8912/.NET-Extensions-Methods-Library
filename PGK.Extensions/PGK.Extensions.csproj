@@ -16,6 +16,10 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapExtensions.cs" />
+    <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="IntExtensions.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="StreamExtensions.cs" />
+    <Compile Include="StringArrayExtensions.cs" />
     <Compile Include="StringConverter.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />

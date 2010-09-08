@@ -265,4 +265,18 @@ public static class DateTimeExtensions {
     public static bool IsTimeEqual(this DateTime time, DateTime timeToCompare) {
         return (time.TimeOfDay == timeToCompare.TimeOfDay);
     }
+
+    private readonly static DateTime date1970 = new DateTime(1970, 1, 1);
+    /// <summary>
+    /// Get milliseconds of UNIX area. This is the milliseconds since 1/1/1970
+    /// </summary>
+    /// <param name="datetime">Up to which time.</param>
+    /// <returns>number of milliseconds.</returns>
+    public static long GetMillisecondsSince1970(this DateTime datetime)
+    {
+
+        var ts = datetime.Subtract(date1970);
+        return (long)ts.TotalMilliseconds;
+    }
+
 }

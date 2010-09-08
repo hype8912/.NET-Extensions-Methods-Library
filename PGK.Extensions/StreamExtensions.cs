@@ -148,4 +148,23 @@ public static class StreamExtensions {
             return memoryStream.ToArray();
         }
     }
+    /// <summary>
+    /// Reads a fixed number of bytes.
+    /// </summary>
+    /// <param name="stream">The stream to read from</param>
+    /// <param name="bufsize">The number of bytes to read.</param>
+    /// <returns>the read byte[]</returns>
+    public static byte[] ReadFixedBuffersize(this Stream stream, int bufsize)
+    {
+        byte[] buf = new byte[bufsize];
+        int offset = 0, cnt;
+        do
+        {
+            cnt = stream.Read(buf, offset, bufsize - offset);
+            if (cnt == 0) return null;
+            offset += cnt;
+        } while (offset < bufsize);
+
+        return buf;
+    }
 }

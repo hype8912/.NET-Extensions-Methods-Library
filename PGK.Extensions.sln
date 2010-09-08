@@ -8,6 +8,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGK.Extensions.Windows", "PGK.Extensions.Windows\PGK.Extensions.Windows.csproj", "{F36CE20A-DD8D-494C-82D2-BCBF0827A72F}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs10
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PGK.Extensions\\PGK.Extensions.csproj
+		SccProjectName1 = PGK.Extensions
+		SccLocalPath1 = PGK.Extensions
+		SccProjectUniqueName2 = PGK.Extensions.Web\\PGK.Extensions.Web.csproj
+		SccProjectName2 = PGK.Extensions.Web
+		SccLocalPath2 = PGK.Extensions.Web
+		SccProjectUniqueName3 = PGK.Extensions.Windows\\PGK.Extensions.Windows.csproj
+		SccProjectName3 = PGK.Extensions.Windows
+		SccLocalPath3 = PGK.Extensions.Windows
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

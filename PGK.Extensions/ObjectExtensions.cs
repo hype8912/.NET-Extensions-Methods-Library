@@ -408,4 +408,16 @@ public static class ObjectExtensions {
     public static object ToDatabaseValue<T>(this T value) {
         return (value.Equals(value.GetTypeDefaultValue()) ? DBNull.Value : (object) value);
     }
+
+    /// <summary>
+    /// Cast an object to the given type. Usefull especially for anonymous types.
+    /// </summary>
+    /// <typeparam name="T">The type to cast to</typeparam>
+    /// <param name="obj">The object to case</param>
+    /// <param name="type">The type to cast to</param>
+    /// <returns>the casted type or null if casting is not possible.</returns>
+    public static T CastToType<T>(this object obj, T type)
+    {
+        return (T)obj;
+    }
 }
