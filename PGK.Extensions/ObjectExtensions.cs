@@ -413,12 +413,13 @@ public static class ObjectExtensions {
     /// Cast an object to the given type. Usefull especially for anonymous types.
     /// </summary>
     /// <typeparam name="T">The type to cast to</typeparam>
-    /// <param name="obj">The object to case</param>
-    /// <param name="type">The type to cast to</param>
-    /// <returns>the casted type or null if casting is not possible.</returns>
-    public static T CastToType<T>(this object obj, T type)
-    {
-        return (T)obj;
+    /// <param name="value">The object to case</param>
+    /// <returns>
+    /// the casted type or null if casting is not possible.
+    /// </returns>
+    /// <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+    public static T CastToType<T>(this object value) {
+        return (T) value;
     }
 
 	/// <summary>
@@ -431,13 +432,15 @@ public static class ObjectExtensions {
 	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
 	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
 	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
-	/// </remarks>
+    /// 
+    /// Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+    /// </remarks>
 	/// <example>
 	/// object someObject = GetSomeObject();
 	/// if ( someObject.IsNull() ) { /* the someObject is null */ }
 	/// else { /* the someObject is not null */ }
 	/// </example>
-	public static bool IsNull(this object target) {
+    public static bool IsNull(this object target) {
 		bool ret = IsNull<object>(target);
 		return ret;
 	}
@@ -453,7 +456,9 @@ public static class ObjectExtensions {
 	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
 	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
 	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
-	/// </remarks>
+    /// 
+    /// Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+    /// </remarks>
 	/// <example>
 	/// MyClass someObject = GetSomeObject();
 	/// if ( someObject.IsNull() ) { /* the someObject is null */ }
@@ -474,7 +479,9 @@ public static class ObjectExtensions {
 	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
 	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
 	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
-	/// </remarks>
+    /// 
+    /// Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+    /// </remarks>
 	/// <example>
 	/// object someObject = GetSomeObject();
 	/// if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
@@ -496,7 +503,9 @@ public static class ObjectExtensions {
 	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
 	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
 	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
-	/// </remarks>
+    /// 
+    /// Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+    /// </remarks>
 	/// <example>
 	/// MyClass someObject = GetSomeObject();
 	/// if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
@@ -519,7 +528,8 @@ public static class ObjectExtensions {
 	/// number = 15.7892;
 	/// string text2 = number.AsString();
 	/// </example>
-	public static string AsString(this object target) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static string AsString(this object target) {
 		string result;
 		if (object.ReferenceEquals(target, null)) {
 			result = null;
@@ -545,7 +555,8 @@ public static class ObjectExtensions {
 	/// number = 15.7892;
 	/// string text2 = number.AsString( czech );
 	/// </example>
-	public static string AsString(this object target, IFormatProvider formatProvider) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static string AsString(this object target, IFormatProvider formatProvider) {
 		string result = string.Format(formatProvider, "{0}", target);
 		return result;
 	}
@@ -562,7 +573,8 @@ public static class ObjectExtensions {
 	/// number = 15.7892;
 	/// string text2 = number.AsInvariantString();
 	/// </example>
-	public static string AsInvariantString(this object target) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static string AsInvariantString(this object target) {
 		string result = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", target);
 		return result;
 	}
@@ -583,7 +595,8 @@ public static class ObjectExtensions {
 	/// number = 57;
 	/// int notNullNumber2 = number.NotNull( DEFAULT_NUMBER ).Value; // returns 57
 	/// </example>
-	public static T NotNull<T>(this T target, T notNullValue) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static T NotNull<T>(this T target, T notNullValue) {
 		T result;
 		if (object.ReferenceEquals(target, null)) {
 			result = notNullValue;
@@ -609,7 +622,8 @@ public static class ObjectExtensions {
 	/// number = 57;
 	/// int notNullNumber2 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns 57
 	/// </example>
-	public static T NotNull<T>(this T target, Func<T> notNullValueProvider) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static T NotNull<T>(this T target, Func<T> notNullValueProvider) {
 		T result;
 		if (object.ReferenceEquals(target, null)) {
 			result = notNullValueProvider();

@@ -61,16 +61,15 @@ public static class EnumerableExtensions {
 	///		// result of items.NotNull() is enumerable with two strings
 	/// }
 	/// </example>
-	public static IEnumerable<T> IgnoreNulls<T>(this IEnumerable<T> target) {
-		if (object.ReferenceEquals(target, null)) {
+    /// <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+    public static IEnumerable<T> IgnoreNulls<T>(this IEnumerable<T> target) {
+	    if (object.ReferenceEquals(target, null)) {
 			yield break;
 		}
-		else {
-			foreach (var item in target) {
-				if (object.ReferenceEquals(item, null)) { continue; }
-
-				yield return item;
-			}
-		}
+	
+        foreach (var item in target) {
+	        if (object.ReferenceEquals(item, null)) continue;
+            yield return item;
+	    }
 	}
 }

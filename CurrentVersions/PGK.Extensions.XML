@@ -76,6 +76,39 @@
             var files = directory.FindFilesRecursive(f => f.Extension == ".ini");
             </code></example>
         </member>
+        <member name="T:ValueTypeExtensions">
+            <summary>
+            Extension methods for all kind of value types (structs)
+            </summary>
+        </member>
+        <member name="M:ValueTypeExtensions.IsEmpty``1(``0)">
+            <summary>
+            Determines whether the specified value is empty.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            	<c>true</c> if the specified value is empty; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ValueTypeExtensions.IsNotEmpty``1(``0)">
+            <summary>
+            Determines whether the specified value is not empty.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>
+            	<c>true</c> if the specified value is not empty; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ValueTypeExtensions.ToNullable``1(``0)">
+            <summary>
+            Converts the specified value to a corresponding nullable type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+            <returns>The nullable type</returns>
+        </member>
         <member name="T:IntExtensions">
             <summary>
             Extension methods for the string data type
@@ -141,6 +174,26 @@
             
             </example>
             <remarks>This method was intended to return the passed values to provide method chaining. Howver due to defered execution the compiler would actually never run the entire code at all.</remarks>
+        </member>
+        <member name="M:EnumerableExtensions.IgnoreNulls``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns enumerable object based on target, which does not contains null references.
+            If target is null reference, returns empty enumerable object.
+            </summary>
+            <typeparam name="T">Type of items in target.</typeparam>
+            <param name="target">Target enumerable object. Can be null.</param>
+            <example>
+            object[] items = null;
+            foreach(var item in items.NotNull()){
+                // result of items.NotNull() is empty but not null enumerable
+            }
+            
+            object[] items = new object[]{ null, "Hello World!", null, "Good bye!" };
+            foreach(var item in items.NotNull()){
+            	// result of items.NotNull() is enumerable with two strings
+            }
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
         </member>
         <member name="T:StreamExtensions">
             <summary>
@@ -237,6 +290,14 @@
             <param name="stream">The stream.</param>
             <returns>The byte array</returns>
             <remarks>Thanks to EsbenCarlsen  for providing an update to this method.</remarks>
+        </member>
+        <member name="M:StreamExtensions.ReadFixedBuffersize(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a fixed number of bytes.
+            </summary>
+            <param name="stream">The stream to read from</param>
+            <param name="bufsize">The number of bytes to read.</param>
+            <returns>the read byte[]</returns>
         </member>
         <member name="T:FileInfoExtensions">
             <summary>
@@ -1141,6 +1202,28 @@
             	<c>true</c> if both time values are equal; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:DateTimeExtensions.GetMillisecondsSince1970(System.DateTime)">
+            <summary>
+            Get milliseconds of UNIX area. This is the milliseconds since 1/1/1970
+            </summary>
+            <param name="datetime">Up to which time.</param>
+            <returns>number of milliseconds.</returns>
+            <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+        </member>
+        <member name="T:ByteArrayExtensions">
+            <summary>
+            Extension methods for byte-Arrays
+            </summary>
+        </member>
+        <member name="M:ByteArrayExtensions.FindArrayInArray(System.Byte[],System.Byte[])">
+            <summary>
+            Find the first occurence of an byte[] in another byte[]
+            </summary>
+            <param name="buf1">the byte[] to search in</param>
+            <param name="buf2">the byte[] to find</param>
+            <returns>the first position of the found byte[] or -1 if not found</returns>
+            <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+        </member>
         <member name="T:DataRowViewViewExtensions">
             <summary>
             Extension methods for ADO.NET DataRowViewViews (DataView / DataTable / DataSet)
@@ -1371,6 +1454,27 @@
             <returns>
             	<c>true</c> if the value is DBNull.Value; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="T:ComponentExtensions">
+            <summary>
+            Extension methods for IComponent data type.
+            </summary>
+        </member>
+        <member name="M:ComponentExtensions.IsInDesignMode(System.ComponentModel.IComponent)">
+            <summary>
+            Returns <c>true</c> if target component is in design mode.
+            Othervise returns <c>false</c>.
+            </summary>
+            <param name="target">Target component. Can not be null.</param>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ComponentExtensions.IsInRuntimeMode(System.ComponentModel.IComponent)">
+            <summary>
+            Returns <c>true</c> if target component is NOT in design mode.
+            Othervise returns <c>false</c>.
+            </summary>
+            <param name="target">Target component.</param>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
         </member>
         <member name="T:DateTimeOffsetExtensions">
             <summary>
@@ -2084,6 +2188,25 @@
             <param name="comparison">The comparison.</param>
             <returns>The item index</returns>
         </member>
+        <member name="T:StringArrayExtensions">
+            <summary>
+            Extension methods for string[]
+            </summary>
+        </member>
+        <member name="M:StringArrayExtensions.ToString(System.String[],System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns a combined value of strings from a string array
+            </summary>
+            <param name="values">The values.</param>
+            <param name="prefix">The prefix.</param>
+            <param name="suffix">The suffix.</param>
+            <param name="quotation">The quotation (or null).</param>
+            <param name="separator">The separator.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+            <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+        </member>
         <member name="T:ComparableExtensions">
             <summary>
             Extension methods for all comparable objects eg. string, DateTime, numeric values ...
@@ -2417,6 +2540,183 @@
             <param name="value">The value.</param>
             <returns></returns>
         </member>
+        <member name="M:ObjectExtensions.CastToType``1(System.Object)">
+            <summary>
+            Cast an object to the given type. Usefull especially for anonymous types.
+            </summary>
+            <typeparam name="T">The type to cast to</typeparam>
+            <param name="value">The object to case</param>
+            <returns>
+            the casted type or null if casting is not possible.
+            </returns>
+            <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+        </member>
+        <member name="M:ObjectExtensions.IsNull(System.Object)">
+            <summary>
+            Returns TRUE, if specified target reference is equals with null reference.
+            Othervise returns FALSE.
+            </summary>
+            <param name="target">Target reference. Can be null.</param>
+            <remarks>
+            Some types has overloaded '==' and '!=' operators.
+            So the code "null == ((MyClass)null)" can returns <c>false</c>.
+            The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+            However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+            
+            Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+            </remarks>
+            <example>
+            object someObject = GetSomeObject();
+            if ( someObject.IsNull() ) { /* the someObject is null */ }
+            else { /* the someObject is not null */ }
+            </example>
+        </member>
+        <member name="M:ObjectExtensions.IsNull``1(``0)">
+            <summary>
+            Returns TRUE, if specified target reference is equals with null reference.
+            Othervise returns FALSE.
+            </summary>
+            <typeparam name="T">Type of target.</typeparam>
+            <param name="target">Target reference. Can be null.</param>
+            <remarks>
+            Some types has overloaded '==' and '!=' operators.
+            So the code "null == ((MyClass)null)" can returns <c>false</c>.
+            The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+            However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+            
+            Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+            </remarks>
+            <example>
+            MyClass someObject = GetSomeObject();
+            if ( someObject.IsNull() ) { /* the someObject is null */ }
+            else { /* the someObject is not null */ }
+            </example>
+        </member>
+        <member name="M:ObjectExtensions.IsNotNull(System.Object)">
+            <summary>
+            Returns TRUE, if specified target reference is equals with null reference.
+            Othervise returns FALSE.
+            </summary>
+            <param name="target">Target reference. Can be null.</param>
+            <remarks>
+            Some types has overloaded '==' and '!=' operators.
+            So the code "null == ((MyClass)null)" can returns <c>false</c>.
+            The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+            However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+            
+            Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+            </remarks>
+            <example>
+            object someObject = GetSomeObject();
+            if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
+            else { /* the someObject is null */ }
+            </example>
+        </member>
+        <member name="M:ObjectExtensions.IsNotNull``1(``0)">
+            <summary>
+            Returns TRUE, if specified target reference is equals with null reference.
+            Othervise returns FALSE.
+            </summary>
+            <typeparam name="T">Type of target.</typeparam>
+            <param name="target">Target reference. Can be null.</param>
+            <remarks>
+            Some types has overloaded '==' and '!=' operators.
+            So the code "null == ((MyClass)null)" can returns <c>false</c>.
+            The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+            However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+            
+            Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
+            </remarks>
+            <example>
+            MyClass someObject = GetSomeObject();
+            if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
+            else { /* the someObject is null */ }
+            </example>
+        </member>
+        <member name="M:ObjectExtensions.AsString(System.Object)">
+            <summary>
+            If target is null, returns null.
+            Othervise returns string representation of target using current culture format provider.
+            </summary>
+            <param name="target">Target transforming to string representation. Can be null.</param>
+            <example>
+            float? number = null;
+            string text1 = number.AsString();
+            
+            number = 15.7892;
+            string text2 = number.AsString();
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ObjectExtensions.AsString(System.Object,System.IFormatProvider)">
+            <summary>
+            If target is null, returns null.
+            Othervise returns string representation of target using specified format provider.
+            </summary>
+            <param name="target">Target transforming to string representation. Can be null.</param>
+            <param name="formatProvider">Format provider used to transformation target to string representation.</param>
+            <example>
+            CultureInfo czech = new CultureInfo("cs-CZ");
+            
+            float? number = null;
+            string text1 = number.AsString( czech );
+            
+            number = 15.7892;
+            string text2 = number.AsString( czech );
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ObjectExtensions.AsInvariantString(System.Object)">
+            <summary>
+            If target is null, returns null.
+            Othervise returns string representation of target using invariant format provider.
+            </summary>
+            <param name="target">Target transforming to string representation. Can be null.</param>
+            <example>
+            float? number = null;
+            string text1 = number.AsInvariantString();
+            
+            number = 15.7892;
+            string text2 = number.AsInvariantString();
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ObjectExtensions.NotNull``1(``0,``0)">
+            <summary>
+            If target is null reference, returns notNullValue.
+            Othervise returns target.
+            </summary>
+            <typeparam name="T">Type of target.</typeparam>
+            <param name="target">Target which is maybe null. Can be null.</param>
+            <param name="notNullValue">Value used instead of null.</param>
+            <example>
+            const int DEFAULT_NUMBER = 123;
+            
+            int? number = null;
+            int notNullNumber1 = number.NotNull( DEFAULT_NUMBER ).Value; // returns 123
+            
+            number = 57;
+            int notNullNumber2 = number.NotNull( DEFAULT_NUMBER ).Value; // returns 57
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ObjectExtensions.NotNull``1(``0,System.Func{``0})">
+            <summary>
+            If target is null reference, returns result from notNullValueProvider.
+            Othervise returns target.
+            </summary>
+            <typeparam name="T">Type of target.</typeparam>
+            <param name="target">Target which is maybe null. Can be null.</param>
+            <param name="notNullValueProvider">Delegate which return value is used instead of null.</param>
+            <example>
+            int? number = null;
+            int notNullNumber1 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns random number from 10 to 20
+            
+            number = 57;
+            int notNullNumber2 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns 57
+            </example>
+            <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
         <member name="T:CollectionExtensions">
             <summary>
             Extension methods for all kind of Collections implementing the ICollection&lt;T&gt; interface
@@ -2443,39 +2743,6 @@
             <param name="collection">The collection.</param>
             <param name="values">The values to be added.</param>
             <returns>The amount if values that were added.</returns>
-        </member>
-        <member name="T:ValueTypeExtensions">
-            <summary>
-            Extension methods for all kind of value types (structs)
-            </summary>
-        </member>
-        <member name="M:ValueTypeExtensions.IsEmpty``1(``0)">
-            <summary>
-            Determines whether the specified value is empty.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value">The value.</param>
-            <returns>
-            	<c>true</c> if the specified value is empty; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:ValueTypeExtensions.IsNotEmpty``1(``0)">
-            <summary>
-            Determines whether the specified value is not empty.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value">The value.</param>
-            <returns>
-            	<c>true</c> if the specified value is not empty; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:ValueTypeExtensions.ToNullable``1(``0)">
-            <summary>
-            Converts the specified value to a corresponding nullable type
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value">The value.</param>
-            <returns>The nullable type</returns>
         </member>
     </members>
 </doc>

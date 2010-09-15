@@ -266,17 +266,17 @@ public static class DateTimeExtensions {
         return (time.TimeOfDay == timeToCompare.TimeOfDay);
     }
 
-    private readonly static DateTime date1970 = new DateTime(1970, 1, 1);
+    private readonly static DateTime Date1970 = new DateTime(1970, 1, 1);
+
     /// <summary>
     /// Get milliseconds of UNIX area. This is the milliseconds since 1/1/1970
     /// </summary>
     /// <param name="datetime">Up to which time.</param>
     /// <returns>number of milliseconds.</returns>
-    public static long GetMillisecondsSince1970(this DateTime datetime)
-    {
-
-        var ts = datetime.Subtract(date1970);
-        return (long)ts.TotalMilliseconds;
+    /// <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+    public static long GetMillisecondsSince1970(this DateTime datetime) {
+        var ts = datetime.Subtract(Date1970);
+        return (long) ts.TotalMilliseconds;
     }
 
 }

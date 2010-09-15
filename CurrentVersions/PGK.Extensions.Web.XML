@@ -372,5 +372,21 @@
             <param name="visible">The visible control.</param>
             <param name="notVisible">The not visible control.</param>
         </member>
+        <member name="T:HttpListenerContextExtensions">
+            <summary>
+            Extension methods for HttpListenerContext
+            </summary>
+        </member>
+        <member name="M:HttpListenerContextExtensions.GetResponseStream(System.Net.HttpListenerContext,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Prepares a response-stream using compression-, caching- and buffering-settings
+            </summary>
+            <param name="context">The context</param>
+            <param name="allowZip">set to true in case you want to honor the compression-http-headers</param>
+            <param name="buffered">set to true in case you want a BufferedStream</param>
+            <param name="allowCache">set to false in case you want to set the no-cache-http-headers</param>
+            <returns>the stream to write you stuff to</returns>
+            <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+        </member>
     </members>
 </doc>
