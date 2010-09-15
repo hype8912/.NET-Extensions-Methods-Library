@@ -69,6 +69,7 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
+    <Compile Include="ComponentExtensions.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="DataReaderExtensions.cs" />
     <Compile Include="DataRowExtensions.cs" />

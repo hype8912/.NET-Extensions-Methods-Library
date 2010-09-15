@@ -420,4 +420,204 @@ public static class ObjectExtensions {
     {
         return (T)obj;
     }
+
+	/// <summary>
+	/// Returns TRUE, if specified target reference is equals with null reference.
+	/// Othervise returns FALSE.
+	/// </summary>
+	/// <param name="target">Target reference. Can be null.</param>
+	/// <remarks>
+	/// Some types has overloaded '==' and '!=' operators.
+	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
+	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+	/// </remarks>
+	/// <example>
+	/// object someObject = GetSomeObject();
+	/// if ( someObject.IsNull() ) { /* the someObject is null */ }
+	/// else { /* the someObject is not null */ }
+	/// </example>
+	public static bool IsNull(this object target) {
+		bool ret = IsNull<object>(target);
+		return ret;
+	}
+
+	/// <summary>
+	/// Returns TRUE, if specified target reference is equals with null reference.
+	/// Othervise returns FALSE.
+	/// </summary>
+	/// <typeparam name="T">Type of target.</typeparam>
+	/// <param name="target">Target reference. Can be null.</param>
+	/// <remarks>
+	/// Some types has overloaded '==' and '!=' operators.
+	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
+	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+	/// </remarks>
+	/// <example>
+	/// MyClass someObject = GetSomeObject();
+	/// if ( someObject.IsNull() ) { /* the someObject is null */ }
+	/// else { /* the someObject is not null */ }
+	/// </example>
+	public static bool IsNull<T>(this T target) {
+		bool result = object.ReferenceEquals(target, null);
+		return result;
+	}
+
+	/// <summary>
+	/// Returns TRUE, if specified target reference is equals with null reference.
+	/// Othervise returns FALSE.
+	/// </summary>
+	/// <param name="target">Target reference. Can be null.</param>
+	/// <remarks>
+	/// Some types has overloaded '==' and '!=' operators.
+	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
+	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+	/// </remarks>
+	/// <example>
+	/// object someObject = GetSomeObject();
+	/// if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
+	/// else { /* the someObject is null */ }
+	/// </example>
+	public static bool IsNotNull(this object target) {
+		bool ret = IsNotNull<object>(target);
+		return ret;
+	}
+
+	/// <summary>
+	/// Returns TRUE, if specified target reference is equals with null reference.
+	/// Othervise returns FALSE.
+	/// </summary>
+	/// <typeparam name="T">Type of target.</typeparam>
+	/// <param name="target">Target reference. Can be null.</param>
+	/// <remarks>
+	/// Some types has overloaded '==' and '!=' operators.
+	/// So the code "null == ((MyClass)null)" can returns <c>false</c>.
+	/// The most correct way how to test for null reference is using "System.Object.ReferenceEquals(object, object)" method.
+	/// However the notation with ReferenceEquals method is long and uncomfortable - this extension method solve it.
+	/// </remarks>
+	/// <example>
+	/// MyClass someObject = GetSomeObject();
+	/// if ( someObject.IsNotNull() ) { /* the someObject is not null */ }
+	/// else { /* the someObject is null */ }
+	/// </example>
+	public static bool IsNotNull<T>(this T target) {
+		bool result = !object.ReferenceEquals(target, null);
+		return result;
+	}
+
+	/// <summary>
+	/// If target is null, returns null.
+	/// Othervise returns string representation of target using current culture format provider.
+	/// </summary>
+	/// <param name="target">Target transforming to string representation. Can be null.</param>
+	/// <example>
+	/// float? number = null;
+	/// string text1 = number.AsString();
+	/// 
+	/// number = 15.7892;
+	/// string text2 = number.AsString();
+	/// </example>
+	public static string AsString(this object target) {
+		string result;
+		if (object.ReferenceEquals(target, null)) {
+			result = null;
+		}
+		else {
+			result = string.Format("{0}", target);
+		}
+		return result;
+	}
+
+	/// <summary>
+	/// If target is null, returns null.
+	/// Othervise returns string representation of target using specified format provider.
+	/// </summary>
+	/// <param name="target">Target transforming to string representation. Can be null.</param>
+	/// <param name="formatProvider">Format provider used to transformation target to string representation.</param>
+	/// <example>
+	/// CultureInfo czech = new CultureInfo("cs-CZ");
+	/// 
+	/// float? number = null;
+	/// string text1 = number.AsString( czech );
+	/// 
+	/// number = 15.7892;
+	/// string text2 = number.AsString( czech );
+	/// </example>
+	public static string AsString(this object target, IFormatProvider formatProvider) {
+		string result = string.Format(formatProvider, "{0}", target);
+		return result;
+	}
+
+	/// <summary>
+	/// If target is null, returns null.
+	/// Othervise returns string representation of target using invariant format provider.
+	/// </summary>
+	/// <param name="target">Target transforming to string representation. Can be null.</param>
+	/// <example>
+	/// float? number = null;
+	/// string text1 = number.AsInvariantString();
+	/// 
+	/// number = 15.7892;
+	/// string text2 = number.AsInvariantString();
+	/// </example>
+	public static string AsInvariantString(this object target) {
+		string result = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", target);
+		return result;
+	}
+
+	/// <summary>
+	/// If target is null reference, returns notNullValue.
+	/// Othervise returns target.
+	/// </summary>
+	/// <typeparam name="T">Type of target.</typeparam>
+	/// <param name="target">Target which is maybe null. Can be null.</param>
+	/// <param name="notNullValue">Value used instead of null.</param>
+	/// <example>
+	/// const int DEFAULT_NUMBER = 123;
+	/// 
+	/// int? number = null;
+	/// int notNullNumber1 = number.NotNull( DEFAULT_NUMBER ).Value; // returns 123
+	/// 
+	/// number = 57;
+	/// int notNullNumber2 = number.NotNull( DEFAULT_NUMBER ).Value; // returns 57
+	/// </example>
+	public static T NotNull<T>(this T target, T notNullValue) {
+		T result;
+		if (object.ReferenceEquals(target, null)) {
+			result = notNullValue;
+		}
+		else {
+			result = target;
+		}
+
+		return result;
+	}
+
+	/// <summary>
+	/// If target is null reference, returns result from notNullValueProvider.
+	/// Othervise returns target.
+	/// </summary>
+	/// <typeparam name="T">Type of target.</typeparam>
+	/// <param name="target">Target which is maybe null. Can be null.</param>
+	/// <param name="notNullValueProvider">Delegate which return value is used instead of null.</param>
+	/// <example>
+	/// int? number = null;
+	/// int notNullNumber1 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns random number from 10 to 20
+	/// 
+	/// number = 57;
+	/// int notNullNumber2 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns 57
+	/// </example>
+	public static T NotNull<T>(this T target, Func<T> notNullValueProvider) {
+		T result;
+		if (object.ReferenceEquals(target, null)) {
+			result = notNullValueProvider();
+		}
+		else {
+			result = target;
+		}
+
+		return result;
+	}
 }

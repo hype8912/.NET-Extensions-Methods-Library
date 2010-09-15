@@ -43,4 +43,34 @@ public static class EnumerableExtensions {
             action(value);
         }
     }
+
+	/// <summary>
+	/// Returns enumerable object based on target, which does not contains null references.
+	/// If target is null reference, returns empty enumerable object.
+	/// </summary>
+	/// <typeparam name="T">Type of items in target.</typeparam>
+	/// <param name="target">Target enumerable object. Can be null.</param>
+	/// <example>
+	/// object[] items = null;
+	/// foreach(var item in items.NotNull()){
+	///     // result of items.NotNull() is empty but not null enumerable
+	/// }
+	/// 
+	/// object[] items = new object[]{ null, "Hello World!", null, "Good bye!" };
+	/// foreach(var item in items.NotNull()){
+	///		// result of items.NotNull() is enumerable with two strings
+	/// }
+	/// </example>
+	public static IEnumerable<T> IgnoreNulls<T>(this IEnumerable<T> target) {
+		if (object.ReferenceEquals(target, null)) {
+			yield break;
+		}
+		else {
+			foreach (var item in target) {
+				if (object.ReferenceEquals(item, null)) { continue; }
+
+				yield return item;
+			}
+		}
+	}
 }
