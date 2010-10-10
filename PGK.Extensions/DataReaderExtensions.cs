@@ -14,7 +14,7 @@ public static class DataReaderExtensions {
     /// <param name="field">The name of the record field.</param>
     /// <returns>The record value</returns>
     public static T Get<T>(this IDataReader reader, string field) {
-        return reader.Get<T>(field, default(T));
+        return reader.Get(field, default(T));
     }
 
     /// <summary>
@@ -27,8 +27,11 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static T Get<T>(this IDataReader reader, string field, T defaultValue) {
         var value = reader[field];
-        if(value == DBNull.Value) return defaultValue;
-        return value.ConvertTo<T>(defaultValue);
+        if (value == DBNull.Value) return defaultValue;
+
+        if (value is T) return (T)value;
+
+        return value.ConvertTo(defaultValue);
     }
 
     /// <summary>
@@ -60,7 +63,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static string GetString(this IDataReader reader, string field, string defaultValue) {
         var value = reader[field];
-        return (value is string ? (string) value : defaultValue);
+        return (value is string ? (string)value : defaultValue);
     }
 
     /// <summary>
@@ -71,7 +74,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static Guid GetGuid(this IDataReader reader, string field) {
         var value = reader[field];
-        return (value is Guid ? (Guid) value : Guid.Empty);
+        return (value is Guid ? (Guid)value : Guid.Empty);
     }
 
     /// <summary>
@@ -93,7 +96,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static DateTime GetDateTime(this IDataReader reader, string field, DateTime defaultValue) {
         var value = reader[field];
-        return (value is DateTime ? (DateTime) value : defaultValue);
+        return (value is DateTime ? (DateTime)value : defaultValue);
     }
 
     /// <summary>
@@ -137,7 +140,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static int GetInt32(this IDataReader reader, string field, int defaultValue) {
         var value = reader[field];
-        return (value is int ? (int) value : defaultValue);
+        return (value is int ? (int)value : defaultValue);
     }
 
     /// <summary>
@@ -159,7 +162,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static long GetInt64(this IDataReader reader, string field, int defaultValue) {
         var value = reader[field];
-        return (value is long ? (long) value : defaultValue);
+        return (value is long ? (long)value : defaultValue);
     }
 
     /// <summary>
@@ -181,7 +184,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static decimal GetDecimal(this IDataReader reader, string field, long defaultValue) {
         var value = reader[field];
-        return (value is decimal ? (decimal) value : defaultValue);
+        return (value is decimal ? (decimal)value : defaultValue);
     }
 
     /// <summary>
@@ -203,7 +206,7 @@ public static class DataReaderExtensions {
     /// <returns>The record value</returns>
     public static bool GetBoolean(this IDataReader reader, string field, bool defaultValue) {
         var value = reader[field];
-        return (value is bool ? (bool) value : defaultValue);
+        return (value is bool ? (bool)value : defaultValue);
     }
 
     /// <summary>
@@ -227,7 +230,7 @@ public static class DataReaderExtensions {
         var classType = reader.GetString(field);
         if (classType.IsNotEmpty()) {
             var type = Type.GetType(classType);
-            if(type != null) return type;
+            if (type != null) return type;
         }
         return defaultValue;
     }
@@ -313,7 +316,7 @@ public static class DataReaderExtensions {
     /// </returns>
     public static int ReadAll(this IDataReader reader, Action<IDataReader> action) {
         var count = 0;
-        while(reader.Read()) {
+        while (reader.Read()) {
             action(reader);
             count++;
         }

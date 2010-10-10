@@ -195,6 +195,66 @@
             </example>
             <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
         </member>
+        <member name="M:EnumerableExtensions.MaxItem``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},``1@)">
+            <summary>
+            Returns the maximum item based on a provided selector.
+            </summary>
+            <typeparam name="TItem">The item type</typeparam>
+            <typeparam name="TValue">The value item</typeparam>
+            <param name="items">The items.</param>
+            <param name="selector">The selector.</param>
+            <param name="maxValue">The max value as output parameter.</param>
+            <returns>The maximum item</returns>
+            <example><code>
+            int age;
+            var oldestPerson = persons.MaxItem(p =&gt; p.Age, out age);
+            </code>
+            </example>
+        </member>
+        <member name="M:EnumerableExtensions.MaxItem``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Returns the maximum item based on a provided selector.
+            </summary>
+            <typeparam name="TItem">The item type</typeparam>
+            <typeparam name="TValue">The value item</typeparam>
+            <param name="items">The items.</param>
+            <param name="selector">The selector.</param>
+            <returns>The maximum item</returns>
+            <example><code>
+            var oldestPerson = persons.MaxItem(p =&gt; p.Age);
+            </code>
+            </example>
+        </member>
+        <member name="M:EnumerableExtensions.MinItem``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},``1@)">
+            <summary>
+            Returns the minimum item based on a provided selector.
+            </summary>
+            <typeparam name="TItem">The item type</typeparam>
+            <typeparam name="TValue">The value item</typeparam>
+            <param name="items">The items.</param>
+            <param name="selector">The selector.</param>
+            <param name="minValue">The min value as output parameter.</param>
+            <returns>The minimum item</returns>
+            <example><code>
+            int age;
+            var youngestPerson = persons.MinItem(p =&gt; p.Age, out age);
+            </code>
+            </example>
+        </member>
+        <member name="M:EnumerableExtensions.MinItem``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Returns the minimum item based on a provided selector.
+            </summary>
+            <typeparam name="TItem">The item type</typeparam>
+            <typeparam name="TValue">The value item</typeparam>
+            <param name="items">The items.</param>
+            <param name="selector">The selector.</param>
+            <returns>The minimum item</returns>
+            <example><code>
+            var youngestPerson = persons.MinItem(p =&gt; p.Age);
+            </code>
+            </example>
+        </member>
         <member name="T:StreamExtensions">
             <summary>
             Extension methods any kind of streams
@@ -2540,7 +2600,7 @@
             <param name="value">The value.</param>
             <returns></returns>
         </member>
-        <member name="M:ObjectExtensions.CastToType``1(System.Object)">
+        <member name="M:ObjectExtensions.CastTo``1(System.Object)">
             <summary>
             Cast an object to the given type. Usefull especially for anonymous types.
             </summary>

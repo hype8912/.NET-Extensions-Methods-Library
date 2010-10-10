@@ -418,7 +418,7 @@ public static class ObjectExtensions {
     /// the casted type or null if casting is not possible.
     /// </returns>
     /// <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
-    public static T CastToType<T>(this object value) {
+    public static T CastTo<T>(this object value) {
         return (T) value;
     }
 

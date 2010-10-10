@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Extension methods for all kinds of (typed) enumerable data (Array, List, ...)
@@ -72,4 +73,107 @@ public static class EnumerableExtensions {
             yield return item;
 	    }
 	}
+
+    /// <summary>
+    /// Returns the maximum item based on a provided selector.
+    /// </summary>
+    /// <typeparam name="TItem">The item type</typeparam>
+    /// <typeparam name="TValue">The value item</typeparam>
+    /// <param name="items">The items.</param>
+    /// <param name="selector">The selector.</param>
+    /// <param name="maxValue">The max value as output parameter.</param>
+    /// <returns>The maximum item</returns>
+    /// <example><code>
+    /// int age;
+    /// var oldestPerson = persons.MaxItem(p =&gt; p.Age, out age);
+    /// </code>
+    /// </example>
+    public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue maxValue) where TItem : class where TValue : IComparable {
+        TItem maxItem = null;
+        maxValue = default(TValue);
+
+        foreach (var item in items) {
+            if (item != null) {
+                var itemValue = selector(item);
+
+                if ((maxItem == null) || (itemValue.CompareTo(maxValue) > 0)) {
+                    maxValue = itemValue;
+                    maxItem = item;
+                }
+            }
+        }
+
+        return maxItem;
+    }
+
+    /// <summary>
+    /// Returns the maximum item based on a provided selector.
+    /// </summary>
+    /// <typeparam name="TItem">The item type</typeparam>
+    /// <typeparam name="TValue">The value item</typeparam>
+    /// <param name="items">The items.</param>
+    /// <param name="selector">The selector.</param>
+    /// <returns>The maximum item</returns>
+    /// <example><code>
+    /// var oldestPerson = persons.MaxItem(p =&gt; p.Age);
+    /// </code>
+    /// </example>
+    public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector) where TItem : class where TValue : IComparable {
+        TValue maxValue;
+
+        return items.MaxItem(selector, out maxValue);
+    }
+
+    /// <summary>
+    /// Returns the minimum item based on a provided selector.
+    /// </summary>
+    /// <typeparam name="TItem">The item type</typeparam>
+    /// <typeparam name="TValue">The value item</typeparam>
+    /// <param name="items">The items.</param>
+    /// <param name="selector">The selector.</param>
+    /// <param name="minValue">The min value as output parameter.</param>
+    /// <returns>The minimum item</returns>
+    /// <example><code>
+    /// int age;
+    /// var youngestPerson = persons.MinItem(p =&gt; p.Age, out age);
+    /// </code>
+    /// </example>
+    public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue minValue)
+        where TItem : class
+        where TValue : IComparable {
+        TItem minItem = null;
+        minValue = default(TValue);
+
+        foreach (var item in items) {
+            if (item != null) {
+                var itemValue = selector(item);
+
+                if ((minItem == null) || (itemValue.CompareTo(minValue) < 0)) {
+                    minValue = itemValue;
+                    minItem = item;
+                }
+            }
+        }
+
+        return minItem;
+    }
+
+    /// <summary>
+    /// Returns the minimum item based on a provided selector.
+    /// </summary>
+    /// <typeparam name="TItem">The item type</typeparam>
+    /// <typeparam name="TValue">The value item</typeparam>
+    /// <param name="items">The items.</param>
+    /// <param name="selector">The selector.</param>
+    /// <returns>The minimum item</returns>
+    /// <example><code>
+    /// var youngestPerson = persons.MinItem(p =&gt; p.Age);
+    /// </code>
+    /// </example>
+    public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector) where TItem : class where TValue : IComparable {
+        TValue minValue;
+
+        return items.MinItem(selector, out minValue);
+    }
+
 }
