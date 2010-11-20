@@ -1,25 +1,26 @@
 ﻿using System;
-using System.Net;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 
 /// <summary>
-/// Extension methods for HttpListenerContext
+///   Extension methods for HttpListenerContext
 /// </summary>
 public static class HttpListenerContextExtensions {
-
     /// <summary>
-    /// Prepares a response-stream using compression-, caching- and buffering-settings
+    ///   Prepares a response-stream using compression-, caching- and buffering-settings
     /// </summary>
-    /// <param name="context">The context</param>
-    /// <param name="allowZip">set to true in case you want to honor the compression-http-headers</param>
-    /// <param name="buffered">set to true in case you want a BufferedStream</param>
-    /// <param name="allowCache">set to false in case you want to set the no-cache-http-headers</param>
+    /// <param name = "context">The context</param>
+    /// <param name = "allowZip">set to true in case you want to honor the compression-http-headers</param>
+    /// <param name = "buffered">set to true in case you want a BufferedStream</param>
+    /// <param name = "allowCache">set to false in case you want to set the no-cache-http-headers</param>
     /// <returns>the stream to write you stuff to</returns>
-    /// <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+    /// <remarks>
+    ///   Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser
+    /// </remarks>
     public static Stream GetResponseStream(this HttpListenerContext context, bool allowZip = true, bool buffered = true, bool allowCache = true) {
-        bool gzip = (context.Request.Headers["Accept-Encoding"] ?? String.Empty).Contains("gzip");
-        bool deflate = (context.Request.Headers["Accept-Encoding"] ?? String.Empty).Contains("deflate");
+        var gzip = (context.Request.Headers["Accept-Encoding"] ?? String.Empty).Contains("gzip");
+        var deflate = (context.Request.Headers["Accept-Encoding"] ?? String.Empty).Contains("deflate");
 
         if (!allowCache) {
             context.Response.AddHeader("Date", DateTime.UtcNow.ToString("R"));
@@ -28,7 +29,7 @@ public static class HttpListenerContextExtensions {
             context.Response.AddHeader("Pragma", "no-cache");
         }
 
-        Stream stream = context.Response.OutputStream;
+        var stream = context.Response.OutputStream;
 
         if (allowZip) {
             context.Response.AddHeader("Vary", "Accept-Encoding");

@@ -1,23 +1,23 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 /// <summary>
-/// Extension methods for string[]
+///   Extension methods for string[]
 /// </summary>
 public static class StringArrayExtensions {
-
     /// <summary>
-    /// Returns a combined value of strings from a string array
+    ///   Returns a combined value of strings from a string array
     /// </summary>
-    /// <param name="values">The values.</param>
-    /// <param name="prefix">The prefix.</param>
-    /// <param name="suffix">The suffix.</param>
-    /// <param name="quotation">The quotation (or null).</param>
-    /// <param name="separator">The separator.</param>
+    /// <param name = "values">The values.</param>
+    /// <param name = "prefix">The prefix.</param>
+    /// <param name = "suffix">The suffix.</param>
+    /// <param name = "quotation">The quotation (or null).</param>
+    /// <param name = "separator">The separator.</param>
     /// <returns>
-    /// A <see cref="System.String"/> that represents this instance.
+    ///   A <see cref = "System.String" /> that represents this instance.
     /// </returns>
-    /// <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
+    /// <remarks>
+    ///   Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser
+    /// </remarks>
     public static string ToString(this string[] values, string prefix = "(", string suffix = ")", string quotation = "\"", string separator = ",") {
         var sb = new StringBuilder();
         sb.Append(prefix);

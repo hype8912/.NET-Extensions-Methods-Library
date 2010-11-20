@@ -359,6 +359,13 @@
             <param name="bufsize">The number of bytes to read.</param>
             <returns>the read byte[]</returns>
         </member>
+        <member name="M:StreamExtensions.Write(System.IO.Stream,System.Byte[])">
+            <summary>
+            Writes all passed bytes to the specified stream.
+            </summary>
+            <param name="stream">The stream.</param>
+            <param name="bytes">The byte array / buffer.</param>
+        </member>
         <member name="T:FileInfoExtensions">
             <summary>
             Extension methods for the FileInfo and FileInfo-Array classes
@@ -637,6 +644,64 @@
             url = url.EnsureEndsWith("/"));
             </code>
             </example>
+        </member>
+        <member name="M:StringExtensions.Repeat(System.String,System.Int32)">
+            <summary>
+            Repeats the specified string value as provided by the repeat count.
+            </summary>
+            <param name="value">The original string.</param>
+            <param name="repeatCount">The repeat count.</param>
+            <returns>The repeated string</returns>
+        </member>
+        <member name="M:StringExtensions.IsNumeric(System.String)">
+            <summary>
+            Tests whether the contents of a string is a numeric value
+            </summary>
+            <param name="value">String to check</param>
+            <returns>
+            Boolean indicating whether or not the string contents are numeric
+            </returns>
+            <remarks>Contributed by Kenneth Scott</remarks>
+        </member>
+        <member name="M:StringExtensions.ExtractDigits(System.String)">
+            <summary>
+            Extracts all digits from a string.
+            </summary>
+            <param name="value">String containing digits to extract</param>
+            <returns>
+            All digits contained within the input string
+            </returns>
+            <remarks>Contributed by Kenneth Scott</remarks>
+        </member>
+        <member name="M:StringExtensions.ConcatWith(System.String,System.String[])">
+            <summary>
+            Concatenates the specified string value with the passed additional strings.
+            </summary>
+            <param name="value">The original value.</param>
+            <param name="values">The additional string values to be concatenated.</param>
+            <returns>The concatenated string.</returns>
+        </member>
+        <member name="M:StringExtensions.ToGuid(System.String)">
+            <summary>
+            Convert the provided string to a Guid value.
+            </summary>
+            <param name="value">The original string value.</param>
+            <returns>The Guid</returns>
+        </member>
+        <member name="M:StringExtensions.ToGuidSave(System.String)">
+            <summary>
+            Convert the provided string to a Guid value and returns Guid.Empty if conversion fails.
+            </summary>
+            <param name="value">The original string value.</param>
+            <returns>The Guid</returns>
+        </member>
+        <member name="M:StringExtensions.ToGuidSave(System.String,System.Guid)">
+            <summary>
+            Convert the provided string to a Guid value and returns the provided default value if the conversion fails.
+            </summary>
+            <param name="value">The original string value.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns>The Guid</returns>
         </member>
         <member name="M:StringExtensions.IsMatchingTo(System.String,System.String)">
             <summary>
@@ -1270,6 +1335,23 @@
             <returns>number of milliseconds.</returns>
             <remarks>Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser </remarks>
         </member>
+        <member name="M:DateTimeExtensions.IsWeekend(System.DateTime)">
+            <summary>
+            Indicates whether the specified date is a weekend (Saturday or Sunday).
+            </summary>
+            <param name="date">The date.</param>
+            <returns>
+            	<c>true</c> if the specified date is a weekend; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:DateTimeExtensions.AddWeeks(System.DateTime,System.Int32)">
+            <summary>
+            Adds the specified amount of weeks (=7 days gregorian calendar) to the passed date value.
+            </summary>
+            <param name="date">The origin date.</param>
+            <param name="value">The amount of weeks to be added.</param>
+            <returns>The enw date value</returns>
+        </member>
         <member name="T:ByteArrayExtensions">
             <summary>
             Extension methods for byte-Arrays
@@ -1535,6 +1617,19 @@
             </summary>
             <param name="target">Target component.</param>
             <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="T:ExceptionExtensions">
+            <summary>
+            Extension methods for all kinds of exceptions.
+            </summary>
+        </member>
+        <member name="M:ExceptionExtensions.GetOriginalException(System.Exception)">
+            <summary>
+            Gets the original exception which is most inner exception.
+            </summary>
+            <param name="exception">The exeption</param>
+            <returns>The original exception</returns>
+            <remarks>Contributed by Kenneth Scott</remarks>
         </member>
         <member name="T:DateTimeOffsetExtensions">
             <summary>
@@ -2776,6 +2871,18 @@
             int notNullNumber2 = number.NotNull( ()=> GetRandomNumber(10, 20) ).Value; // returns 57
             </example>
             <remarks>Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy </remarks>
+        </member>
+        <member name="M:ObjectExtensions.CountLoopsToNull``1(``0,System.Func{``0,``0})">
+            <summary>
+            Returns the number of loops that were performed by the passed function until it returns null.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="item">The item to start with.</param>
+            <param name="function">The loop.</param>
+            <returns>The number of performed loops.</returns>
+            <example><code>
+            var count = item.CountLoopsToNull(i => i.ParentItem);
+            </code></example>
         </member>
         <member name="T:CollectionExtensions">
             <summary>

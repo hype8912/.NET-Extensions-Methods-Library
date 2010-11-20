@@ -1,31 +1,29 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 /// <summary>
-/// Extension methods for the System.Windows.UIElement class
+///   Extension methods for the System.Windows.UIElement class
 /// </summary>
 public static class UIElementExtensions {
-
     /// <summary>
-    /// Renders the ui element into a bitmap frame.
+    ///   Renders the ui element into a bitmap frame.
     /// </summary>
-    /// <param name="element">The UI element.</param>
+    /// <param name = "element">The UI element.</param>
     /// <returns>The created bitmap frame</returns>
     public static BitmapSource RenderToBitmap(this UIElement element) {
         return element.RenderToBitmap(1);
     }
 
     /// <summary>
-    /// Renders the ui element into a bitmap frame using the specified scale.
+    ///   Renders the ui element into a bitmap frame using the specified scale.
     /// </summary>
-    /// <param name="element">The UI element.</param>
-    /// <param name="scale">The scale (default: 1).</param>
+    /// <param name = "element">The UI element.</param>
+    /// <param name = "scale">The scale (default: 1).</param>
     /// <returns>The created bitmap frame</returns>
     public static BitmapSource RenderToBitmap(this UIElement element, double scale) {
-        var renderWidth = (int)(element.RenderSize.Width * scale);
-        var renderHeight = (int)(element.RenderSize.Height * scale);
+        var renderWidth = (int) (element.RenderSize.Width*scale);
+        var renderHeight = (int) (element.RenderSize.Height*scale);
 
         var renderTarget = new RenderTargetBitmap(renderWidth, renderHeight, 96, 96, PixelFormats.Pbgra32);
         var sourceBrush = new VisualBrush(element);
