@@ -254,6 +254,53 @@ public static class StringExtensions {
         return defaultValue;
     }
 
+    /// <summary>
+    /// Gets the string before the given string parameter.
+    /// </summary>
+    /// <param name="value">The default value.</param>
+    /// <param name="x">The given string parameter.</param>
+    /// <returns></returns>
+    public static string GetBefore(this string value, string x)
+    {
+        var xPos = value.IndexOf(x);
+        return xPos == -1 ? String.Empty : value.Substring(0, xPos);
+    }
+
+    /// <summary>
+    /// Gets the string between the given string parameters.
+    /// </summary>
+    /// <param name="value">The default value.</param>
+    /// <param name="x">The left string parameter.</param>
+    /// <param name="y">The right string parameter</param>
+    /// <returns></returns>
+    public static string GetBetween(this string value, string x, string y)
+    {
+        var xPos = value.IndexOf(x);
+        var yPos = value.LastIndexOf(y);
+
+        if (xPos == -1 || xPos == -1)
+            return String.Empty;
+
+        var startIndex = xPos + x.Length;
+        return startIndex >= yPos ? String.Empty : value.Substring(startIndex, yPos - startIndex).Trim();
+    }
+
+    /// <summary>
+    /// Gets the string after the given string parameter.
+    /// </summary>
+    /// <param name="value">The default value.</param>
+    /// <param name="x">The given string parameter.</param>
+    /// <returns></returns>
+    public static string GetAfter(this string value, string x)
+    {
+        var xPos = value.LastIndexOf(x);
+
+        if (xPos == -1)
+            return String.Empty;
+
+        var startIndex = xPos + x.Length;
+        return startIndex >= value.Length ? String.Empty : value.Substring(startIndex).Trim();
+    }
     #endregion
 
     #region Regex based extension methods
