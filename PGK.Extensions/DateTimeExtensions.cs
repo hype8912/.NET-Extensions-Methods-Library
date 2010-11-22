@@ -264,7 +264,7 @@ public static class DateTimeExtensions {
     }
 
     /// <summary>
-    ///   Determines whether the time only part of twi DateTime values are equal.
+    ///   Determines whether the time only part of two DateTime values are equal.
     /// </summary>
     /// <param name = "time">The time.</param>
     /// <param name = "timeToCompare">The time to compare.</param>
