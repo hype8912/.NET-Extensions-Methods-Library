@@ -131,7 +131,13 @@ namespace PGK.Extensions.Tests
             Assert.AreEqual(testValue.ExtractDigits(), validationValue);
         }
 
-        
+        [TestMethod]
+        public void TestAdjustString()
+        {
+            string testValue = @"%&btf678&//(b hbg";
+            string validationValue = @"btf678bhbg";
+            Assert.AreEqual(testValue.AdjustInput(), validationValue);
+        }        
 
 
     }

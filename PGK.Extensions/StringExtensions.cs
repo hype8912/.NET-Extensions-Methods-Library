@@ -620,7 +620,17 @@ public static class StringExtensions
 		return words[index];
 	}
 
-	#endregion
+    /// <summary>
+    /// Removed all special characters from the string.
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <returns>The adjusted string.</returns>
+    public static string AdjustInput(this string value)
+    {
+        return string.Join(null, Regex.Split(value, "[^a-zA-Z0-9]"));
+    }
+
+    #endregion	
 	#region Bytes & Base64
 
 	/// <summary>
