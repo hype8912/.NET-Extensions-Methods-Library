@@ -15,10 +15,10 @@ namespace PGK.Extensions.Tests
 			/* positive testing */
 			var testValue = new DateTime(2010);
 			var resultValue = 365;
-			Assert.AreEqual(testValue.GetDaysInYear(), resultValue);
+			Assert.AreEqual(testValue.GetDays(), resultValue);
 			/* negative testing */
 			testValue = DateTime.Now.AddYears(1);
-			Assert.AreNotEqual(testValue.GetDaysInYear(), resultValue);
+			Assert.AreNotEqual(testValue.GetDays(), resultValue);
 		}
 	}
 }

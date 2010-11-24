@@ -9,14 +9,14 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 
 /// <summary>
-///   Extension methods for the string data type
+/// 	Extension methods for the string data type
 /// </summary>
 public static class StringExtensions
 {
 	#region Common string extensions
 
 	/// <summary>
-	///   Determines whether the specified string is null or empty.
+	/// 	Determines whether the specified string is null or empty.
 	/// </summary>
 	/// <param name = "value">The string value to check.</param>
 	public static bool IsEmpty(this string value)
@@ -25,7 +25,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Determines whether the specified string is not null or empty.
+	/// 	Determines whether the specified string is not null or empty.
 	/// </summary>
 	/// <param name = "value">The string value to check.</param>
 	public static bool IsNotEmpty(this string value)
@@ -34,7 +34,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Checks whether the string is empty and returns a default value in case.
+	/// 	Checks whether the string is empty and returns a default value in case.
 	/// </summary>
 	/// <param name = "value">The string to check.</param>
 	/// <param name = "defaultValue">The default value.</param>
@@ -45,7 +45,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Formats the value with the parameters using string.Format.
+	/// 	Formats the value with the parameters using string.Format.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "parameters">The parameters.</param>
@@ -56,13 +56,13 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Trims the text to a provided maximum length.
+	/// 	Trims the text to a provided maximum length.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "maxLength">Maximum length.</param>
 	/// <returns></returns>
 	/// <remarks>
-	///   Proposed by Rene Schulte
+	/// 	Proposed by Rene Schulte
 	/// </remarks>
 	public static string TrimToMaxLength(this string value, int maxLength)
 	{
@@ -70,14 +70,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Trims the text to a provided maximum length and adds a suffix if required.
+	/// 	Trims the text to a provided maximum length and adds a suffix if required.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "maxLength">Maximum length.</param>
 	/// <param name = "suffix">The suffix.</param>
 	/// <returns></returns>
 	/// <remarks>
-	///   Proposed by Rene Schulte
+	/// 	Proposed by Rene Schulte
 	/// </remarks>
 	public static string TrimToMaxLength(this string value, int maxLength, string suffix)
 	{
@@ -85,13 +85,13 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Determines whether the comparison value strig is contained within the input value string
+	/// 	Determines whether the comparison value strig is contained within the input value string
 	/// </summary>
 	/// <param name = "inputValue">The input value.</param>
 	/// <param name = "comparisonValue">The comparison value.</param>
 	/// <param name = "comparisonType">Type of the comparison to allow case sensitive or insensitive comparison.</param>
 	/// <returns>
-	///   <c>true</c> if input value contains the specified value, otherwise, <c>false</c>.
+	/// 	<c>true</c> if input value contains the specified value, otherwise, <c>false</c>.
 	/// </returns>
 	public static bool Contains(this string inputValue, string comparisonValue, StringComparison comparisonType)
 	{
@@ -99,7 +99,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Loads the string into a LINQ to XML XDocument
+	/// 	Loads the string into a LINQ to XML XDocument
 	/// </summary>
 	/// <param name = "xml">The XML string.</param>
 	/// <returns>The XML document object model (XDocument)</returns>
@@ -109,7 +109,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Loads the string into a XML DOM object (XmlDocument)
+	/// 	Loads the string into a XML DOM object (XmlDocument)
 	/// </summary>
 	/// <param name = "xml">The XML string.</param>
 	/// <returns>The XML document object model (XmlDocument)</returns>
@@ -121,7 +121,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Loads the string into a XML XPath DOM (XPathDocument)
+	/// 	Loads the string into a XML XPath DOM (XPathDocument)
 	/// </summary>
 	/// <param name = "xml">The XML string.</param>
 	/// <returns>The XML XPath document object model (XPathNavigator)</returns>
@@ -132,13 +132,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Reverses / mirrors a string.
+	/// 	Reverses / mirrors a string.
 	/// </summary>
 	/// <param name = "value">The string to be reversed.</param>
 	/// <returns>The reversed string</returns>
 	public static string Reverse(this string value)
 	{
-		if (value.IsEmpty() || (value.Length == 1)) return value;
+		if (value.IsEmpty() || (value.Length == 1))
+			return value;
 
 		var chars = value.ToCharArray();
 		Array.Reverse(chars);
@@ -146,16 +147,16 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Ensures that a string starts with a given prefix.
+	/// 	Ensures that a string starts with a given prefix.
 	/// </summary>
 	/// <param name = "value">The string value to check.</param>
 	/// <param name = "prefix">The prefix value to check for.</param>
 	/// <returns>The string value including the prefix</returns>
 	/// <example>
-	///   <code>
-	///     var extension = "txt";
-	///     var fileName = string.Concat(file.Name, extension.EnsureStartsWith("."));
-	///   </code>
+	/// 	<code>
+	/// 		var extension = "txt";
+	/// 		var fileName = string.Concat(file.Name, extension.EnsureStartsWith("."));
+	/// 	</code>
 	/// </example>
 	public static string EnsureStartsWith(this string value, string prefix)
 	{
@@ -163,16 +164,16 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Ensures that a string ends with a given suffix.
+	/// 	Ensures that a string ends with a given suffix.
 	/// </summary>
 	/// <param name = "value">The string value to check.</param>
 	/// <param name = "suffix">The suffix value to check for.</param>
 	/// <returns>The string value including the suffix</returns>
 	/// <example>
-	///   <code>
-	///     var url = "http://www.pgk.de";
-	///     url = url.EnsureEndsWith("/"));
-	///   </code>
+	/// 	<code>
+	/// 		var url = "http://www.pgk.de";
+	/// 		url = url.EnsureEndsWith("/"));
+	/// 	</code>
 	/// </example>
 	public static string EnsureEndsWith(this string value, string suffix)
 	{
@@ -180,7 +181,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Repeats the specified string value as provided by the repeat count.
+	/// 	Repeats the specified string value as provided by the repeat count.
 	/// </summary>
 	/// <param name = "value">The original string.</param>
 	/// <param name = "repeatCount">The repeat count.</param>
@@ -193,14 +194,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Tests whether the contents of a string is a numeric value
+	/// 	Tests whether the contents of a string is a numeric value
 	/// </summary>
 	/// <param name = "value">String to check</param>
 	/// <returns>
-	///   Boolean indicating whether or not the string contents are numeric
+	/// 	Boolean indicating whether or not the string contents are numeric
 	/// </returns>
 	/// <remarks>
-	///   Contributed by Kenneth Scott
+	/// 	Contributed by Kenneth Scott
 	/// </remarks>
 	public static bool IsNumeric(this string value)
 	{
@@ -209,14 +210,14 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Extracts all digits from a string.
+	/// 	Extracts all digits from a string.
 	/// </summary>
 	/// <param name = "value">String containing digits to extract</param>
 	/// <returns>
-	///   All digits contained within the input string
+	/// 	All digits contained within the input string
 	/// </returns>
 	/// <remarks>
-	///   Contributed by Kenneth Scott
+	/// 	Contributed by Kenneth Scott
 	/// </remarks>
 	public static string ExtractDigits(this string value)
 	{
@@ -224,7 +225,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Concatenates the specified string value with the passed additional strings.
+	/// 	Concatenates the specified string value with the passed additional strings.
 	/// </summary>
 	/// <param name = "value">The original value.</param>
 	/// <param name = "values">The additional string values to be concatenated.</param>
@@ -235,7 +236,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Convert the provided string to a Guid value.
+	/// 	Convert the provided string to a Guid value.
 	/// </summary>
 	/// <param name = "value">The original string value.</param>
 	/// <returns>The Guid</returns>
@@ -245,7 +246,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Convert the provided string to a Guid value and returns Guid.Empty if conversion fails.
+	/// 	Convert the provided string to a Guid value and returns Guid.Empty if conversion fails.
 	/// </summary>
 	/// <param name = "value">The original string value.</param>
 	/// <returns>The Guid</returns>
@@ -255,31 +256,31 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Convert the provided string to a Guid value and returns the provided default value if the conversion fails.
+	/// 	Convert the provided string to a Guid value and returns the provided default value if the conversion fails.
 	/// </summary>
 	/// <param name = "value">The original string value.</param>
 	/// <param name = "defaultValue">The default value.</param>
 	/// <returns>The Guid</returns>
 	public static Guid ToGuidSave(this string value, Guid defaultValue)
 	{
-		if (value.IsEmpty()) return defaultValue;
+		if (value.IsEmpty())
+			return defaultValue;
 
 		try
 		{
 			return value.ToGuid();
 		}
 		catch
-		{
-		}
+		{}
 
 		return defaultValue;
 	}
 
 	/// <summary>
-	/// Gets the string before the given string parameter.
+	/// 	Gets the string before the given string parameter.
 	/// </summary>
-	/// <param name="value">The default value.</param>
-	/// <param name="x">The given string parameter.</param>
+	/// <param name = "value">The default value.</param>
+	/// <param name = "x">The given string parameter.</param>
 	/// <returns></returns>
 	public static string GetBefore(this string value, string x)
 	{
@@ -288,11 +289,11 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Gets the string between the given string parameters.
+	/// 	Gets the string between the given string parameters.
 	/// </summary>
-	/// <param name="value">The default value.</param>
-	/// <param name="x">The left string parameter.</param>
-	/// <param name="y">The right string parameter</param>
+	/// <param name = "value">The default value.</param>
+	/// <param name = "x">The left string parameter.</param>
+	/// <param name = "y">The right string parameter</param>
 	/// <returns></returns>
 	public static string GetBetween(this string value, string x, string y)
 	{
@@ -307,10 +308,10 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Gets the string after the given string parameter.
+	/// 	Gets the string after the given string parameter.
 	/// </summary>
-	/// <param name="value">The default value.</param>
-	/// <param name="x">The given string parameter.</param>
+	/// <param name = "value">The default value.</param>
+	/// <param name = "x">The given string parameter.</param>
 	/// <returns></returns>
 	public static string GetAfter(this string value, string x)
 	{
@@ -324,19 +325,19 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// A generic version of System.String.Join()
+	/// 	A generic version of System.String.Join()
 	/// </summary>
-	/// <typeparam name="T">
-	/// The type of the array to join
+	/// <typeparam name = "T">
+	/// 	The type of the array to join
 	/// </typeparam>
-	/// <param name="separator">
-	/// The separator to appear between each element
+	/// <param name = "separator">
+	/// 	The separator to appear between each element
 	/// </param>
-	/// <param name="value">
-	/// An array of values
+	/// <param name = "value">
+	/// 	An array of values
 	/// </param>
 	/// <returns>
-	/// The join.
+	/// 	The join.
 	/// </returns>
 	public static string Join<T>(string separator, T[] value)
 	{
@@ -349,17 +350,17 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Remove any instance of the given character from the current string.
+	/// 	Remove any instance of the given character from the current string.
 	/// </summary>
-	/// <param name="value">
-	/// The input.
+	/// <param name = "value">
+	/// 	The input.
 	/// </param>
-	/// <param name="removeCharc">
-	/// The remove char.
+	/// <param name = "removeCharc">
+	/// 	The remove char.
 	/// </param>
 	public static string Remove(this string value, params char[] removeCharc)
 	{
-		string result = value;
+		var result = value;
 		if (!string.IsNullOrEmpty(result) && removeCharc != null)
 			Array.ForEach(removeCharc, c => result = result.Remove(c.ToString()));
 
@@ -367,39 +368,39 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// Remove any instance of the given string pattern from the current string.
+	/// 	Remove any instance of the given string pattern from the current string.
 	/// </summary>
-	/// <param name="value">
-	/// The input.
+	/// <param name = "value">
+	/// 	The input.
 	/// </param>
-	/// <param name="removeStrings">
-	/// The remove Strings.
+	/// <param name = "removeStrings">
+	/// 	The remove Strings.
 	/// </param>
 	public static string Remove(this string value, params string[] removeStrings)
 	{
-		string result = value;
+		var result = value;
 		if (!string.IsNullOrEmpty(result) && removeStrings != null)
 			Array.ForEach(removeStrings, s => result = result.Replace(s, string.Empty));
 
 		return result;
 	}
-	#endregion
 
+	#endregion
 	#region Regex based extension methods
 
 	/// <summary>
-	///   Uses regular expressions to determine if the string matches to a given regex pattern.
+	/// 	Uses regular expressions to determine if the string matches to a given regex pattern.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <returns>
-	///   <c>true</c> if the value is matching to the specified pattern; otherwise, <c>false</c>.
+	/// 	<c>true</c> if the value is matching to the specified pattern; otherwise, <c>false</c>.
 	/// </returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var isMatching = s.IsMatchingTo(@"^\d+$");
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var isMatching = s.IsMatchingTo(@"^\d+$");
+	/// 	</code>
 	/// </example>
 	public static bool IsMatchingTo(this string value, string regexPattern)
 	{
@@ -407,19 +408,19 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to determine if the string matches to a given regex pattern.
+	/// 	Uses regular expressions to determine if the string matches to a given regex pattern.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <param name = "options">The regular expression options.</param>
 	/// <returns>
-	///   <c>true</c> if the value is matching to the specified pattern; otherwise, <c>false</c>.
+	/// 	<c>true</c> if the value is matching to the specified pattern; otherwise, <c>false</c>.
 	/// </returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var isMatching = s.IsMatchingTo(@"^\d+$");
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var isMatching = s.IsMatchingTo(@"^\d+$");
+	/// 	</code>
 	/// </example>
 	public static bool IsMatchingTo(this string value, string regexPattern, RegexOptions options)
 	{
@@ -427,17 +428,17 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to replace parts of a string.
+	/// 	Uses regular expressions to replace parts of a string.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <param name = "replaceValue">The replacement value.</param>
 	/// <returns>The newly created string</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
+	/// 	</code>
 	/// </example>
 	public static string ReplaceWith(this string value, string regexPattern, string replaceValue)
 	{
@@ -445,7 +446,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to replace parts of a string.
+	/// 	Uses regular expressions to replace parts of a string.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -453,10 +454,10 @@ public static class StringExtensions
 	/// <param name = "options">The regular expression options.</param>
 	/// <returns>The newly created string</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
+	/// 	</code>
 	/// </example>
 	public static string ReplaceWith(this string value, string regexPattern, string replaceValue, RegexOptions options)
 	{
@@ -464,17 +465,17 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to replace parts of a string.
+	/// 	Uses regular expressions to replace parts of a string.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <param name = "evaluator">The replacement method / lambda expression.</param>
 	/// <returns>The newly created string</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
+	/// 	</code>
 	/// </example>
 	public static string ReplaceWith(this string value, string regexPattern, MatchEvaluator evaluator)
 	{
@@ -482,7 +483,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to replace parts of a string.
+	/// 	Uses regular expressions to replace parts of a string.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -490,10 +491,10 @@ public static class StringExtensions
 	/// <param name = "evaluator">The replacement method / lambda expression.</param>
 	/// <returns>The newly created string</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		var replaced = s.ReplaceWith(@"\d", m => string.Concat(" -", m.Value, "- "));
+	/// 	</code>
 	/// </example>
 	public static string ReplaceWith(this string value, string regexPattern, RegexOptions options, MatchEvaluator evaluator)
 	{
@@ -501,7 +502,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to determine all matches of a given regex pattern.
+	/// 	Uses regular expressions to determine all matches of a given regex pattern.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -512,7 +513,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to determine all matches of a given regex pattern.
+	/// 	Uses regular expressions to determine all matches of a given regex pattern.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -524,18 +525,18 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to determine all matches of a given regex pattern and returns them as string enumeration.
+	/// 	Uses regular expressions to determine all matches of a given regex pattern and returns them as string enumeration.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <returns>An enumeration of matching strings</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     foreach(var number in s.GetMatchingValues(@"\d")) {
-	///     Console.WriteLine(number);
-	///     }
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		foreach(var number in s.GetMatchingValues(@"\d")) {
+	/// 		Console.WriteLine(number);
+	/// 		}
+	/// 	</code>
 	/// </example>
 	public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern)
 	{
@@ -543,19 +544,19 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to determine all matches of a given regex pattern and returns them as string enumeration.
+	/// 	Uses regular expressions to determine all matches of a given regex pattern and returns them as string enumeration.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
 	/// <param name = "options">The regular expression options.</param>
 	/// <returns>An enumeration of matching strings</returns>
 	/// <example>
-	///   <code>
-	///     var s = "12345";
-	///     foreach(var number in s.GetMatchingValues(@"\d")) {
-	///     Console.WriteLine(number);
-	///     }
-	///   </code>
+	/// 	<code>
+	/// 		var s = "12345";
+	/// 		foreach(var number in s.GetMatchingValues(@"\d")) {
+	/// 		Console.WriteLine(number);
+	/// 		}
+	/// 	</code>
 	/// </example>
 	public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern, RegexOptions options)
 	{
@@ -565,7 +566,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to split a string into parts.
+	/// 	Uses regular expressions to split a string into parts.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -576,7 +577,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Uses regular expressions to split a string into parts.
+	/// 	Uses regular expressions to split a string into parts.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "regexPattern">The regular expression pattern.</param>
@@ -588,7 +589,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Splits the given string into words and returns a string array.
+	/// 	Splits the given string into words and returns a string array.
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <returns>The splitted string array</returns>
@@ -598,35 +599,32 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Gets the nth "word" of a given string, where "words" are substrings separated by a given separator
+	/// 	Gets the nth "word" of a given string, where "words" are substrings separated by a given separator
 	/// </summary>
 	/// <param name = "value">The string from which the word should be retrieved.</param>
 	/// <param name = "index">Index of the word (0-based).</param>
 	/// <returns>
-	///   The word at position n of the string.
-	///   Trying to retrieve a word at a position lower than 0 or at a position where no word exists results in an exception.
+	/// 	The word at position n of the string.
+	/// 	Trying to retrieve a word at a position lower than 0 or at a position where no word exists results in an exception.
 	/// </returns>
 	/// <remarks>
-	///   Originally contributed by MMathews
+	/// 	Originally contributed by MMathews
 	/// </remarks>
 	public static string GetWordByIndex(this string value, int index)
 	{
 		var words = value.GetWords();
 
 		if ((index < 0) || (index > words.Length - 1))
-		{
 			throw new IndexOutOfRangeException("The word number is out of range.");
-		}
 
 		return words[index];
 	}
 
 	#endregion
-
 	#region Bytes & Base64
 
 	/// <summary>
-	///   Converts the string to a byte-array using the default encoding
+	/// 	Converts the string to a byte-array using the default encoding
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <returns>The created byte array</returns>
@@ -636,17 +634,17 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Converts the string to a byte-array using the supplied encoding
+	/// 	Converts the string to a byte-array using the supplied encoding
 	/// </summary>
 	/// <param name = "value">The input string.</param>
 	/// <param name = "encoding">The encoding to be used.</param>
 	/// <returns>The created byte array</returns>
 	/// <example>
-	///   <code>
-	///     var value = "Hello World";
-	///     var ansiBytes = value.ToBytes(Encoding.GetEncoding(1252)); // 1252 = ANSI
-	///     var utf8Bytes = value.ToBytes(Encoding.UTF8);
-	///   </code>
+	/// 	<code>
+	/// 		var value = "Hello World";
+	/// 		var ansiBytes = value.ToBytes(Encoding.GetEncoding(1252)); // 1252 = ANSI
+	/// 		var utf8Bytes = value.ToBytes(Encoding.UTF8);
+	/// 	</code>
 	/// </example>
 	public static byte[] ToBytes(this string value, Encoding encoding)
 	{
@@ -655,7 +653,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Encodes the input value to a Base64 string using the default encoding.
+	/// 	Encodes the input value to a Base64 string using the default encoding.
 	/// </summary>
 	/// <param name = "value">The input value.</param>
 	/// <returns>The Base 64 encoded string</returns>
@@ -665,7 +663,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Encodes the input value to a Base64 string using the supplied encoding.
+	/// 	Encodes the input value to a Base64 string using the supplied encoding.
 	/// </summary>
 	/// <param name = "value">The input value.</param>
 	/// <param name = "encoding">The encoding.</param>
@@ -678,7 +676,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Decodes a Base 64 encoded value to a string using the default encoding.
+	/// 	Decodes a Base 64 encoded value to a string using the default encoding.
 	/// </summary>
 	/// <param name = "encodedValue">The Base 64 encoded value.</param>
 	/// <returns>The decoded string</returns>
@@ -688,7 +686,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	///   Decodes a Base 64 encoded value to a string using the supplied encoding.
+	/// 	Decodes a Base 64 encoded value to a string using the supplied encoding.
 	/// </summary>
 	/// <param name = "encodedValue">The Base 64 encoded value.</param>
 	/// <param name = "encoding">The encoding.</param>
