@@ -645,7 +645,7 @@ public static class StringExtensions
 	/// <param name="value">The input string.</param>
 	/// <returns>The adjusted string.</returns>
 	/// <remarks>
-	/// 	Contributed by Guffa, http://stackoverflow.com/users/69083/guffa
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
 	/// </remarks>
 	public static string RemoveAllSpecialCharacters(this string value)
 	{
