@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PGK.Extensions.MVC</name>
+    </assembly>
+    <members>
+        <member name="T:HTMLHelperExtensions">
+            <summary>
+             A bunch of HTML helper extensions
+            </summary>
+        </member>
+        <member name="M:HTMLHelperExtensions.ImageLink(System.Web.Mvc.HtmlHelper,System.String,System.String,System.String,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            </summary>
+            <param name="htmlHelper"></param>
+            <param name="imgSrc"></param>
+            <param name="alt"></param>
+            <param name="actionName"></param>
+            <param name="controllerName"></param>
+            <param name="routeValues"></param>
+            <param name="htmlAttributes"></param>
+            <param name="imgHtmlAttributes"></param>
+            <returns></returns>
+             <remarks>
+             	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+             </remarks>
+        </member>
+        <member name="M:HTMLHelperExtensions.Image(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="helper"></param>
+            <param name="src"></param>
+            <param name="alt"></param>
+            <returns></returns>
+             <remarks>
+             	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+             </remarks>
+        </member>
+    </members>
+</doc>

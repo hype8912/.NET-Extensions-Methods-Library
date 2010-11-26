@@ -1,5 +1,8 @@
 ﻿using System;
 
+/// <summary>
+/// 	Extension methods for the array data type
+/// </summary>
 public static class ArrayExtension
 {
 	///<summary>

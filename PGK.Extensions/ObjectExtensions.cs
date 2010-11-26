@@ -61,20 +61,20 @@ public static class ObjectExtensions
 	{
 		if (value != null)
 		{
-			var targetType = typeof (T);
+			var targetType = typeof(T);
 
 			var converter = TypeDescriptor.GetConverter(value);
 			if (converter != null)
 			{
 				if (converter.CanConvertTo(targetType))
-					return (T) converter.ConvertTo(value, targetType);
+					return (T)converter.ConvertTo(value, targetType);
 			}
 
 			converter = TypeDescriptor.GetConverter(targetType);
 			if (converter != null)
 			{
 				if (converter.CanConvertFrom(value.GetType()))
-					return (T) converter.ConvertFrom(value);
+					return (T)converter.ConvertFrom(value);
 			}
 		}
 		return defaultValue;
@@ -116,7 +116,7 @@ public static class ObjectExtensions
 	{
 		if (value != null)
 		{
-			var targetType = typeof (T);
+			var targetType = typeof(T);
 
 			var converter = TypeDescriptor.GetConverter(value);
 			if (converter != null)
@@ -203,7 +203,7 @@ public static class ObjectExtensions
 			throw new ArgumentException(string.Format("Method '{0}' not found.", methodName), methodName);
 
 		var value = method.Invoke(obj, parameters);
-		return (value is T ? (T) value : default(T));
+		return (value is T ? (T)value : default(T));
 	}
 
 	/// <summary>
@@ -279,7 +279,7 @@ public static class ObjectExtensions
 			throw new ArgumentException(string.Format("Property '{0}' not found.", propertyName), propertyName);
 
 		var value = property.GetValue(obj, null);
-		return (value is T ? (T) value : defaultValue);
+		return (value is T ? (T)value : defaultValue);
 	}
 
 	/// <summary>
@@ -320,7 +320,7 @@ public static class ObjectExtensions
 	public static T GetAttribute<T>(this object obj, bool includeInherited) where T : Attribute
 	{
 		var type = (obj as Type ?? obj.GetType());
-		var attributes = type.GetCustomAttributes(typeof (T), includeInherited);
+		var attributes = type.GetCustomAttributes(typeof(T), includeInherited);
 		if ((attributes.Length > 0))
 			return (attributes[0] as T);
 		return null;
@@ -346,7 +346,7 @@ public static class ObjectExtensions
 	/// <returns>The found attributes</returns>
 	public static IEnumerable<T> GetAttributes<T>(this object obj, bool includeInherited) where T : Attribute
 	{
-		return (obj as Type ?? obj.GetType()).GetCustomAttributes(typeof (T), includeInherited).OfType<T>().Select(attribute => attribute);
+		return (obj as Type ?? obj.GetType()).GetCustomAttributes(typeof(T), includeInherited).OfType<T>().Select(attribute => attribute);
 	}
 
 	/// <summary>
@@ -359,7 +359,7 @@ public static class ObjectExtensions
 	/// </returns>
 	public static bool IsOfType<T>(this object obj)
 	{
-		return obj.IsOfType(typeof (T));
+		return obj.IsOfType(typeof(T));
 	}
 
 	/// <summary>
@@ -385,7 +385,7 @@ public static class ObjectExtensions
 	/// </returns>
 	public static bool IsOfTypeOrInherits<T>(this object obj)
 	{
-		return obj.IsOfTypeOrInherits(typeof (T));
+		return obj.IsOfTypeOrInherits(typeof(T));
 	}
 
 	/// <summary>
@@ -420,7 +420,7 @@ public static class ObjectExtensions
 	/// </returns>
 	public static bool IsAssignableTo<T>(this object obj)
 	{
-		return obj.IsAssignableTo(typeof (T));
+		return obj.IsAssignableTo(typeof(T));
 	}
 
 	/// <summary>
@@ -456,7 +456,7 @@ public static class ObjectExtensions
 	/// <returns></returns>
 	public static object ToDatabaseValue<T>(this T value)
 	{
-		return (value.Equals(value.GetTypeDefaultValue()) ? DBNull.Value : (object) value);
+		return (value.Equals(value.GetTypeDefaultValue()) ? DBNull.Value : (object)value);
 	}
 
 	/// <summary>
@@ -472,7 +472,7 @@ public static class ObjectExtensions
 	/// </remarks>
 	public static T CastTo<T>(this object value)
 	{
-		return (T) value;
+		return (T)value;
 	}
 
 	/// <summary>
@@ -765,6 +765,7 @@ public static class ObjectExtensions
 		}
 	}
 
+	// todo: Please document these methods
 	static XElement ToXElementInternal(object o, ICollection<object> visited, BindingFlags flags, int maxArrayElements)
 	{
 		if (o == null)
@@ -796,20 +797,20 @@ public static class ObjectExtensions
 			return elems;
 		}
 		foreach (var propertyInfo in from propertyInfo in type.GetProperties(flags)
-		                             where propertyInfo.CanRead
-		                             select propertyInfo)
+																 where propertyInfo.CanRead
+																 select propertyInfo)
 		{
 			var value = GetValue(o, propertyInfo);
 			elems.Add(NeedRecursion(propertyInfo.PropertyType, value)
-			          	? new XElement(CleanName(propertyInfo.Name, propertyInfo.PropertyType.IsArray), ToXElementInternal(value, visited, flags, maxArrayElements))
-			          	: new XElement(CleanName(propertyInfo.Name, propertyInfo.PropertyType.IsArray), String.Empty + value));
+									? new XElement(CleanName(propertyInfo.Name, propertyInfo.PropertyType.IsArray), ToXElementInternal(value, visited, flags, maxArrayElements))
+									: new XElement(CleanName(propertyInfo.Name, propertyInfo.PropertyType.IsArray), String.Empty + value));
 		}
 		foreach (var fieldInfo in type.GetFields())
 		{
 			var value = fieldInfo.GetValue(o);
 			elems.Add(NeedRecursion(fieldInfo.FieldType, value)
-			          	? new XElement(CleanName(fieldInfo.Name, fieldInfo.FieldType.IsArray), ToXElementInternal(value, visited, flags, maxArrayElements))
-			          	: new XElement(CleanName(fieldInfo.Name, fieldInfo.FieldType.IsArray), String.Empty + value));
+									? new XElement(CleanName(fieldInfo.Name, fieldInfo.FieldType.IsArray), ToXElementInternal(value, visited, flags, maxArrayElements))
+									: new XElement(CleanName(fieldInfo.Name, fieldInfo.FieldType.IsArray), String.Empty + value));
 		}
 		return elems;
 	}
@@ -852,5 +853,103 @@ public static class ObjectExtensions
 		if (isArray)
 			sb.Append("Array");
 		return sb.ToString();
+	}
+
+	/// <summary>
+	/// 	Get the key value of a dictionary type object
+	/// </summary>
+	/// <param name="obj">The dictionary type object</param>
+	/// <param name="keyName">The key value. Can be null.</param>
+	/// <param name="defaultValue">The default value if the dictionary does not contain the key value</param>
+	/// <example>
+	/// Session["username"] = "MT"
+	/// 
+	/// var username = Session.GetKeyValue("username", "defaultUsername");
+	/// 
+	/// username would equal to "MT"
+	/// </example>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
+	public static TValue GetKeyValue<TKey, TValue>(this object obj, TKey keyName, TValue defaultValue)
+	{
+		if (!(obj is IDictionary<TKey, TValue>)) return defaultValue;
+
+		var type = obj.CastAs<Dictionary<TKey, TValue>>();
+		return type.ContainsKey(keyName) ? type[keyName] : defaultValue;
+	}
+
+	/// <summary>
+	/// 	Set the key value to a dictionary type object
+	/// </summary>
+	/// <param name="obj">The dictionary type object</param>
+	/// <param name="keyName">The key value</param>
+	/// <param name="value">The value to set to the dictionary type</param>
+	/// <example>
+	/// Session.SetKeyValue("username", "MT");
+	/// 
+	/// Session["username"] would equal to "MT"
+	/// </example>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
+	public static TValue SetKeyValue<TKey, TValue>(this object obj, TKey keyName, TValue value)
+	{
+		if (!(obj is IDictionary<TKey, TValue>)) return value;
+
+		var type = obj.CastAs<Dictionary<TKey, TValue>>();
+		return type[keyName] = value;
+	}
+
+	/// <summary>
+	/// 	Cast an object to the given type. Usefull especially for anonymous types.
+	/// </summary>
+	/// <param name="obj">The object to be cast</param>
+	/// <param name="targetType">The type to cast to</param>
+	/// <returns>
+	/// 	the casted type or null if casting is not possible.
+	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
+	public static object DynamicCast(this object obj, Type targetType)
+	{
+		// First, it might be just a simple situation
+		if (targetType.IsAssignableFrom(obj.GetType()))
+			return obj;
+
+		// If not, we need to find a cast operator. The operator
+		// may be explicit or implicit and may be included in
+		// either of the two types...
+		const BindingFlags pubStatBinding = BindingFlags.Public | BindingFlags.Static;
+		var originType = obj.GetType();
+		String[] names = { "op_Implicit", "op_Explicit" };
+
+		var castMethod =
+			targetType.GetMethods(pubStatBinding).Union(originType.GetMethods(pubStatBinding)).FirstOrDefault(
+				itm => itm.ReturnType.Equals(targetType) && itm.GetParameters().Length == 1 && itm.GetParameters()[0].ParameterType.IsAssignableFrom(originType) && names.Contains(itm.Name));
+		if (null != castMethod)
+			return castMethod.Invoke(null, new[] { obj });
+		throw new InvalidOperationException(
+			String.Format(
+				"No matching cast operator found from {0} to {1}.",
+				originType.Name,
+				targetType.Name));
+	}
+
+	/// <summary>
+	/// 	Cast an object to the given type. Usefull especially for anonymous types.
+	/// </summary>
+	/// <param name="obj">The object to be cast</param>
+	/// <param name="targetType">The type to cast to</param>
+	/// <returns>
+	/// 	the casted type or null if casting is not possible.
+	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
+	public static T CastAs<T>(this object obj) where T : class, new()
+	{
+		return obj as T;
 	}
 }

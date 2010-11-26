@@ -191,6 +191,9 @@ public static class EnumerableExtensions
 	///<typeparam name = "T"></typeparam>
 	///<typeparam name = "TKey"></typeparam>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> source, Func<T, TKey> expression)
 	{
 		return source == null ? Enumerable.Empty<T>() : source.GroupBy(expression).Select(i => i.First());
@@ -203,6 +206,9 @@ public static class EnumerableExtensions
 	///<param name = "predicate"></param>
 	///<typeparam name = "T"></typeparam>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static IEnumerable<T> RemoveAll<T>(this IEnumerable<T> source, Predicate<T> predicate)
 	{
 		if (source == null)

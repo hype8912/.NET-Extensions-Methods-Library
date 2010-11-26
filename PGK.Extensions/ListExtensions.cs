@@ -73,6 +73,9 @@ public static class ListExtensions
 	/// <returns>
 	/// 	The resulting string of the elements in the list.
 	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static string Join<T>(this IList<T> list, char joinChar)
 	{
 		return list.Join(joinChar.ToString());
@@ -92,6 +95,9 @@ public static class ListExtensions
 	/// <returns>
 	/// 	The resulting string of the elements in the list.
 	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static string Join<T>(this IList<T> list, string joinString)
 	{
 		var result = string.Empty;
@@ -133,6 +139,9 @@ public static class ListExtensions
 	/// <returns>
 	/// 	A List of top matches.
 	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static List<T> Match<T>(this IList<T> list, string searchString, int top, params Expression<Func<T, object>>[] args)
 	{
 		// Create a new list of results and matches;
@@ -192,6 +201,9 @@ public static class ListExtensions
 	///<param name = "source"></param>
 	///<typeparam name = "T"></typeparam>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static List<T> Cast<T>(this IList source)
 	{
 		var list = new List<T>();

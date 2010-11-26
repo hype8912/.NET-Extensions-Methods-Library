@@ -271,7 +271,7 @@ public static class StringExtensions
 			return value.ToGuid();
 		}
 		catch
-		{}
+		{ }
 
 		return defaultValue;
 	}
@@ -339,6 +339,9 @@ public static class StringExtensions
 	/// <returns>
 	/// 	The join.
 	/// </returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static string Join<T>(string separator, T[] value)
 	{
 		if (value == null || value.Length == 0)
@@ -358,6 +361,9 @@ public static class StringExtensions
 	/// <param name = "removeCharc">
 	/// 	The remove char.
 	/// </param>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static string Remove(this string value, params char[] removeCharc)
 	{
 		var result = value;
@@ -375,7 +381,9 @@ public static class StringExtensions
 	/// </param>
 	/// <param name = "removeStrings">
 	/// 	The remove Strings.
-	/// </param>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static string Remove(this string value, params string[] removeStrings)
 	{
 		var result = value;
@@ -561,8 +569,8 @@ public static class StringExtensions
 	public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern, RegexOptions options)
 	{
 		return from Match match in GetMatches(value, regexPattern, options)
-		       where match.Success
-		       select match.Value;
+					 where match.Success
+					 select match.Value;
 	}
 
 	/// <summary>
@@ -620,17 +628,34 @@ public static class StringExtensions
 		return words[index];
 	}
 
-    /// <summary>
-    /// Removed all special characters from the string.
-    /// </summary>
-    /// <param name="value">The input string.</param>
-    /// <returns>The adjusted string.</returns>
-    public static string AdjustInput(this string value)
-    {
-        return string.Join(null, Regex.Split(value, "[^a-zA-Z0-9]"));
-    }
+	/// <summary>
+	/// Removed all special characters from the string.
+	/// </summary>
+	/// <param name="value">The input string.</param>
+	/// <returns>The adjusted string.</returns>
+	[Obsolete("Please use RemoveAllSpecialCharacters instead")]
+	public static string AdjustInput(this string value)
+	{
+		return string.Join(null, Regex.Split(value, "[^a-zA-Z0-9]"));
+	}
 
-    #endregion	
+	/// <summary>
+	/// Removed all special characters from the string.
+	/// </summary>
+	/// <param name="value">The input string.</param>
+	/// <returns>The adjusted string.</returns>
+	/// <remarks>
+	/// 	Contributed by Guffa, http://stackoverflow.com/users/69083/guffa
+	/// </remarks>
+	public static string RemoveAllSpecialCharacters(this string value)
+	{
+		var sb = new StringBuilder();
+		foreach (var c in value.Where(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
+			sb.Append(c);
+		return sb.ToString();
+	}
+
+	#endregion
 	#region Bytes & Base64
 
 	/// <summary>

@@ -47,6 +47,9 @@ public static class TypeExtensions
 	///<param name = "type"></param>
 	///<param name = "checkingType"></param>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static bool IsBaseType(this Type type, Type checkingType)
 	{
 		while (type != typeof (object))
@@ -68,6 +71,9 @@ public static class TypeExtensions
 	///<param name = "generic"></param>
 	///<param name = "toCheck"></param>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
 	public static bool IsSubclassOfRawGeneric(this Type generic, Type toCheck)
 	{
 		while (toCheck != typeof (object))
