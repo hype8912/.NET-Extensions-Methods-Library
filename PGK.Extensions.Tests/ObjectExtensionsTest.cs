@@ -57,5 +57,19 @@ namespace PGK.Extensions.Tests
 			// Assert
 			result.Should().Equal(new List<string>());
 		}
+
+		[TestMethod]
+		public void TestConvertTo()
+		{
+			// Arrange
+			var value = 123m;
+
+			// Act
+			var result = value.ConvertTo<Decimal>();
+
+			// Assert
+			result.Should().Equal(value);
+			result.Should().Not.Equal("test");
+		}
 	}
 }

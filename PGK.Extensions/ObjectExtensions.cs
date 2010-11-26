@@ -63,6 +63,8 @@ public static class ObjectExtensions
 		{
 			var targetType = typeof(T);
 
+			if (value.GetType() == targetType) return (T)value;
+
 			var converter = TypeDescriptor.GetConverter(value);
 			if (converter != null)
 			{
