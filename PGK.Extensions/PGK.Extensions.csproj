@@ -84,6 +84,7 @@
     <Compile Include="DateTimeOffsetExtensions.cs" />
     <Compile Include="DirectoryInfoExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
     <Compile Include="IConverter.cs" />
     <Compile Include="IntExtensions.cs" />
@@ -104,8 +105,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "$(SolutionDir)CurrentVersions\"
-xcopy /y /d "$(TargetDir)*.xml" "$(SolutionDir)CurrentVersions\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
