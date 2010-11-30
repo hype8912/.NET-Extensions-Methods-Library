@@ -7,16 +7,17 @@ using System.Web.Mvc;
 public static class HTMLHelperExtensions
 {
 	///<summary>
+	/// Returns an HTML image element for the given image options
 	///</summary>
 	///<param name="htmlHelper"></param>
-	///<param name="imgSrc"></param>
-	///<param name="alt"></param>
-	///<param name="actionName"></param>
-	///<param name="controllerName"></param>
-	///<param name="routeValues"></param>
-	///<param name="htmlAttributes"></param>
-	///<param name="imgHtmlAttributes"></param>
-	///<returns></returns>
+	///<param name="imgSrc">Image source</param>
+	///<param name="alt">Image alt text</param>
+	///<param name="actionName">Link action name</param>
+	///<param name="controllerName">Link controller name</param>
+	///<param name="routeValues">Link route values</param>
+	///<param name="htmlAttributes">Link html attributes</param>
+	///<param name="imgHtmlAttributes">Image html attributes</param>
+	///<returns>MvcHtmlString</returns>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
 	/// </remarks>
@@ -30,18 +31,19 @@ public static class HTMLHelperExtensions
 		var url = urlHelper.Action(actionName, controllerName, routeValues);
 		var imglink = new TagBuilder("a");
 		imglink.MergeAttribute("href", url);
-		imglink.InnerHtml = imgTag.ToString();
+		imglink.InnerHtml = imgTag.ToString(TagRenderMode.SelfClosing);
 		imglink.MergeAttributes((IDictionary<string, string>)htmlAttributes, true);
 
 		return MvcHtmlString.Create(imglink.ToString());
 	}
 
 	///<summary>
+	/// Returns an HTML image element for the given source and alt text.
 	///</summary>
 	///<param name="helper"></param>
 	///<param name="src"></param>
 	///<param name="alt"></param>
-	///<returns></returns>
+	///<returns>MvcHtmlString</returns>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
 	/// </remarks>
@@ -52,5 +54,27 @@ public static class HTMLHelperExtensions
 		tb.Attributes.Add("src", helper.Encode(src));
 		tb.Attributes.Add("alt", helper.Encode(alt));
 		return MvcHtmlString.Create(tb.ToString(TagRenderMode.SelfClosing));
+	}
+
+	/// <summary>
+	/// Returns an HTML label element for the given target and text.
+	/// </summary>
+	/// <param name="helper"></param>
+	/// <param name="target"></param>
+	/// <param name="text"></param>
+	/// <param name="htmlAttributes"></param>
+	/// <returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// </remarks>
+	public static MvcHtmlString Label(this HtmlHelper helper, string target, string text, object htmlAttributes = null)
+	{
+		var tb = new TagBuilder("label");
+
+		tb.MergeAttribute("for", target);
+		tb.MergeAttributes((IDictionary<string, string>)htmlAttributes, true);
+		tb.SetInnerText(text);
+
+		return MvcHtmlString.Create(tb.ToString());
 	}
 }

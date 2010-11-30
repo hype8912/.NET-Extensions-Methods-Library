@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -855,52 +856,6 @@ public static class ObjectExtensions
 		if (isArray)
 			sb.Append("Array");
 		return sb.ToString();
-	}
-
-	/// <summary>
-	/// 	Get the key value of a dictionary type object
-	/// </summary>
-	/// <param name="obj">The dictionary type object</param>
-	/// <param name="keyName">The key value. Can be null.</param>
-	/// <param name="defaultValue">The default value if the dictionary does not contain the key value</param>
-	/// <example>
-	/// Session["username"] = "MT"
-	/// 
-	/// var username = Session.GetKeyValue("username", "defaultUsername");
-	/// 
-	/// username would equal to "MT"
-	/// </example>
-	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
-	/// </remarks>
-	public static TValue GetKeyValue<TKey, TValue>(this object obj, TKey keyName, TValue defaultValue)
-	{
-		if (!(obj is IDictionary<TKey, TValue>)) return defaultValue;
-
-		var type = obj.CastAs<Dictionary<TKey, TValue>>();
-		return type.ContainsKey(keyName) ? type[keyName] : defaultValue;
-	}
-
-	/// <summary>
-	/// 	Set the key value to a dictionary type object
-	/// </summary>
-	/// <param name="obj">The dictionary type object</param>
-	/// <param name="keyName">The key value</param>
-	/// <param name="value">The value to set to the dictionary type</param>
-	/// <example>
-	/// Session.SetKeyValue("username", "MT");
-	/// 
-	/// Session["username"] would equal to "MT"
-	/// </example>
-	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
-	/// </remarks>
-	public static TValue SetKeyValue<TKey, TValue>(this object obj, TKey keyName, TValue value)
-	{
-		if (!(obj is IDictionary<TKey, TValue>)) return value;
-
-		var type = obj.CastAs<Dictionary<TKey, TValue>>();
-		return type[keyName] = value;
 	}
 
 	/// <summary>

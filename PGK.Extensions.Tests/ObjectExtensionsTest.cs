@@ -9,30 +9,6 @@ namespace PGK.Extensions.Tests
 	public class ObjectExtensionsTest
 	{
 		[TestMethod]
-		public void TestGetKeyValue()
-		{
-			// Arrange
-			var session = new Dictionary<int, string>
-			              {
-			              	{
-			              		1, "test"
-			              		},
-			              	{
-			              		2, "MT"
-			              		}
-			              };
-			// Act
-			var result = session.GetKeyValue(2, "error");
-			var defaultValueResult = session.GetKeyValue(3, "error");
-
-			// Assert
-			result.Should().Equal("MT");
-			result.Should().Not.Equal("test");
-			defaultValueResult.Should().Equal("error");
-			defaultValueResult.Should().Not.Equal("test");
-		}
-
-		[TestMethod]
 		public void TestCastTo()
 		{
 			// Arrange
