@@ -89,6 +89,7 @@
     <Compile Include="IConverter.cs" />
     <Compile Include="IntExtensions.cs" />
     <Compile Include="ListExtensions.cs" />
+    <Compile Include="SocketExtensions.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringArrayExtensions.cs" />
     <Compile Include="StringConverter.cs" />

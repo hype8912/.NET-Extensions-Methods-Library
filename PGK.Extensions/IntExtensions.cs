@@ -46,4 +46,23 @@ public static class IntExtensions
 	{
 		return !IsEven(value);
 	}
+
+	/// <summary>Checks whether the value is in range</summary>
+	/// <param name="value">The Value</param>
+	/// <param name="minValue">The minimum value</param>
+	/// <param name="maxValue">The maximum value</param>
+	public static bool InRange(this int value, int minValue, int maxValue)
+	{
+		return (value >= minValue && value <= maxValue);
+	}
+
+	/// <summary>Checks whether the value is in range or returns the default value</summary>
+	/// <param name="value">The Value</param>
+	/// <param name="minValue">The minimum value</param>
+	/// <param name="maxValue">The maximum value</param>
+	/// <param name="defaultValue">The default value</param>
+	public static int InRange(this int value, int minValue, int maxValue, int defaultValue)
+	{
+		return value.InRange(minValue, maxValue) ? value : defaultValue;
+	}
 }
