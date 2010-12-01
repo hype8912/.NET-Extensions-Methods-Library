@@ -298,7 +298,8 @@ public static class ObjectExtensions
 
 		if (property == null)
 			throw new ArgumentException(string.Format("Property '{0}' not found.", propertyName), propertyName);
-
+		if(!property.CanWrite)
+			throw new ArgumentException(string.Format("Property '{0}' does not allow writes.", propertyName), propertyName);
 		property.SetValue(obj, value, null);
 	}
 
