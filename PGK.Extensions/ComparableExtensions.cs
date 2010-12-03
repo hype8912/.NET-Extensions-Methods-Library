@@ -56,4 +56,21 @@ public static class ComparableExtensions
 		else
 			return ((comparer.Compare(value, maxValue) >= 0) && (comparer.Compare(value, minValue) <= 0));
 	}
+
+	// todo: xml documentation is required
+	public class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
+	{
+		public int Compare(T x, T y)
+		{
+			return y.CompareTo(x);
+		}
+	}
+
+	public class AscendingComparer<T> : IComparer<T> where T : IComparable<T>
+	{
+		public int Compare(T x, T y)
+		{
+			return x.CompareTo(y);
+		}
+	}
 }

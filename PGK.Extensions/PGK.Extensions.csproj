@@ -82,6 +82,7 @@
     <Compile Include="DataRowViewExtensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="DateTimeOffsetExtensions.cs" />
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="DirectoryInfoExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ExceptionExtensions.cs" />
