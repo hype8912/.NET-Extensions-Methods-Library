@@ -147,10 +147,10 @@ public static class ObjectExtensions
 	/// <example>
 	/// 	<code>
 	/// 		var value = "123";
-	/// 		var numeric = value.Convert().ToInt32();
+	/// 		var numeric = value.ConvertTo().ToInt32();
 	/// 	</code>
 	/// </example>
-	public static IConverter<T> Convert<T>(this T value)
+	public static IConverter<T> ConvertTo<T>(this T value)
 	{
 		return new Converter<T>(value);
 	}

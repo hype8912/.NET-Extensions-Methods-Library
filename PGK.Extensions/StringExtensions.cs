@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -391,6 +392,59 @@ public static class StringExtensions
 			Array.ForEach(removeStrings, s => result = result.Replace(s, string.Empty));
 
 		return result;
+	}
+
+	/// <summary>Finds out if the specified string contains null, empty or consists only of white-space characters</summary>
+	/// <param name = "value">The input string</param>
+	public static bool IsEmptyOrWhiteSpace(this string value)
+	{
+		return (value.IsEmpty() || value.All(t => char.IsWhiteSpace(t)));
+	}
+
+	/// <summary>Determines whether the specified string is not null, empty or consists only of white-space characters</summary>
+	/// <param name = "value">The string value to check</param>
+	public static bool IsNotEmptyOrWhiteSpace(this string value)
+	{
+		return (value.IsEmptyOrWhiteSpace() == false);
+	}
+
+	/// <summary>Checks whether the string is null, empty or consists only of white-space characters and returns a default value in case</summary>
+	/// <param name = "value">The string to check</param>
+	/// <param name = "defaultValue">The default value</param>
+	/// <returns>Either the string or the default value</returns>
+	public static string IfEmptyOrWhiteSpace(this string value, string defaultValue)
+	{
+		return (value.IsEmptyOrWhiteSpace() ? defaultValue : value);
+	}
+
+	/// <summary>Uppercase First Letter</summary>
+	/// <param name = "value">The string value to process</param>
+	public static string ToUpperFirstLetter(this string value)
+	{
+		if (value.IsEmptyOrWhiteSpace()) return string.Empty;
+
+		char[] valueChars = value.ToCharArray();
+		valueChars[0] = char.ToUpper(valueChars[0]);
+
+		return new string(valueChars);
+	}
+
+	//todo: xml documentation requires
+	//todo: unit test required
+	public static byte[] GetBytes(this string data)
+	{
+		return Encoding.Default.GetBytes(data);
+	}
+
+	public static byte[] GetBytes(this string data, Encoding encoding)
+	{
+		return encoding.GetBytes(data);
+	}
+
+	/// <summary>Convert text's case to a title case</summary>
+	public static string ToTitleCase(this string value)
+	{
+		return value.IsEmptyOrWhiteSpace() ? string.Empty : CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value);
 	}
 
 	#endregion

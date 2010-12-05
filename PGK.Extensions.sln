@@ -21,27 +21,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGK.Extensions.MVC", "PGK.Extensions.MVC\PGK.Extensions.MVC.csproj", "{75D5CDDF-A77C-4B79-ABD5-3A8FB6324AF9}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs10
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = PGK.Extensions\\PGK.Extensions.csproj
-		SccProjectName1 = PGK.Extensions
-		SccLocalPath1 = PGK.Extensions
-		SccProjectUniqueName2 = PGK.Extensions.Web\\PGK.Extensions.Web.csproj
-		SccProjectName2 = PGK.Extensions.Web
-		SccLocalPath2 = PGK.Extensions.Web
-		SccProjectUniqueName3 = PGK.Extensions.Windows\\PGK.Extensions.Windows.csproj
-		SccProjectName3 = PGK.Extensions.Windows
-		SccLocalPath3 = PGK.Extensions.Windows
-		SccProjectUniqueName4 = PGK.Extensions.Windows.Forms\\PGK.Extensions.Windows.Forms.csproj
-		SccProjectName4 = PGK.Extensions.Windows.Forms
-		SccLocalPath4 = PGK.Extensions.Windows.Forms
-		SccProjectUniqueName5 = PGK.Extensions.Tests\\PGK.Extensions.Tests.csproj
-		SccProjectName5 = PGK.Extensions.Tests
-		SccLocalPath5 = PGK.Extensions.Tests
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PGK.Extensions.vsmdi
 	EndGlobalSection

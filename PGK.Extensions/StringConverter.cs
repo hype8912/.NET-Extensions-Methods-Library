@@ -1,12 +1,12 @@
 ﻿/// <summary>
 /// 	Universal conversion and parsing methods for strings.
-/// 	These methods are avaiblable throught the generic object.Convert method:
+/// 	These methods are avaiblable throught the generic object.ConvertTo method:
 /// 	Feel free to provide additional converns for string or any other object type.
 /// </summary>
 /// <example>
 /// 	<code>
 /// 		var value = "123";
-/// 		var numeric = value.Convert().ToInt32();
+/// 		var numeric = value.ConvertTo().ToInt32();
 /// 	</code>
 /// </example>
 public static class StringConverter
@@ -19,7 +19,7 @@ public static class StringConverter
 	/// <example>
 	/// 	<code>
 	/// 		var value = "123";
-	/// 		var numeric = value.Convert().ToInt32();
+	/// 		var numeric = value.ConvertTo().ToInt32();
 	/// 	</code>
 	/// </example>
 	public static int ToInt32(this IConverter<string> value)
@@ -37,7 +37,7 @@ public static class StringConverter
 	/// <example>
 	/// 	<code>
 	/// 		var value = "123";
-	/// 		var numeric = value.Convert().ToInt32();
+	/// 		var numeric = value.ConvertTo().ToInt32();
 	/// 	</code>
 	/// </example>
 	public static int ToInt32(this IConverter<string> value, int defaultValue, bool ignoreException)

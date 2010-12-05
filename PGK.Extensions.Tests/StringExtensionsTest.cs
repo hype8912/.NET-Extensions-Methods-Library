@@ -146,5 +146,11 @@ namespace PGK.Extensions.Tests
 			string validationValue = @"btf678bhbg";
 			Assert.AreEqual(testValue.RemoveAllSpecialCharacters(), validationValue);
 		}
+
+		[TestMethod]
+		public void TestIsEmptyOrWhiteSpace()
+		{
+
+		}
 	}
 }
