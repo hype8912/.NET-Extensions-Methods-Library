@@ -444,7 +444,7 @@ public static class StringExtensions
 	/// <summary>Convert text's case to a title case</summary>
 	public static string ToTitleCase(this string value)
 	{
-		return value.IsEmptyOrWhiteSpace() ? string.Empty : CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value);
+		return IfEmptyOrWhiteSpace(value, CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value));
 	}
 
 	#endregion

@@ -35,17 +35,32 @@ namespace PGK.Extensions.Tests
 		}
 
 		[TestMethod]
-		public void TestConvertTo()
+		public void TestConvertToAgainstStringOnly()
 		{
 			// Arrange
-			var value = 123m;
+			var value = "test";
 
 			// Act
-			var result = value.ConvertTo<Decimal>();
+			var result = value.ConvertTo<int>();
 
 			// Assert
-			result.Should().Equal(value);
-			result.Should().Not.Equal("test");
+			result.Should().Equal(0);
+			result.Should().Not.Equal(value);
+		}
+
+		[TestMethod]
+		public void TestConvertToAgainstStringDigit()
+		{
+			// Arrange
+			var value = 123;
+			var stringValue = "123";
+
+			// Act
+			var stringResult = stringValue.ConvertTo<int>();
+
+			// Assert
+			stringResult.Should().Equal(value);
+			stringResult.Should().Not.Equal(0);
 		}
 	}
 }

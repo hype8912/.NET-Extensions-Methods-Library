@@ -4,68 +4,6 @@
         <name>PGK.Extensions.MVC</name>
     </assembly>
     <members>
-        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.Route)">
-            <summary>
-             Get the name of the route
-            </summary>
-            <param name="route"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.RouteData)">
-            <summary>
-             Get the name of the route
-            </summary>
-            <param name="routeData"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.RouteValueDictionary)">
-            <summary>
-             Get the name of the route
-            </summary>
-            <param name="routeValues"></param>
-            <returns></returns>
-             <example>
-             	<code>
-            			var route = routes.Map("rName", "url");
-            			route.GetRouteName();
-            		</code>
-             </example>
-        </member>
-        <member name="M:RouteExtensions.SetRouteName(System.Web.Routing.Route,System.String)">
-            <summary>
-             Set the name of a route
-            </summary>
-            <param name="route">The route</param>
-            <param name="routeName">the route name</param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
-             <example>
-             	<code>
-            		routes.MapRoute("rName", "{controller}/{action}").SetRouteName("rName");
-            		</code>
-             </example>
-        </member>
-        <member name="M:RouteExtensions.Map(System.Web.Routing.RouteCollection,System.String,System.String,System.Object,System.Object,System.String[])">
-            <summary>
-             Create routes for which I can retrieve the route name
-            </summary>
-            <param name="routes"></param>
-            <param name="name"></param>
-            <param name="url"></param>
-            <param name="defaults"></param>
-            <param name="constraints"></param>
-            <param name="namespaces"></param>
-            <returns></returns>
-             <example>
-             	<code>
-             		var route = routes.Map("rName", "url");
-            			route.GetRouteName();
-            			
-            			//within a controller
-            			string routeName = RouteData.GetRouteName();
-             	</code>
-             </example>
-        </member>
         <member name="T:HttpSessionStateBaseExtensions">
             <summary>
               Extensions classes for the ASP.NET Session State class
@@ -177,6 +115,68 @@
             <remarks>
             	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
             </remarks>
+        </member>
+        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.Route)">
+            <summary>
+             Get the name of the route
+            </summary>
+            <param name="route"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.RouteData)">
+            <summary>
+             Get the name of the route
+            </summary>
+            <param name="routeData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RouteExtensions.GetRouteName(System.Web.Routing.RouteValueDictionary)">
+            <summary>
+             Get the name of the route
+            </summary>
+            <param name="routeValues"></param>
+            <returns></returns>
+             <example>
+             	<code>
+            			var route = routes.Map("rName", "url");
+            			route.GetRouteName();
+            		</code>
+             </example>
+        </member>
+        <member name="M:RouteExtensions.SetRouteName(System.Web.Routing.Route,System.String)">
+            <summary>
+             Set the name of a route
+            </summary>
+            <param name="route">The route</param>
+            <param name="routeName">the route name</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+             <example>
+             	<code>
+            		routes.MapRoute("rName", "{controller}/{action}").SetRouteName("rName");
+            		</code>
+             </example>
+        </member>
+        <member name="M:RouteExtensions.Map(System.Web.Routing.RouteCollection,System.String,System.String,System.Object,System.Object,System.String[])">
+            <summary>
+             Create routes for which I can retrieve the route name
+            </summary>
+            <param name="routes"></param>
+            <param name="name"></param>
+            <param name="url"></param>
+            <param name="defaults"></param>
+            <param name="constraints"></param>
+            <param name="namespaces"></param>
+            <returns></returns>
+             <example>
+             	<code>
+             		var route = routes.Map("rName", "url");
+            			route.GetRouteName();
+            			
+            			//within a controller
+            			string routeName = RouteData.GetRouteName();
+             	</code>
+             </example>
         </member>
     </members>
 </doc>

@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System;
 using System.Web;
+using System.Web.Mvc.Html;
 
 ///<summary>
 /// A bunch of HTML helper extensions
@@ -82,87 +83,101 @@ public static class HTMLHelperExtensions
 		return MvcHtmlString.Create(tb.ToString());
 	}
 
-    public static string Tag(this HtmlHelper htmlHelper,
-        string tag = null,
-        string src = null, string href = null,
-        string type = null,
-        string id = null, string name = null,
-        string style = null, string @class = null,
-        string attribs = null)
-    {
-        var sb = new StringBuilder();
-        sb.Append("<");
-        if (string.IsNullOrEmpty(tag)) tag = "div";
-        sb.Append(tag);
-        AppendOptionalAttrib(htmlHelper, sb, "id", id, encode: false, validateScriptableIdent: true);
-        AppendOptionalAttrib(htmlHelper, sb, "name", name, encode: false, validateScriptableIdent: true);
-        AppendOptionalAttrib(htmlHelper, sb, "type", type);
-        AppendOptionalAttrib(htmlHelper, sb, "src", src, encode: false, resolveAbsUrl: true);
-        AppendOptionalAttrib(htmlHelper, sb, "href", href, encode: false, resolveAbsUrl: true);
-        AppendOptionalAttrib(htmlHelper, sb, "style", style);
-        AppendOptionalAttrib(htmlHelper, sb, "class", @class, encode: false, validateClass: true);
-        if (!string.IsNullOrEmpty(attribs)) sb.Append(" " + attribs);
-        if ((new[] { "script", "div", "p", "a", "h1", "h2", "h3", "h4", "h5", "h6", "center", "table", "form" }).Contains(tag.ToLower()))
-            sb.Append("></" + tag + ">");
-        else sb.Append(" />");
-        return sb.ToString();
-    }
+	public static string Tag(this HtmlHelper htmlHelper,
+			string tag = null,
+			string src = null, string href = null,
+			string type = null,
+			string id = null, string name = null,
+			string style = null, string @class = null,
+			string attribs = null)
+	{
+		var sb = new StringBuilder();
+		sb.Append("<");
+		if (string.IsNullOrEmpty(tag)) tag = "div";
+		sb.Append(tag);
+		AppendOptionalAttrib(htmlHelper, sb, "id", id, encode: false, validateScriptableIdent: true);
+		AppendOptionalAttrib(htmlHelper, sb, "name", name, encode: false, validateScriptableIdent: true);
+		AppendOptionalAttrib(htmlHelper, sb, "type", type);
+		AppendOptionalAttrib(htmlHelper, sb, "src", src, encode: false, resolveAbsUrl: true);
+		AppendOptionalAttrib(htmlHelper, sb, "href", href, encode: false, resolveAbsUrl: true);
+		AppendOptionalAttrib(htmlHelper, sb, "style", style);
+		AppendOptionalAttrib(htmlHelper, sb, "class", @class, encode: false, validateClass: true);
+		if (!string.IsNullOrEmpty(attribs)) sb.Append(" " + attribs);
+		if ((new[] { "script", "div", "p", "a", "h1", "h2", "h3", "h4", "h5", "h6", "center", "table", "form" }).Contains(tag.ToLower()))
+			sb.Append("></" + tag + ">");
+		else sb.Append(" />");
+		return sb.ToString();
+	}
 
-    private static void AppendOptionalAttrib(HtmlHelper htmlHelper, StringBuilder sb,
-        string attribName, string attribValue, bool? encode = null,
-        bool? resolveAbsUrl = null, bool? validateScriptableIdent = null, bool? validateClass = null)
-    {
-        if (string.IsNullOrEmpty(attribValue)) return;
-        if (string.IsNullOrEmpty(attribName)) throw new ArgumentException("attribName is required.", "attribName");
-        var attribNameLcase = attribName.ToLower();
-        if (!resolveAbsUrl.HasValue) resolveAbsUrl = attribNameLcase == "src" || attribNameLcase == "href";
-        if (!validateScriptableIdent.HasValue)
-            validateScriptableIdent = attribNameLcase == "id" || attribNameLcase == "name";
-        if (!validateClass.HasValue)
-            validateClass = attribNameLcase == "class";
-        if (!encode.HasValue) encode = !validateScriptableIdent.Value && !resolveAbsUrl.Value && !validateClass.Value;
-        sb.Append(" " + attribName + "=\"");
-        if (validateScriptableIdent.Value && !IsScriptableIdValue(attribValue))
-            throw new FormatException("Attrib value has invalid characters: " + attribNameLcase + "=" + attribValue);
-        if (validateClass.Value && !IsValidClassValue(attribValue))
-            throw new FormatException("Attrib value has invalid characters: " + attribNameLcase + "=" + attribValue);
-        if (resolveAbsUrl.Value)
-        {
-            try
-            {
-                sb.Append(VirtualPathUtility.ToAbsolute(attribValue));
-            }
-            catch (ArgumentException e)
-            {
-                if (e.Message.Contains("is not allowed here"))
-                {
-                    throw new ArgumentException(e.Message + " (Try prefixing the app root, i.e. \"~/\".)", e.ParamName);
-                }
-                throw;
-            }
-        }
-        else if (encode.Value) sb.Append(htmlHelper.Encode(attribValue));
-        else sb.Append(attribValue);
-        sb.Append("\"");
-    }
+	private static void AppendOptionalAttrib(HtmlHelper htmlHelper, StringBuilder sb,
+			string attribName, string attribValue, bool? encode = null,
+			bool? resolveAbsUrl = null, bool? validateScriptableIdent = null, bool? validateClass = null)
+	{
+		if (string.IsNullOrEmpty(attribValue)) return;
+		if (string.IsNullOrEmpty(attribName)) throw new ArgumentException("attribName is required.", "attribName");
+		var attribNameLcase = attribName.ToLower();
+		if (!resolveAbsUrl.HasValue) resolveAbsUrl = attribNameLcase == "src" || attribNameLcase == "href";
+		if (!validateScriptableIdent.HasValue)
+			validateScriptableIdent = attribNameLcase == "id" || attribNameLcase == "name";
+		if (!validateClass.HasValue)
+			validateClass = attribNameLcase == "class";
+		if (!encode.HasValue) encode = !validateScriptableIdent.Value && !resolveAbsUrl.Value && !validateClass.Value;
+		sb.Append(" " + attribName + "=\"");
+		if (validateScriptableIdent.Value && !IsScriptableIdValue(attribValue))
+			throw new FormatException("Attrib value has invalid characters: " + attribNameLcase + "=" + attribValue);
+		if (validateClass.Value && !IsValidClassValue(attribValue))
+			throw new FormatException("Attrib value has invalid characters: " + attribNameLcase + "=" + attribValue);
+		if (resolveAbsUrl.Value)
+		{
+			try
+			{
+				sb.Append(VirtualPathUtility.ToAbsolute(attribValue));
+			}
+			catch (ArgumentException e)
+			{
+				if (e.Message.Contains("is not allowed here"))
+				{
+					throw new ArgumentException(e.Message + " (Try prefixing the app root, i.e. \"~/\".)", e.ParamName);
+				}
+				throw;
+			}
+		}
+		else if (encode.Value) sb.Append(htmlHelper.Encode(attribValue));
+		else sb.Append(attribValue);
+		sb.Append("\"");
+	}
 
-    private static bool IsValidClassValue(string value)
-    {
-        const string _123 = "1234567890";
-        const string abc123 = "abcdefghijklmnopqrstuvwxyz_- " + _123;
-        if (string.IsNullOrEmpty(value)) return false;
-        value = value.ToLower();
-        return value.All(c => abc123.Contains(c));
-    }
+	private static bool IsValidClassValue(string value)
+	{
+		const string _123 = "1234567890";
+		const string abc123 = "abcdefghijklmnopqrstuvwxyz_- " + _123;
+		if (string.IsNullOrEmpty(value)) return false;
+		value = value.ToLower();
+		return value.All(c => abc123.Contains(c));
+	}
 
-    private static bool IsScriptableIdValue(string value)
-    {
-        const string _123 = "1234567890";
-        const string abc123 = "abcdefghijklmnopqrstuvwxyz_" + _123;
-        if (string.IsNullOrEmpty(value)) return false;
-        value = value.ToLower();
-        if (_123.Contains(value[0])) return false; // don't start with a #
-        return value.All(c => abc123.Contains(c));
-    }
+	private static bool IsScriptableIdValue(string value)
+	{
+		const string _123 = "1234567890";
+		const string abc123 = "abcdefghijklmnopqrstuvwxyz_" + _123;
+		if (string.IsNullOrEmpty(value)) return false;
+		value = value.ToLower();
+		if (_123.Contains(value[0])) return false; // don't start with a #
+		return value.All(c => abc123.Contains(c));
+	}
 
+	public static MvcHtmlString CurrentAction(this HtmlHelper htmlHelper)
+	{
+		return MvcHtmlString.Create(htmlHelper.ViewContext.RouteData.Values["action"].ToString());
+	}
+
+	public static MvcHtmlString CurrentController(this HtmlHelper htmlHelper)
+	{
+		return MvcHtmlString.Create(htmlHelper.ViewContext.RouteData.Values["controller"].ToString());
+	}
+
+	//public static MvcForm BeginForm(this HtmlHelper htmlHelper, object routeValues, FormMethod method, object htmlAttributes)
+	//{
+	//  return htmlHelper.BeginForm(Html.CurrentAction, Html.CurrentController, routeValues, method, htmlAttributes);
+	//}
 }
