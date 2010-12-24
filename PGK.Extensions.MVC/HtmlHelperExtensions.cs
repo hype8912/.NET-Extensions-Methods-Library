@@ -4,7 +4,6 @@ using System.Text;
 using System.Linq;
 using System;
 using System.Web;
-using System.Web.Mvc.Html;
 
 ///<summary>
 /// A bunch of HTML helper extensions
@@ -83,7 +82,7 @@ public static class HTMLHelperExtensions
 		return MvcHtmlString.Create(tb.ToString());
 	}
 
-	public static string Tag(this HtmlHelper htmlHelper,
+	public static MvcHtmlString Tag(this HtmlHelper htmlHelper,
 			string tag = null,
 			string src = null, string href = null,
 			string type = null,
@@ -95,18 +94,18 @@ public static class HTMLHelperExtensions
 		sb.Append("<");
 		if (string.IsNullOrEmpty(tag)) tag = "div";
 		sb.Append(tag);
-		AppendOptionalAttrib(htmlHelper, sb, "id", id, encode: false, validateScriptableIdent: true);
-		AppendOptionalAttrib(htmlHelper, sb, "name", name, encode: false, validateScriptableIdent: true);
+		AppendOptionalAttrib(htmlHelper, sb, "id", id, false, validateScriptableIdent: true);
+		AppendOptionalAttrib(htmlHelper, sb, "name", name, false, validateScriptableIdent: true);
 		AppendOptionalAttrib(htmlHelper, sb, "type", type);
-		AppendOptionalAttrib(htmlHelper, sb, "src", src, encode: false, resolveAbsUrl: true);
-		AppendOptionalAttrib(htmlHelper, sb, "href", href, encode: false, resolveAbsUrl: true);
+		AppendOptionalAttrib(htmlHelper, sb, "src", src, false, true);
+		AppendOptionalAttrib(htmlHelper, sb, "href", href, false, true);
 		AppendOptionalAttrib(htmlHelper, sb, "style", style);
-		AppendOptionalAttrib(htmlHelper, sb, "class", @class, encode: false, validateClass: true);
+		AppendOptionalAttrib(htmlHelper, sb, "class", @class, false, validateClass: true);
 		if (!string.IsNullOrEmpty(attribs)) sb.Append(" " + attribs);
 		if ((new[] { "script", "div", "p", "a", "h1", "h2", "h3", "h4", "h5", "h6", "center", "table", "form" }).Contains(tag.ToLower()))
 			sb.Append("></" + tag + ">");
 		else sb.Append(" />");
-		return sb.ToString();
+		return MvcHtmlString.Create(sb.ToString());
 	}
 
 	private static void AppendOptionalAttrib(HtmlHelper htmlHelper, StringBuilder sb,

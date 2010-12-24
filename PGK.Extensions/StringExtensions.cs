@@ -382,16 +382,18 @@ public static class StringExtensions
 	/// </param>
 	/// <param name = "removeStrings">
 	/// 	The remove Strings.
+	/// </param>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
 	/// </remarks>
-	public static string Remove(this string value, params string[] removeStrings)
+	public static string Remove(this string value, params string[] strings)
 	{
-		var result = value;
-		if (!string.IsNullOrEmpty(result) && removeStrings != null)
-			Array.ForEach(removeStrings, s => result = result.Replace(s, string.Empty));
+		return strings.Aggregate(value, (current, c) => current.Replace(c, string.Empty));
+		//var result = value;
+		//if (!string.IsNullOrEmpty(result) && removeStrings != null)
+		//  Array.ForEach(removeStrings, s => result = result.Replace(s, string.Empty));
 
-		return result;
+		//return result;
 	}
 
 	/// <summary>Finds out if the specified string contains null, empty or consists only of white-space characters</summary>
@@ -445,6 +447,26 @@ public static class StringExtensions
 	public static string ToTitleCase(this string value)
 	{
 		return IfEmptyOrWhiteSpace(value, CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value));
+	}
+
+	public static string ToPlural(this string singular)
+	{
+		// Multiple words in the form A of B : Apply the plural to the first word only (A)
+		int index = singular.LastIndexOf(" of ");
+		if (index > 0) return (singular.Substring(0, index)) + singular.Remove(0, index).ToPlural();
+
+		// single Word rules
+		//sibilant ending rule
+		if (singular.EndsWith("sh")) return singular + "es";
+		if (singular.EndsWith("ch")) return singular + "es";
+		if (singular.EndsWith("us")) return singular + "es";
+		if (singular.EndsWith("ss")) return singular + "es";
+		//-ies rule
+		if (singular.EndsWith("y")) return singular.Remove(singular.Length - 1, 1) + "ies";
+		// -oes rule
+		if (singular.EndsWith("o")) return singular.Remove(singular.Length - 1, 1) + "oes";
+		// -s suffix rule
+		return singular + "s";
 	}
 
 	#endregion
