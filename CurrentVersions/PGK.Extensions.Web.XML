@@ -77,65 +77,6 @@
               </code>
             </example>
         </member>
-        <member name="T:UriQueryString">
-            <summary>
-            </summary>
-        </member>
-        <member name="F:UriQueryString.values">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:UriQueryString.ToString">
-            <summary>
-              Returns a <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
-            </summary>
-            <returns>
-              A <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
-            </returns>
-        </member>
-        <member name="M:UriQueryString.ToString(System.Uri)">
-            <summary>
-              Returns a <see cref="T:System.String"/> that represents this instance.
-            </summary>
-            <param name="baseUrl">The base URL.</param>
-            <returns>
-              A <see cref="T:System.String"/> that represents this instance.
-            </returns>
-        </member>
-        <member name="M:UriQueryString.ToString(System.String)">
-            <summary>
-              Returns a <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
-            </summary>
-            <param name = "baseUrl">The base URL.</param>
-            <returns>
-              A <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
-            </returns>
-        </member>
-        <member name="M:UriQueryString.Add(System.String,System.String)">
-            <summary>
-              Adds the specified key.
-            </summary>
-            <param name = "key">The key.</param>
-            <param name = "value">The value.</param>
-        </member>
-        <member name="T:HttpListenerContextExtensions">
-            <summary>
-              Extension methods for HttpListenerContext
-            </summary>
-        </member>
-        <member name="M:HttpListenerContextExtensions.GetResponseStream(System.Net.HttpListenerContext,System.Boolean,System.Boolean,System.Boolean)">
-            <summary>
-              Prepares a response-stream using compression-, caching- and buffering-settings
-            </summary>
-            <param name = "context">The context</param>
-            <param name = "allowZip">set to true in case you want to honor the compression-http-headers</param>
-            <param name = "buffered">set to true in case you want a BufferedStream</param>
-            <param name = "allowCache">set to false in case you want to set the no-cache-http-headers</param>
-            <returns>the stream to write you stuff to</returns>
-            <remarks>
-              Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser
-            </remarks>
-        </member>
         <member name="T:StateBagExtensions">
             <summary>
               Extensions classes for the ASP.NET ViewState StateBag class
@@ -208,6 +149,47 @@
                 }
               </code>
             </example>
+        </member>
+        <member name="T:UriQueryString">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:UriQueryString.values">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:UriQueryString.ToString">
+            <summary>
+              Returns a <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
+            </summary>
+            <returns>
+              A <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.ToString(System.Uri)">
+            <summary>
+              Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="baseUrl">The base URL.</param>
+            <returns>
+              A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.ToString(System.String)">
+            <summary>
+              Returns a <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
+            </summary>
+            <param name = "baseUrl">The base URL.</param>
+            <returns>
+              A <see cref = "T:System.String" /> that represents the current <see cref = "T:System.Object" />.
+            </returns>
+        </member>
+        <member name="M:UriQueryString.Add(System.String,System.String)">
+            <summary>
+              Adds the specified key.
+            </summary>
+            <param name = "key">The key.</param>
+            <param name = "value">The value.</param>
         </member>
         <member name="T:HttpResponseExtensions">
             <summary>
@@ -405,6 +387,24 @@
             <param name = "control">The root control.</param>
             <param name = "visible">The visible control.</param>
             <param name = "notVisible">The not visible control.</param>
+        </member>
+        <member name="T:HttpListenerContextExtensions">
+            <summary>
+              Extension methods for HttpListenerContext
+            </summary>
+        </member>
+        <member name="M:HttpListenerContextExtensions.GetResponseStream(System.Net.HttpListenerContext,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+              Prepares a response-stream using compression-, caching- and buffering-settings
+            </summary>
+            <param name = "context">The context</param>
+            <param name = "allowZip">set to true in case you want to honor the compression-http-headers</param>
+            <param name = "buffered">set to true in case you want a BufferedStream</param>
+            <param name = "allowCache">set to false in case you want to set the no-cache-http-headers</param>
+            <returns>the stream to write you stuff to</returns>
+            <remarks>
+              Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser
+            </remarks>
         </member>
     </members>
 </doc>
