@@ -797,7 +797,7 @@ public static class ObjectExtensions {
     /// 	the casted type or null if casting is not possible.
     /// </returns>
     /// <remarks>
-    /// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static object DynamicCast(this object obj, Type targetType) {
         // First, it might be just a simple situation
@@ -832,7 +832,7 @@ public static class ObjectExtensions {
     /// the casted type or null if casting is not possible.
     /// </returns>
     /// <remarks>
-    /// Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static T CastAs<T>(this object obj) where T : class, new() {
         return obj as T;

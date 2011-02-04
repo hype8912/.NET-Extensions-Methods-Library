@@ -326,7 +326,7 @@ public static class DateTimeExtensions {
     ///<param name = "year">The year.</param>
     ///<returns>the number of days within that year</returns>
     /// <remarks>
-    /// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static int GetDays(int year) {
         var first = new DateTime(year, 1, 1);
@@ -340,7 +340,7 @@ public static class DateTimeExtensions {
     ///<param name = "date">The date.</param>
     ///<returns>the number of days within that year</returns>
     /// <remarks>
-    /// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static int GetDays(this DateTime date) {
         return GetDays(date.Year);
@@ -353,7 +353,7 @@ public static class DateTimeExtensions {
     ///<param name = "toDate">To year</param>
     ///<returns>The number of days between the two years</returns>
     /// <remarks>
-    /// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static int GetDays(this DateTime fromDate, DateTime toDate) {
         return Convert.ToInt32(toDate.Subtract(fromDate).TotalDays);
@@ -365,7 +365,7 @@ public static class DateTimeExtensions {
     ///<param name = "date">The date.</param>
     ///<returns>The period "morning", "afternoon", or "evening"</returns>
     /// <remarks>
-    /// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
     public static string GetPeriodOfDay(this DateTime date) {
         var hour = date.Hour;

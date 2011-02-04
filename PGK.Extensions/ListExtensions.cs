@@ -74,7 +74,7 @@ public static class ListExtensions
 	/// 	The resulting string of the elements in the list.
 	/// </returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static string Join<T>(this IList<T> list, char joinChar)
 	{
@@ -96,7 +96,7 @@ public static class ListExtensions
 	/// 	The resulting string of the elements in the list.
 	/// </returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static string Join<T>(this IList<T> list, string joinString)
 	{
@@ -140,7 +140,7 @@ public static class ListExtensions
 	/// 	A List of top matches.
 	/// </returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static List<T> Match<T>(this IList<T> list, string searchString, int top, params Expression<Func<T, object>>[] args)
 	{
@@ -202,7 +202,7 @@ public static class ListExtensions
 	///<typeparam name = "T"></typeparam>
 	///<returns></returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static List<T> Cast<T>(this IList source)
 	{

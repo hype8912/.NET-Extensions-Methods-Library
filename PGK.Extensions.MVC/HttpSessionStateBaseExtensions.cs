@@ -22,7 +22,7 @@ public static class HttpSessionStateBaseExtensions
 	///   </code>
 	/// </example>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static TValue Get<TValue>(this HttpSessionStateBase state, string key, TValue defaultValue = default(TValue))
 	{
@@ -46,7 +46,7 @@ public static class HttpSessionStateBaseExtensions
 	///   </code>
 	/// </example>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static T Ensure<T>(this HttpSessionStateBase state, string key) where T : class, new()
 	{
@@ -75,7 +75,7 @@ public static class HttpSessionStateBaseExtensions
 	///   </code>
 	/// </example>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static void Set(this HttpSessionStateBase state, string key, object value)
 	{

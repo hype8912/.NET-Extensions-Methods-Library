@@ -192,7 +192,7 @@ public static class EnumerableExtensions
 	///<typeparam name = "TKey"></typeparam>
 	///<returns></returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static IEnumerable<T> Distinct<T, TKey>(this IEnumerable<T> source, Func<T, TKey> expression)
 	{
@@ -207,7 +207,7 @@ public static class EnumerableExtensions
 	///<typeparam name = "T"></typeparam>
 	///<returns></returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static IEnumerable<T> RemoveAll<T>(this IEnumerable<T> source, Predicate<T> predicate)
 	{

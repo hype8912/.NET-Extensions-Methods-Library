@@ -21,8 +21,26 @@ public static class ArrayExtension
 	///<param name = "source"></param>
 	///<param name = "index"></param>
 	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	public static bool WithinIndex(this Array source, int index)
 	{
 		return source != null && index >= 0 && index < source.Length;
+	}
+
+	///<summary>
+	///	Check if the index is within the array
+	///</summary>
+	///<param name = "source"></param>
+	///<param name = "index"></param>
+	///<param name="dimension"></param>
+	///<returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static bool WithinIndex(this Array source, int index, int dimension = 0)
+	{
+		return source != null && index >= source.GetLowerBound(dimension) && index <= source.GetUpperBound(dimension);
 	}
 }

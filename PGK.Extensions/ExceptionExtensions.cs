@@ -28,7 +28,7 @@ public static class ExceptionExtensions
 	///<param name="exception">The exception</param>
 	///<returns>IEnumerable of message</returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	/// <note>
 	/// The most inner exception message is first in the list, and the most outer exception message is last in the list
@@ -45,7 +45,7 @@ public static class ExceptionExtensions
 	///<param name="exception">The exception</param>
 	///<returns>IEnumerable of message</returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	/// <note>
 	/// The most inner exception is first in the list, and the most outer exception is last in the list

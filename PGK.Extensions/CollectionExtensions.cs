@@ -56,7 +56,7 @@ public static class CollectionExtensions
 	///<typeparam name = "T"></typeparam>
 	///<exception cref = "ArgumentNullException"></exception>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static void RemoveAll<T>(this ICollection<T> collection, Predicate<T> predicate)
 	{

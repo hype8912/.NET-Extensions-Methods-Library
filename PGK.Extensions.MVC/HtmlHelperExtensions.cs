@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System;
 using System.Web;
+using System.Web.Routing;
 
 ///<summary>
 /// A bunch of HTML helper extensions
@@ -23,20 +24,20 @@ public static class HTMLHelperExtensions
 	///<param name="imgHtmlAttributes">Image html attributes</param>
 	///<returns>MvcHtmlString</returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static MvcHtmlString ImageLink(this HtmlHelper htmlHelper, string imgSrc = null, string alt = null, string actionName = null, string controllerName = null, object routeValues = null, object htmlAttributes = null, object imgHtmlAttributes = null)
 	{
 		var urlHelper = ((Controller)htmlHelper.ViewContext.Controller).Url;
 		var imgTag = new TagBuilder("img");
 		imgTag.MergeAttribute("src", imgSrc);
-		imgTag.MergeAttributes((IDictionary<string, string>)imgHtmlAttributes, true);
+		imgTag.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
 
 		var url = urlHelper.Action(actionName, controllerName, routeValues);
 		var imglink = new TagBuilder("a");
 		imglink.MergeAttribute("href", url);
 		imglink.InnerHtml = imgTag.ToString(TagRenderMode.SelfClosing);
-		imglink.MergeAttributes((IDictionary<string, string>)htmlAttributes, true);
+		imglink.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
 
 		return MvcHtmlString.Create(imglink.ToString());
 	}
@@ -47,16 +48,17 @@ public static class HTMLHelperExtensions
 	///<param name="helper"></param>
 	///<param name="src"></param>
 	///<param name="alt"></param>
+	///<param name="htmlAttributes"></param>
 	///<returns>MvcHtmlString</returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
-	public static MvcHtmlString Image(this HtmlHelper helper, string src, string alt = null)
+	public static MvcHtmlString Image(this HtmlHelper helper, string src, string alt = null, object htmlAttributes = null)
 	{
-
 		var tb = new TagBuilder("img");
 		tb.Attributes.Add("src", helper.Encode(src));
 		tb.Attributes.Add("alt", helper.Encode(alt));
+		tb.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
 		return MvcHtmlString.Create(tb.ToString(TagRenderMode.SelfClosing));
 	}
 
@@ -69,14 +71,13 @@ public static class HTMLHelperExtensions
 	/// <param name="htmlAttributes"></param>
 	/// <returns></returns>
 	/// <remarks>
-	/// 	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
 	/// </remarks>
 	public static MvcHtmlString Label(this HtmlHelper helper, string target, string text, object htmlAttributes = null)
 	{
 		var tb = new TagBuilder("label");
-
 		tb.MergeAttribute("for", target);
-		tb.MergeAttributes((IDictionary<string, string>)htmlAttributes, true);
+		tb.MergeAttributes(new RouteValueDictionary(htmlAttributes), true);
 		tb.SetInnerText(text);
 
 		return MvcHtmlString.Create(tb.ToString());

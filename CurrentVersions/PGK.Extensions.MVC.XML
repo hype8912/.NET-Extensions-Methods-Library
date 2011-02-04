@@ -85,19 +85,20 @@
             <param name="imgHtmlAttributes">Image html attributes</param>
             <returns>MvcHtmlString</returns>
              <remarks>
-             	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+             	Contributed by Michael T, http://about.me/MichaelTran
              </remarks>
         </member>
-        <member name="M:HTMLHelperExtensions.Image(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+        <member name="M:HTMLHelperExtensions.Image(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
             <summary>
              Returns an HTML image element for the given source and alt text.
             </summary>
             <param name="helper"></param>
             <param name="src"></param>
             <param name="alt"></param>
+            <param name="htmlAttributes"></param>
             <returns>MvcHtmlString</returns>
              <remarks>
-             	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+             	Contributed by Michael T, http://about.me/MichaelTran
              </remarks>
         </member>
         <member name="M:HTMLHelperExtensions.Label(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
@@ -110,7 +111,7 @@
             <param name="htmlAttributes"></param>
             <returns></returns>
             <remarks>
-            	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+            	Contributed by Michael T, http://about.me/MichaelTran
             </remarks>
         </member>
         <member name="T:HttpSessionStateBaseExtensions">
@@ -136,7 +137,7 @@
               </code>
             </example>
             <remarks>
-            	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+            	Contributed by Michael T, http://about.me/MichaelTran
             </remarks>
         </member>
         <member name="M:HttpSessionStateBaseExtensions.Ensure``1(System.Web.HttpSessionStateBase,System.String)">
@@ -156,7 +157,7 @@
               </code>
             </example>
             <remarks>
-            	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+            	Contributed by Michael T, http://about.me/MichaelTran
             </remarks>
         </member>
         <member name="M:HttpSessionStateBaseExtensions.Set(System.Web.HttpSessionStateBase,System.String,System.Object)">
@@ -175,7 +176,7 @@
               </code>
             </example>
             <remarks>
-            	Contributed by Michael T, http://stackoverflow.com/users/190249/michael-t
+            	Contributed by Michael T, http://about.me/MichaelTran
             </remarks>
         </member>
     </members>
