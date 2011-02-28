@@ -83,6 +83,9 @@ public static class HTMLHelperExtensions
 		return MvcHtmlString.Create(tb.ToString());
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	public static MvcHtmlString Tag(this HtmlHelper htmlHelper,
 			string tag = null,
 			string src = null, string href = null,
@@ -109,6 +112,9 @@ public static class HTMLHelperExtensions
 		return MvcHtmlString.Create(sb.ToString());
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	private static void AppendOptionalAttrib(HtmlHelper htmlHelper, StringBuilder sb,
 			string attribName, string attribValue, bool? encode = null,
 			bool? resolveAbsUrl = null, bool? validateScriptableIdent = null, bool? validateClass = null)
@@ -147,6 +153,9 @@ public static class HTMLHelperExtensions
 		sb.Append("\"");
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	private static bool IsValidClassValue(string value)
 	{
 		const string _123 = "1234567890";
@@ -156,6 +165,9 @@ public static class HTMLHelperExtensions
 		return value.All(c => abc123.Contains(c));
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	private static bool IsScriptableIdValue(string value)
 	{
 		const string _123 = "1234567890";
@@ -166,11 +178,17 @@ public static class HTMLHelperExtensions
 		return value.All(c => abc123.Contains(c));
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	public static MvcHtmlString CurrentAction(this HtmlHelper htmlHelper)
 	{
 		return MvcHtmlString.Create(htmlHelper.ViewContext.RouteData.Values["action"].ToString());
 	}
 
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	public static MvcHtmlString CurrentController(this HtmlHelper htmlHelper)
 	{
 		return MvcHtmlString.Create(htmlHelper.ViewContext.RouteData.Values["controller"].ToString());
@@ -180,4 +198,12 @@ public static class HTMLHelperExtensions
 	//{
 	//  return htmlHelper.BeginForm(Html.CurrentAction, Html.CurrentController, routeValues, method, htmlAttributes);
 	//}
+
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static MvcHtmlString Render(this HtmlHelper html, string content)
+	{
+		return MvcHtmlString.Create(content);
+	}
 }

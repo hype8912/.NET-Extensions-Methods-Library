@@ -10,6 +10,9 @@ public static class IViewExtensions
 	///<param name="view">Current view</param>
 	///<returns>View name</returns>
 	///<exception cref="InvalidOperationException"></exception>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
 	public static string GetWebFormViewName(this IView view)
 	{
 		if (view is WebFormView)
