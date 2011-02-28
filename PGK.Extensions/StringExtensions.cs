@@ -446,7 +446,7 @@ public static class StringExtensions
 	/// <summary>Convert text's case to a title case</summary>
 	public static string ToTitleCase(this string value)
 	{
-		return IfEmptyOrWhiteSpace(value, CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value));
+		return CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value);
 	}
 
 	public static string ToPlural(this string singular)
@@ -468,6 +468,8 @@ public static class StringExtensions
 		// -s suffix rule
 		return singular + "s";
 	}
+
+	
 
 	#endregion
 	#region Regex based extension methods
@@ -729,6 +731,19 @@ public static class StringExtensions
 		foreach (var c in value.Where(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
 			sb.Append(c);
 		return sb.ToString();
+	}
+
+	/// <summary>
+	/// Add space on every upper character
+	/// </summary>
+	/// <param name="value">The input string.</param>
+	/// <returns>The adjusted string.</returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static string SpaceOnUpper(this string value)
+	{
+		return Regex.Replace(value, "([A-Z])(?=[a-z])|(?<=[a-z])([A-Z]|[0-9]+)", " $1$2").TrimStart();
 	}
 
 	#endregion

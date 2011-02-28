@@ -152,5 +152,44 @@ namespace PGK.Extensions.Tests
 		{
 
 		}
+
+		[TestMethod]
+		public void ToTitleCase()
+		{
+			var testValue = "this is a test";
+			var expectedResult = "This Is A Test";
+			var weirdTestValue = "this IS a tEst";
+
+			var result = testValue.ToTitleCase();
+			var result2 = weirdTestValue.ToTitleCase();
+
+			Assert.AreEqual(result, expectedResult);
+			Assert.AreNotEqual(result, testValue);
+		}
+
+		[TestMethod]
+		public void SpaceOnUpper()
+		{
+			var value = "MyCamelCaseString";
+			var expectedResult = "My Camel Case String";
+
+			var numberTestValue = "MyCamel101CaseString";
+			var expectedNumberTestResult = "My Camel 101 Case String";
+
+			var allCaseTestValue = "MYCAMELCASESTRING";
+
+			var result = value.SpaceOnUpper();
+			var numberResult = numberTestValue.SpaceOnUpper();
+			var allCaseresult = allCaseTestValue.SpaceOnUpper();
+			
+			Assert.AreEqual(result, expectedResult);
+			Assert.AreNotEqual(result, value);
+
+			// should put space even for number
+			Assert.AreEqual(numberResult, expectedNumberTestResult);
+
+			// shouldn't change
+			Assert.AreEqual(allCaseresult, allCaseTestValue);
+		}
 	}
 }
