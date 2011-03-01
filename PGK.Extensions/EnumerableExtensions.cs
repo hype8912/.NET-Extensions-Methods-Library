@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 /// <summary>
 /// 	Extension methods for all kinds of (typed) enumerable data (Array, List, ...)
@@ -217,5 +218,51 @@ public static class EnumerableExtensions
 		var list = source.ToList();
 		list.RemoveAll(predicate);
 		return list;
+	}
+
+	///<summary>
+	/// Turn the list of objects to a string of Common Seperated Value
+	///</summary>
+	///<param name="source"></param>
+	///<param name="separator"></param>
+	///<typeparam name="T"></typeparam>
+	///<returns></returns>
+	/// <example>
+	/// 	<code>
+	/// 		var values = new[] { 1, 2, 3, 4, 5 };
+	///			string csv = values.ToCSV(';');
+	/// 	</code>
+	/// </example>
+	/// <remarks>
+	/// 	Contributed by Moses, http://mosesofegypt.net
+	/// </remarks>
+	public static string ToCSV<T>(this IEnumerable<T> source, char separator)
+	{
+		if (source == null)
+			return string.Empty;
+
+		var csv = new StringBuilder();
+		source.ForEach(value => csv.AppendFormat("{0}{1}", value, separator));
+		return csv.ToString(0, csv.Length - 1);
+	}
+
+	///<summary>
+	/// Turn the list of objects to a string of Common Seperated Value
+	///</summary>
+	///<param name="source"></param>
+	///<typeparam name="T"></typeparam>
+	///<returns></returns>
+	/// <example>
+	/// 	<code>
+	/// 		var values = new[] {1, 2, 3, 4, 5};
+	///			string csv = values.ToCSV();
+	/// 	</code>
+	/// </example>
+	/// <remarks>
+	/// 	Contributed by Moses, http://mosesofegypt.net
+	/// </remarks>
+	public static string ToCSV<T>(this IEnumerable<T> source)
+	{
+		return source == null ? string.Empty : source.ToCSV(',');
 	}
 }

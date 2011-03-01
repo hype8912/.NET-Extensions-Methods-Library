@@ -191,5 +191,25 @@ namespace PGK.Extensions.Tests
 			// shouldn't change
 			Assert.AreEqual(allCaseresult, allCaseTestValue);
 		}
+
+		[TestMethod]
+		public void ToCSV_Should_Return_Correct_Comma_Separated_Values()
+		{
+			var values = new[] { 1, 2, 3, 4, 5 };
+
+			string csv = values.ToCSV();
+
+			Assert.AreEqual("1,2,3,4,5", csv);
+		}
+
+		[TestMethod]
+		public void ToCSV_Should_Return_Correct_Comma_Separated_Values_Using_Specified_Separator()
+		{
+			var values = new[] { 1, 2, 3, 4, 5 };
+
+			string csv = values.ToCSV(';');
+
+			Assert.AreEqual("1;2;3;4;5", csv);
+		}
 	}
 }
