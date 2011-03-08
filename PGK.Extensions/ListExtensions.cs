@@ -107,7 +107,7 @@ public static class ListExtensions
 			{
 				for (var i = 0; i < list.Count; i++)
 				{
-					if (i != list.Count)
+					if (i != list.Count - 1)
 						result += list[i] + joinString;
 					else
 						result += list[i];
