@@ -210,4 +210,75 @@ public static class ListExtensions
 		list.AddRange(source.OfType<T>());
 		return list;
 	}
+
+	#region Merge
+
+	/// <summary>The merge.</summary>
+	/// <param name="lists">The lists.</param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static List<T> Merge<T>(params List<T>[] lists)
+	{
+		var merged = new List<T>();
+		foreach (var list in lists) merged.Merge(list);
+		return merged;
+	}
+
+	/// <summary>The merge.</summary>
+	/// <param name="match">The match.</param>
+	/// <param name="lists">The lists.</param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static List<T> Merge<T>(Expression<Func<T, object>> match, params List<T>[] lists)
+	{
+		var merged = new List<T>();
+		foreach (var list in lists) merged.Merge(list, match);
+		return merged;
+	}
+
+	/// <summary>The merge.</summary>
+	/// <param name="list1">The list 1.</param>
+	/// <param name="list2">The list 2.</param>
+	/// <param name="match">The match.</param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static List<T> Merge<T>(this List<T> list1, List<T> list2, Expression<Func<T, object>> match)
+	{
+		if (list1 != null && list2 != null && match != null)
+		{
+			var matchFunc = match.Compile();
+			foreach (var item in list2)
+			{
+				var key = matchFunc(item);
+				if (!list1.Exists(i => matchFunc(i).Equals(key))) list1.Add(item);
+			}
+		}
+
+		return list1;
+	}
+
+	/// <summary>The merge.</summary>
+	/// <param name="list1">The list 1.</param>
+	/// <param name="list2">The list 2.</param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	/// <remarks>
+	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// </remarks>
+	public static List<T> Merge<T>(this List<T> list1, List<T> list2)
+	{
+		if (list1 != null && list2 != null) foreach (var item in list2.Where(item => !list1.Contains(item))) list1.Add(item);
+		return list1;
+	}
+
+	#endregion
 }
