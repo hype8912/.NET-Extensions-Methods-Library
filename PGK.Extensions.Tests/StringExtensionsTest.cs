@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Security;
 
 namespace PGK.Extensions.Tests
 {
@@ -191,5 +192,13 @@ namespace PGK.Extensions.Tests
 			// shouldn't change
 			Assert.AreEqual(allCaseresult, allCaseTestValue);
 		}
+
+        [TestMethod]
+        public void SecureStringConversion()
+        {
+            string testValue = @"asdf";
+            SecureString validationValue = testValue.ToSecureString();
+            Assert.AreEqual(testValue, validationValue.ToUnsecureString());
+        }
 	}
 }
