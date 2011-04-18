@@ -388,4 +388,32 @@ public static class DateTimeExtensions {
 
         return calendar.GetWeekOfYear(dateTime, dateTimeFormat.CalendarWeekRule, dateTimeFormat.FirstDayOfWeek);
     }
+
+    /// <summary>
+    ///     Indicates whether the specified date is Easter in the Christian calendar.
+    /// </summary>
+    /// <param name="date">Instance value.</param>
+    /// <returns>True if the instance value is a valid Easter Date.</returns>
+    public static bool IsEaster(this DateTime date)
+    {
+        int Y = date.Year;
+        int a = Y % 19;
+        int b = Y / 100;
+        int c = Y % 100;
+        int d = b / 4;
+        int e = b % 4;
+        int f = (b + 8) / 25;
+        int g = (b - f + 1) / 3;
+        int h = (19 * a + b - d - g + 15) % 30;
+        int i = c / 4;
+        int k = c % 4;
+        int L = (32 + 2 * e + 2 * i - h - k) % 7;
+        int m = (a + 11 * h + 22 * L) / 451;
+        int Month = (h + L - 7 * m + 114) / 31;
+        int Day = ((h + L - 7 * m + 114) % 31) + 1;
+
+        DateTime dtEasterSunday = new DateTime(Y, Month, Day);
+
+        return date == dtEasterSunday;
+    }
 }

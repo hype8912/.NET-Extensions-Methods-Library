@@ -61,6 +61,14 @@ namespace PGK.Extensions.Tests
             result.Should().Not.Equal(0);
         }
 
+        [TestMethod]
+        public void TestIsEaster()
+        {
+            DateTime dtR = new DateTime(2011, 4, 24);
+            DateTime dtW = new DateTime(2011, 4, 25);
 
+            Assert.IsTrue(dtR.IsEaster());
+            Assert.IsFalse(dtW.IsEaster());
+        }
 	}
 }
