@@ -44,7 +44,7 @@ public static class IntExtensions
 	/// <returns>true or false</returns>
 	public static bool IsOdd(this int value)
 	{
-		return !IsEven(value);
+        return value % 2 != 0;
 	}
 
 	/// <summary>Checks whether the value is in range</summary>
@@ -65,4 +65,34 @@ public static class IntExtensions
 	{
 		return value.InRange(minValue, maxValue) ? value : defaultValue;
 	}
+
+    /// <summary>
+    /// A prime number (or a prime) is a natural number that has exactly two distinct natural number divisors: 1 and itself.
+    /// </summary>
+    /// <param name="candidate">Object value</param>
+    /// <returns>Returns true if the value is a prime number.</returns>
+    public static bool IsPrime(this int candidate)
+    {
+        if ((candidate & 1) == 0)
+        {
+            if (candidate == 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        for (int i = 3; (i * i) <= candidate; i += 2)
+        {
+            if ((candidate % i) == 0)
+            {
+                return false;
+            }
+        }
+
+        return candidate != 1;
+    }
 }
