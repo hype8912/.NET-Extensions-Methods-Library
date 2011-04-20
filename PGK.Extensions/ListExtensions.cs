@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using System.Text;
 
 /// <summary>
 /// 	Extension methods for all kind of Lists implementing the IList&lt;T&gt; interface
@@ -97,26 +98,35 @@ public static class ListExtensions
 	/// </returns>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://about.me/MichaelTran
+    /// 	Optimised by Mario Majcica
 	/// </remarks>
 	public static string Join<T>(this IList<T> list, string joinString)
 	{
-		var result = string.Empty;
-		if (list != null && list.Count > 0)
-		{
-			if (list.Count > 1)
-			{
-				for (var i = 0; i < list.Count; i++)
-				{
-					if (i != list.Count - 1)
-						result += list[i] + joinString;
-					else
-						result += list[i];
-				}
-			}
-			else
-				result = list[0].ToString();
-		}
-		return result;
+        StringBuilder result = new StringBuilder();
+
+        int listCount = list.Count;
+        int listCountMinusOne = listCount - 1;
+
+        if (list != null && listCount > 0)
+        {
+            if (listCount > 1)
+            {
+                for (var i = 0; i < listCount; i++)
+                {
+                    if (i != listCountMinusOne)
+                    {
+                        result.Append(list[i]);
+                        result.Append(joinString);
+                    }
+                    else
+                        result.Append(list[i]);
+                }
+            }
+            else
+                result.Append(list[0]);
+        }
+
+        return result.ToString();
 	}
 
 	/// <summary>
