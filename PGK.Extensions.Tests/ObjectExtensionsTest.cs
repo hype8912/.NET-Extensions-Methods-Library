@@ -12,13 +12,13 @@ namespace PGK.Extensions.Tests
 		public void TestCastTo()
 		{
 			// Arrange
-			var value = "test";
+			string value = "test";
 
 			// Act
-			var result = value.CastTo<Int32>();
+			int result = value.CastTo<Int32>();
 
 			// Assert
-			result.Should().Equal(null);
+			result.Should().Equal(default(int));
 		}
 
 		[TestMethod]

@@ -479,6 +479,9 @@ public static class ObjectExtensions
 	/// </remarks>
 	public static T CastTo<T>(this object value)
 	{
+        if (value == null || !(value is T))
+            return default(T);
+
 		return (T)value;
 	}
 
