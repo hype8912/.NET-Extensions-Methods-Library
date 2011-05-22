@@ -93,6 +93,37 @@ public static class StringExtensions {
     }
 
     /// <summary>
+    /// Centers a charters in this string, padding in both, left and right, by specified Unicode character,
+    /// for a specified total lenght.
+    /// </summary>
+    /// <param name="value">Instance value.</param>
+    /// <param name="width">The number of characters in the resulting string, 
+    /// equal to the number of original characters plus any additional padding characters.
+    /// </param>
+    /// <param name="padChar">A Unicode padding character.</param>
+    /// <param name="truncate">Should get only the substring of specified width if string width is 
+    /// more than the specified width.</param>
+    /// <returns>A new string that is equivalent to this instance, 
+    /// but center-aligned with as many paddingChar characters as needed to create a 
+    /// length of width paramether.</returns>
+    public static string PadBoth(this string value, int width, char padChar, bool truncate = false)
+    {
+        int diff = width - value.Length;
+        if (diff == 0 || diff < 0 && !(truncate))
+        {
+            return value;
+        }
+        else if (diff < 0)
+        {
+            return value.Substring(0, width);
+        }
+        else
+        {
+            return value.PadLeft(width - diff / 2, padChar).PadRight(width, padChar);
+        }
+    }
+
+    /// <summary>
     /// 	Loads the string into a LINQ to XML XDocument
     /// </summary>
     /// <param name = "xml">The XML string.</param>
