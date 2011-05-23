@@ -80,6 +80,7 @@
     <Compile Include="DateTimeOffsetExtensions.cs" />
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="DirectoryInfoExtensions.cs" />
+    <Compile Include="DrawingExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
