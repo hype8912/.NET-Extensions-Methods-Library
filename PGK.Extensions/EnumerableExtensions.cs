@@ -265,4 +265,29 @@ public static class EnumerableExtensions
 	{
 		return source == null ? string.Empty : source.ToCSV(',');
 	}
+
+    /// <summary>
+    /// Returns true if the <paramref name="source"/> is null or without any items.
+    /// </summary>
+	public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
+	{
+		return (source == null || !source.Any());
+	}
+
+    /// <summary>
+    /// Returns true if the <paramref name="source"/> is contains at least one item.
+    /// </summary>
+	public static bool IsNotEmpty<T>(this IEnumerable<T> source)
+	{
+		return !source.IsNullOrEmpty();
+	}
+
+    /// <summary>
+    /// Returns the first item or the <paramref name="defaultValue"/> if the <paramref name="source"/>
+    /// does not contain any item.
+    /// </summary>
+	public static T FirstOrDefault<T>(this IEnumerable<T> source, T defaultValue)
+	{
+		return (source.IsNotEmpty() ? source.First() : defaultValue);
+	}
 }
