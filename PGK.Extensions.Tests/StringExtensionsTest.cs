@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Security;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PGK.Extensions.Tests
@@ -110,6 +112,8 @@ namespace PGK.Extensions.Tests
         [TestMethod]
         public void TestIsnumeric()
         {
+            SetDotAsDecimalSeparator();
+
             /* positive testing */
             var validationValue = "12345";
             Assert.IsTrue(validationValue.IsNumeric());
@@ -214,6 +218,14 @@ namespace PGK.Extensions.Tests
             string testValue = @"asdf";
             SecureString validationValue = testValue.ToSecureString();
             Assert.AreEqual(testValue, validationValue.ToUnsecureString());
+        }
+
+        private static void SetDotAsDecimalSeparator()
+        {
+            var copy = Thread.CurrentThread.CurrentCulture.Clone().CastTo<CultureInfo>();
+
+            copy.NumberFormat.NumberDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture = copy;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using PGK.Extensions.SystemDependencies;
 
 /// <summary>
 /// 	Extension methods for the DateTimeOffset data type.
@@ -23,7 +24,7 @@ public static class DateTimeExtensions {
     /// <param name = "dateOfBirth">The date of birth.</param>
     /// <returns>The calculated age.</returns>
     public static int CalculateAge(this DateTime dateOfBirth) {
-        return CalculateAge(dateOfBirth, DateTime.Today);
+        return CalculateAge(dateOfBirth, Clock.Now.Date);
     }
 
     /// <summary>

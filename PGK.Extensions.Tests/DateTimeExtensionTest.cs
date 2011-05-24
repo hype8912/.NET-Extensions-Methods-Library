@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PGK.Extensions.SystemDependencies;
 using Should.Fluent;
 
 namespace PGK.Extensions.Tests
@@ -25,25 +26,30 @@ namespace PGK.Extensions.Tests
         [TestMethod]
         public void TestCalculateAge()
         {
+            const int defaultValue = 25;
+            const int smallValue = 24;
+            const int bigValue = 26;
+            var birthDate = new DateTime(1984, 12, 26);
+            var dayBefore26Th = birthDate.AddYears(defaultValue + 1).AddDays(-1);
+
             // Arrange
-            var value = new DateTime(1984, 12, 26);
-            var futureDate = new DateTime(2011, 01, 01);
-            var defaultValue = 25;
-            var smallValue = 24;
-            var bigValue = 26;
+            using (new SubstituteForSystemDate(dayBefore26Th))
+            {
+                var futureDate = new DateTime(2011, 01, 01);
             
-            // Act
-            var result = value.CalculateAge();
-            var futureResult = value.CalculateAge(futureDate);
+                // Act
+                var result = birthDate.CalculateAge();
+                var futureResult = birthDate.CalculateAge(futureDate);
 
-            // Assert
-            result.Should().Equal(defaultValue);
-            result.Should().Not.Equal(smallValue);
-            result.Should().Not.Equal(bigValue);
+                // Assert
+                result.Should().Equal(defaultValue);
+                result.Should().Not.Equal(smallValue);
+                result.Should().Not.Equal(bigValue);
 
-            futureResult.Should().Equal(bigValue);
-            futureResult.Should().Not.Equal(smallValue);
-            futureResult.Should().Not.Equal(defaultValue);
+                futureResult.Should().Equal(bigValue);
+                futureResult.Should().Not.Equal(smallValue);
+                futureResult.Should().Not.Equal(defaultValue);
+            }
         }
 
         [TestMethod]
