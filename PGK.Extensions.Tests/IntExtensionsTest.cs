@@ -72,5 +72,14 @@ namespace PGK.Extensions.Tests
                 Assert.IsFalse(nonPrimes[i].IsPrime());
             }
         }
+
+        [TestMethod]
+        public void TestToOrdinal()
+        {
+            string s3000001 = "3000001st";
+            int i3000001 = 3000001;
+
+            Assert.AreEqual(s3000001, i3000001.ToOrdinal());
+        }
 	}
 }
