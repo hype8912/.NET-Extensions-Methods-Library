@@ -63,6 +63,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringBuilderExtensionsTests.cs" />
     <Compile Include="DbConnectionExtensionsTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
     <Compile Include="DateTimeExtensionTest.cs" />
