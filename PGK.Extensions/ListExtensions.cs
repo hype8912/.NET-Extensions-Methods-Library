@@ -11,15 +11,21 @@ using System.Text;
 /// </summary>
 public static class ListExtensions
 {
-	/// <summary>
-	/// 	Inserts an item uniquely to to a list and returns a value whether the item was inserted or not.
-	/// </summary>
-	/// <typeparam name = "T">The generic list item type.</typeparam>
-	/// <param name = "list">The list to be inserted into.</param>
-	/// <param name = "index">The index to insert the item at.</param>
-	/// <param name = "item">The item to be added.</param>
-	/// <returns>Indicates whether the item was inserted or not</returns>
-	public static bool InsertUnqiue<T>(this IList<T> list, int index, T item)
+    [Obsolete("Wrong orthography.  Use InsertUnique")]
+    public static bool InsertUnqiue<T>(this IList<T> list, int index, T item)
+	{
+		return list.InsertUnique(index, item);
+	}
+
+    /// <summary>
+    /// 	Inserts an item uniquely to to a list and returns a value whether the item was inserted or not.
+    /// </summary>
+    /// <typeparam name = "T">The generic list item type.</typeparam>
+    /// <param name = "list">The list to be inserted into.</param>
+    /// <param name = "index">The index to insert the item at.</param>
+    /// <param name = "item">The item to be added.</param>
+    /// <returns>Indicates whether the item was inserted or not</returns>
+    public static bool InsertUnique<T>(this IList<T> list, int index, T item)
 	{
 		if (list.Contains(item) == false)
 		{
@@ -39,7 +45,7 @@ public static class ListExtensions
 	/// <returns>The amount if items that were inserted.</returns>
 	public static int InsertRangeUnique<T>(this IList<T> list, int startIndex, IEnumerable<T> items)
 	{
-		var index = startIndex + items.Count(item => list.InsertUnqiue(startIndex, item));
+		var index = startIndex + items.Reverse().Count(item => list.InsertUnique(startIndex, item));
 		return (index - startIndex);
 	}
 

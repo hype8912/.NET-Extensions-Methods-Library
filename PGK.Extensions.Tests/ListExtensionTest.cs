@@ -33,18 +33,18 @@ namespace PGK.Extensions.Tests
         }
 
         [TestMethod]
-        public void InsertUnqiueTest()
+        public void InsertUniqueTest()
         {
             var actual = new List<int> { 1, 2, 3, 4, 5 };
             var expected = new List<int>(actual);
-            actual.InsertUnqiue<int>(1, 3);
+            actual.InsertUnique<int>(1, 3);
 
             Assert.AreEqual(actual.Count, expected.Count, "A not unique item was inserted");
 
             for (int i = 0; i < actual.Count; i++)
                 Assert.AreEqual(expected[i], actual[i]);
 
-            actual.InsertUnqiue<int>(2, 6);
+            actual.InsertUnique<int>(2, 6);
 
             Assert.AreEqual(actual.Count, expected.Count + 1);
             Assert.AreEqual(actual[2], 6, "Item not correctly inserted");
@@ -65,7 +65,7 @@ namespace PGK.Extensions.Tests
             //bug: a revert collection is beeing inserted
             //test will fail here
             for (int i = 0; i < actual.Count; i++)
-                Assert.AreEqual(expected[i], actual[i]);
+                Assert.AreEqual(expected[i], actual[i], "Incorrect at index {0}".FormatWith(i));
         }
     }
 }
