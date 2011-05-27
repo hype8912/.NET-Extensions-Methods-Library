@@ -35,17 +35,24 @@ namespace PGK.Extensions.Tests
 		}
 
 		[TestMethod]
-		public void TestConvertToAgainstStringOnly()
+		public void TestConvertToAndIgnoreException()
 		{
-			// Arrange
-			var value = "test";
+			const string invalidValue = "test";
+			const string stringValue = "1234";
+			const int value = 1234;
+			const int defaultValue = 999;
 
-			// Act
-			var result = value.ConvertTo<int>();
+            invalidValue.ConvertToAndIgnoreException<int>().Should().Equal(0);
+            invalidValue.ConvertToAndIgnoreException(defaultValue).Should().Equal(defaultValue);
 
-			// Assert
-			result.Should().Equal(0);
-			result.Should().Not.Equal(value);
+            stringValue.ConvertToAndIgnoreException<int>().Should().Equal(value);
+            stringValue.ConvertToAndIgnoreException(defaultValue).Should().Equal(value);
+		}
+
+        [TestMethod, ExpectedException(typeof(Exception))]
+		public void TestConvertToAgainstNotConvertibleStringOnly()
+		{
+			"NotConvertibleToInt".ConvertTo<int>();
 		}
 
 		[TestMethod]

@@ -44,7 +44,11 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// 	Converts an object to the specified target type or returns the default value.
+	/// 	Converts an object to the specified target type or returns the default value if
+	///     those 2 types are not convertible.
+	///     <para>
+	///     If the <paramref name="value"/> can't be convert even if the types are 
+	///     convertible with each other, an exception is thrown.</para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
@@ -56,6 +60,35 @@ public static class ObjectExtensions
 
 	/// <summary>
 	/// 	Converts an object to the specified target type or returns the default value.
+    ///     <para>Any exceptions are ignored. </para>
+	/// </summary>
+	/// <typeparam name = "T"></typeparam>
+	/// <param name = "value">The value.</param>
+	/// <returns>The target type</returns>
+	public static T ConvertToAndIgnoreException<T>(this object value)
+	{
+        return value.ConvertToAndIgnoreException(default(T));
+	}
+
+	/// <summary>
+	/// 	Converts an object to the specified target type or returns the default value.
+    ///     <para>Any exceptions are ignored. </para>
+	/// </summary>
+	/// <typeparam name = "T"></typeparam>
+	/// <param name = "value">The value.</param>
+	/// <param name = "defaultValue">The default value.</param>
+	/// <returns>The target type</returns>
+	public static T ConvertToAndIgnoreException<T>(this object value, T defaultValue)
+	{
+	    return value.ConvertTo(defaultValue, true);
+	}
+
+	/// <summary>
+    /// 	Converts an object to the specified target type or returns the default value if
+    ///     those 2 types are not convertible.
+    ///     <para>
+    ///     If the <paramref name="value"/> can't be convert even if the types are 
+    ///     convertible with each other, an exception is thrown.</para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
@@ -87,7 +120,12 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// 	Converts an object to the specified target type or returns the default value. Any exceptions are optionally ignored.
+    /// 	Converts an object to the specified target type or returns the default value if
+    ///     those 2 types are not convertible.
+    ///     <para>Any exceptions are optionally ignored (<paramref name="ignoreException"/>).</para>
+    ///     <para>
+    ///     If the exceptions are not ignored and the <paramref name="value"/> can't be convert even if 
+    ///     the types are convertible with each other, an exception is thrown.</para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
