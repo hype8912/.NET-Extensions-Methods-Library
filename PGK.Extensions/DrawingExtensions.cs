@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace PGK.Extensions
 {
@@ -62,6 +63,47 @@ namespace PGK.Extensions
             }
 
             return splitIcons.ToArray();
+        }
+
+        /// <summary>
+        /// Serializes the image in an byte array
+        /// </summary>
+        /// <param name="image">Instance value.</param>
+        /// <param name="format">Specifies the format of the image.</param>
+        /// <returns>The image serialized as byte array.</returns>
+        public static byte[] ToBytes(this Image image, ImageFormat format)
+        {
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (format == null)
+                throw new ArgumentNullException("format");
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, format);
+                return stream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets the bounds of the image in pixels
+        /// </summary>
+        /// <param name="image">Instance value.</param>
+        /// <returns>A rectangle that has the same hight and width as given image.</returns>
+        public static Rectangle GetBounds(this Image image)
+        {
+            return new Rectangle(0, 0, image.Width, image.Height);
+        }
+
+        /// <summary>
+        /// Gets the rectangle that sorrounds the given point by a specified distance.
+        /// </summary>
+        /// <param name="p">Instance value.</param>
+        /// <param name="distance">Distance that will be used to surround the point.</param>
+        /// <returns>Rectangle that sorrounds the given point by a specified distance.</returns>
+        public static Rectangle Surround(this Point p, int distance)
+        {
+            return new Rectangle(p.X - distance, p.Y - distance, distance * 2, distance * 2);
         }
     }
 }
