@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +10,7 @@ namespace PGK.Extensions.Tests
     [TestClass]
     public class ListExtensionTest
     {
+
         [TestMethod]
         public void TestJoinT()
         {
@@ -29,9 +31,15 @@ namespace PGK.Extensions.Tests
                 if (i != 99)
                     expected += ", ";
             }
-            Assert.AreEqual(list.Join<int>(", "),expected);
+            Assert.AreEqual(list.Join<int>(", "), expected);
         }
 
+        /// <summary>
+        ///A test for InsertUnique
+        ///</summary>
+        /// <remarks>
+        /// 	Contributed by dkillewo, http://www.codeplex.com/site/users/view/dkillewo
+        /// </remarks>
         [TestMethod]
         public void InsertUniqueTest()
         {
@@ -50,6 +58,12 @@ namespace PGK.Extensions.Tests
             Assert.AreEqual(actual[2], 6, "Item not correctly inserted");
         }
 
+        /// <summary>
+        ///A test for InsertRanfeUnique
+        ///</summary>
+        /// <remarks>
+        /// 	Contributed by dkillewo, http://www.codeplex.com/site/users/view/dkillewo
+        /// </remarks>
         [TestMethod]
         public void InsertRangeUniqueTest()
         {
@@ -62,10 +76,45 @@ namespace PGK.Extensions.Tests
 
             Assert.AreEqual(expected.Count, actual.Count, "Wrong amount of items inserted");
 
-            //bug: a revert collection is beeing inserted
-            //test will fail here
             for (int i = 0; i < actual.Count; i++)
                 Assert.AreEqual(expected[i], actual[i], "Incorrect at index {0}".FormatWith(i));
         }
+
+        /// <summary>
+        ///A test for IndexOfTest
+        ///</summary>
+        /// <remarks>
+        /// 	Contributed by dkillewo, http://www.codeplex.com/site/users/view/dkillewo
+        /// </remarks>
+        [TestMethod]
+        public void IndexOfTest()
+        {
+            var actual = new List<int> { 1, 2, 3, 4, 5 };
+            Assert.AreEqual(2, actual.IndexOf(n => n == 3));
+            Assert.AreNotEqual(3, actual.IndexOf(n => n == 6));
+        }
+
+        /// <summary>
+        ///A test for MergeTest
+        ///</summary>
+        /// <remarks>
+        /// 	Contributed by dkillewo, http://www.codeplex.com/site/users/view/dkillewo
+        /// </remarks>
+        [TestMethod]
+        public void MergeTest()
+        {
+            var list1 = new List<int> {1, 2, 3, 4, 5};
+            var list2 = new List<int> {6, 7, 8, 9, 10};
+            var expected = new List<int>(list1);
+            expected.InsertRange(list1.Count, list2);
+            var actual = list1.Merge(list2);
+            var invalidList = new List<int>(expected);
+            invalidList.Remove(4);
+
+            Should.Core.Assertions.Assert.Equal(expected,actual);
+            Should.Core.Assertions.Assert.Equal(expected,list1);
+            Should.Core.Assertions.Assert.NotEqual(invalidList, actual);
+        }
+
     }
 }
