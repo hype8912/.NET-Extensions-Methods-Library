@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="LongExtensionsTest.cs" />
     <Compile Include="FileInfoExtensionsTest.cs" />
+    <Compile Include="RhinoMocks\MethodOptionsExtensionsTest.cs" />
     <Compile Include="StringBuilderExtensionsTests.cs" />
     <Compile Include="DbConnectionExtensionsTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
@@ -83,6 +84,10 @@
     <Compile Include="StringExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PGK.Extensions.RhinoMocks\PGK.Extensions.RhinoMocks.csproj">
+      <Project>{7C0DCE9B-4824-4406-924A-38B14A120DEC}</Project>
+      <Name>PGK.Extensions.RhinoMocks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PGK.Extensions\PGK.Extensions.csproj">
       <Project>{1CA53630-FE88-4618-BA42-78CF7F9FC1B3}</Project>
       <Name>PGK.Extensions</Name>
