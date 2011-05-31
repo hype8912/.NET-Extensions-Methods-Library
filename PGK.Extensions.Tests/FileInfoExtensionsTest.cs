@@ -15,7 +15,7 @@ namespace PGK.Extensions.Tests
     [TestClass()]
     public class FileInfoExtensionsTest
     {
-        const string TestDir = "C:\\PGTestFolder\\"
+        private const string TestDir = "C:\\PGTestFolder\\";
 
         #region Additional test attributes
         // 
