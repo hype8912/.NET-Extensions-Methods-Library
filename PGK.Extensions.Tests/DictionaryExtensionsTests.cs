@@ -86,6 +86,22 @@ namespace PGK.Extensions.Tests
 		}
 
 		[TestMethod]
+        public void GetFirstValue()
+		{
+		    const string defaultValue = "Default";
+            var dictionary = new Dictionary<int, string>
+			                          {
+			                          	{1, "a"},
+			                          	{2, "b"},
+			                          	{3, "c"},
+			                          };
+
+            dictionary.GetFirstValue(defaultValue, 3, 2, 1).Should().Equal(dictionary[3]);
+            dictionary.GetFirstValue(defaultValue, 9, 8, 1, 3).Should().Equal(dictionary[1]);
+            dictionary.GetFirstValue(defaultValue, 9, 8).Should().Equal(defaultValue);
+		}
+
+		[TestMethod]
 		public void TestToHashTable()
 		{
 			// Arrange

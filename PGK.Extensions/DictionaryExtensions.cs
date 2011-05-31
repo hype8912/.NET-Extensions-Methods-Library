@@ -49,4 +49,21 @@ public static class DictionaryExtensions
 
 		return table;
 	}
+
+    /// <summary>
+    /// Returns the value of the first entry found with one of the <paramref name="keys"/> received.
+    /// <para>Returns <paramref name="defaultValue"/> if none of the keys exists in this collection </para>
+    /// </summary>
+    /// 
+    /// <param name="defaultValue">Default value if none of the keys </param>
+    /// <param name="keys"> keys to search for (in order) </param>
+	public static TValue GetFirstValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TValue defaultValue, params TKey[] keys)
+	{
+        foreach (var key in keys)
+        {
+            if (dictionary.ContainsKey(key))
+                return dictionary[key];
+        }
+		return defaultValue;
+	}
 }
