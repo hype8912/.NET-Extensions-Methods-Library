@@ -43,4 +43,34 @@ public static class ArrayExtension
 	{
 		return source != null && index >= source.GetLowerBound(dimension) && index <= source.GetUpperBound(dimension);
 	}
+
+
+    /// <summary>
+    /// Combine two arrays into one.
+    /// </summary>
+    /// <typeparam name="T">Type of Array</typeparam>
+    /// <param name="combineWith">Base array in which arrayToCombine will add.</param>
+    /// <param name="arrayToCombine">Array to combine with Base array.</param>
+    /// <returns></returns>
+    /// <example>
+    /// 	<code>
+    /// 		int[] arrayOne = new[] { 1, 2, 3, 4 };
+    /// 		int[] arrayTwo = new[] { 5, 6, 7, 8 };
+    /// 		Array combinedArray = arrayOne.CombineArray<int>(arrayTwo);
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
+    /// </remarks>
+    /// 
+    public static T[] CombineArray<T>(this T[] combineWith, T[] arrayToCombine)
+    {
+        if (combineWith != default(T[]) && arrayToCombine != default(T[]))
+        {
+            int initialSize = combineWith.Length;
+            Array.Resize<T>(ref combineWith, initialSize + arrayToCombine.Length);
+            Array.Copy(arrayToCombine, arrayToCombine.GetLowerBound(0), combineWith, initialSize, arrayToCombine.Length);
+        }
+        return combineWith;
+    }
 }
