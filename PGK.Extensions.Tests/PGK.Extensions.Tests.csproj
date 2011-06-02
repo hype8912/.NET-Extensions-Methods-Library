@@ -68,6 +68,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteArrayExtensionsTest.cs" />
     <Compile Include="LongExtensionsTest.cs" />
     <Compile Include="FileInfoExtensionsTest.cs" />
     <Compile Include="RhinoMocks\MethodOptionsExtensionsTest.cs" />
