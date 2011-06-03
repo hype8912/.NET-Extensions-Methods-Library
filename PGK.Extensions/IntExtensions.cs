@@ -5,66 +5,66 @@
 /// </summary>
 public static class IntExtensions
 {
-	/// <summary>
-	/// 	Performs the specified action n times based on the underlying int value.
-	/// </summary>
-	/// <param name = "value">The value.</param>
-	/// <param name = "action">The action.</param>
-	public static void Times(this int value, Action action)
-	{
-	    value.AsLong().Times(action);
-	}
+    /// <summary>
+    /// 	Performs the specified action n times based on the underlying int value.
+    /// </summary>
+    /// <param name = "value">The value.</param>
+    /// <param name = "action">The action.</param>
+    public static void Times(this int value, Action action)
+    {
+        value.AsLong().Times(action);
+    }
 
-	/// <summary>
-	/// 	Performs the specified action n times based on the underlying int value.
-	/// </summary>
-	/// <param name = "value">The value.</param>
-	/// <param name = "action">The action.</param>
-	public static void Times(this int value, Action<int> action)
-	{
+    /// <summary>
+    /// 	Performs the specified action n times based on the underlying int value.
+    /// </summary>
+    /// <param name = "value">The value.</param>
+    /// <param name = "action">The action.</param>
+    public static void Times(this int value, Action<int> action)
+    {
         // NOTE: Is it possible to reuse LongExtensions for this call?
         for (var i = 0; i < value; i++)
-			action(i);
-	}
+            action(i);
+    }
 
-	/// <summary>
-	/// 	Determines whether the value is even
-	/// </summary>
-	/// <param name = "value">The Value</param>
-	/// <returns>true or false</returns>
-	public static bool IsEven(this int value)
-	{
-		return value.AsLong().IsEven();
-	}
+    /// <summary>
+    /// 	Determines whether the value is even
+    /// </summary>
+    /// <param name = "value">The Value</param>
+    /// <returns>true or false</returns>
+    public static bool IsEven(this int value)
+    {
+        return value.AsLong().IsEven();
+    }
 
-	/// <summary>
-	/// 	Determines whether the value is odd
-	/// </summary>
-	/// <param name = "value">The Value</param>
-	/// <returns>true or false</returns>
-	public static bool IsOdd(this int value)
-	{
+    /// <summary>
+    /// 	Determines whether the value is odd
+    /// </summary>
+    /// <param name = "value">The Value</param>
+    /// <returns>true or false</returns>
+    public static bool IsOdd(this int value)
+    {
         return value.AsLong().IsOdd();
-	}
+    }
 
-	/// <summary>Checks whether the value is in range</summary>
-	/// <param name="value">The Value</param>
-	/// <param name="minValue">The minimum value</param>
-	/// <param name="maxValue">The maximum value</param>
-	public static bool InRange(this int value, int minValue, int maxValue)
-	{
+    /// <summary>Checks whether the value is in range</summary>
+    /// <param name="value">The Value</param>
+    /// <param name="minValue">The minimum value</param>
+    /// <param name="maxValue">The maximum value</param>
+    public static bool InRange(this int value, int minValue, int maxValue)
+    {
         return value.AsLong().InRange(minValue, maxValue);
-	}
+    }
 
-	/// <summary>Checks whether the value is in range or returns the default value</summary>
-	/// <param name="value">The Value</param>
-	/// <param name="minValue">The minimum value</param>
-	/// <param name="maxValue">The maximum value</param>
-	/// <param name="defaultValue">The default value</param>
-	public static int InRange(this int value, int minValue, int maxValue, int defaultValue)
-	{
-		return (int)value.AsLong().InRange(minValue, maxValue, defaultValue);
-	}
+    /// <summary>Checks whether the value is in range or returns the default value</summary>
+    /// <param name="value">The Value</param>
+    /// <param name="minValue">The minimum value</param>
+    /// <param name="maxValue">The maximum value</param>
+    /// <param name="defaultValue">The default value</param>
+    public static int InRange(this int value, int minValue, int maxValue, int defaultValue)
+    {
+        return (int)value.AsLong().InRange(minValue, maxValue, defaultValue);
+    }
 
     /// <summary>
     /// A prime number (or a prime) is a natural number that has exactly two distinct natural number divisors: 1 and itself.
@@ -103,5 +103,32 @@ public static class IntExtensions
     public static long AsLong(this int i)
     {
         return i;
+    }
+
+    /// <summary>
+    /// To check whether an index is in the range of the given array.
+    /// </summary>
+    /// <param name="index">Index to check</param>
+    /// <param name="arrayToCheck">Array where to check</param>
+    /// <returns></returns>
+    /// <remarks>
+    /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
+    /// </remarks>
+    public static bool IsIndexInArray(this int index, Array arrayToCheck)
+    {
+        return index.GetArrayInedx().InRange(arrayToCheck.GetLowerBound(0), arrayToCheck.GetUpperBound(0));
+    }
+
+    /// <summary>
+    /// To get Array index from a given based on a number.
+    /// </summary>
+    /// <param name="at">Real world postion </param>
+    /// <returns></returns>
+    /// <remarks>
+    /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
+    /// </remarks>
+    public static int GetArrayInedx(this int at)
+    {
+        return at == 0 ? 0 : at - 1;
     }
 }
