@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Security;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Should.Fluent;
 
 namespace PGK.Extensions.Tests
 {
@@ -218,6 +219,21 @@ namespace PGK.Extensions.Tests
             string testValue = @"asdf";
             SecureString validationValue = testValue.ToSecureString();
             Assert.AreEqual(testValue, validationValue.ToUnsecureString());
+        }
+
+        [TestMethod]
+        public void EquivalentTo()
+        {
+            string value;
+
+            value = null;
+            value.EquivalentTo("something else").Should().Be.False();
+            value.EquivalentTo(null).Should().Be.True();
+
+            value = "VaLuE";
+            value.EquivalentTo("value").Should().Be.True();
+            value.EquivalentTo("VALUE").Should().Be.True();
+            value.EquivalentTo("VaLuE").Should().Be.True();
         }
 
         private static void SetDotAsDecimalSeparator()

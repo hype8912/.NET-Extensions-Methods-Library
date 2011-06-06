@@ -574,6 +574,14 @@ public static class StringExtensions
         return replace ? sb.Replace("", "<br />").Replace("\n", "<br />").Replace(" ", "&nbsp;").ToString() : sb.ToString();
     }
 
+    /// <summary>
+    /// Returns true if strings are equals, without consideration to case (<see cref="StringComparison.InvariantCultureIgnoreCase"/>)
+    /// </summary>
+    public static bool EquivalentTo(this string s, string whateverCaseString)
+    {
+        return string.Equals(s, whateverCaseString, StringComparison.InvariantCultureIgnoreCase);
+    }
+
     #endregion
     #region Regex based extension methods
 
