@@ -3,7 +3,7 @@ using Rhino.Mocks;
 using Rhino.Mocks.Exceptions;
 using Rhino.Mocks.Interfaces;
 
-namespace PGK.Extensions.RhinoMocks
+namespace PGK.RhinoMocksExtensions
 {
     public static class MethodOptionsExtensions
     {

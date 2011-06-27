@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PGK.Extensions.RhinoMocks;
+using PGK.RhinoMocksExtensions;
 using Rhino.Mocks;
 using Rhino.Mocks.Exceptions;
 using Should.Fluent;
