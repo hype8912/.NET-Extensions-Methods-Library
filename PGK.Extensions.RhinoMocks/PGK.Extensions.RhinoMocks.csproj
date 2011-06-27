@@ -8,7 +8,7 @@
     <ProjectGuid>{7C0DCE9B-4824-4406-924A-38B14A120DEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PGK.RhinoMocksExtensions</RootNamespace>
+    <RootNamespace>PGK.Extensions.RhinoMocks</RootNamespace>
     <AssemblyName>PGK.Extensions.RhinoMocks</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\PGK.Extensions.RhinoMocks.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\PGK.Extensions.RhinoMocks.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Rhino.Mocks">
