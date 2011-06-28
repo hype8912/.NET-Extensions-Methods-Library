@@ -236,6 +236,21 @@ namespace PGK.Extensions.Tests
             value.EquivalentTo("VaLuE").Should().Be.True();
         }
 
+        /// <summary>Tests the SubstringFrom(int index) from StringExtensions.cs</summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestSubstringFrom()
+        {
+            string testValue = null;
+
+            testValue = "dnpextensions";
+
+            Assert.AreEqual(testValue.SubstringFrom(0), "dnpextensions");
+            Assert.AreEqual(testValue.SubstringFrom(1), "npextensions");
+            Assert.AreEqual(testValue.SubstringFrom(5), "tensions");
+            Assert.AreEqual(testValue.SubstringFrom(20), string.Empty);
+        }
+
         private static void SetDotAsDecimalSeparator()
         {
             var copy = Thread.CurrentThread.CurrentCulture.Clone().CastTo<CultureInfo>();

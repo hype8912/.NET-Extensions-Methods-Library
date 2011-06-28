@@ -491,6 +491,15 @@ public static class StringExtensions
         return value.Substring(value.Length - characterCount);
     }
 
+    /// <summary>Returns the right part of the string from index.</summary>
+    /// <param name="value">The original value.</param>
+    /// <param name="index">The start index for substringing.</param>
+    /// <returns>The right part.</returns>
+    public static string SubstringFrom(this string value, int index)
+    {
+        return index < 0 ? value : value.Substring(index, value.Length - index);
+    }
+
     //todo: xml documentation requires
     //todo: unit test required
     public static byte[] GetBytes(this string data)
