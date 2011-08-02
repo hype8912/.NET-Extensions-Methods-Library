@@ -281,6 +281,9 @@ public static class EnumerableExtensions
     /// var noNulls = list.Select(x => x, false);
     /// </code>
     /// </example>
+    /// <remarks>
+    /// Contributed by thinktech_coder
+    /// </remarks>
     public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector, bool allowNull = true)
     {
         foreach (var item in source)
