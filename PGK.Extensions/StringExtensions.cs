@@ -101,6 +101,20 @@ public static class StringExtensions
     }
 
     /// <summary>
+    /// 	Determines whether the comparison value strig is contained within the input value string without any
+    ///     consideration about the case (<see cref="StringComparison.InvariantCultureIgnoreCase"/>).
+    /// </summary>
+    /// <param name = "inputValue">The input value.</param>
+    /// <param name = "comparisonValue">The comparison value.  Case insensitive</param>
+    /// <returns>
+    /// 	<c>true</c> if input value contains the specified value (case insensitive), otherwise, <c>false</c>.
+    /// </returns>
+    public static bool ContainsEquivalenceTo(this string inputValue, string comparisonValue)
+    {
+        return BothStringsAreEmpty(inputValue, comparisonValue) || StringContainsEquivalence(inputValue, comparisonValue);
+    }
+
+    /// <summary>
     /// Centers a charters in this string, padding in both, left and right, by specified Unicode character,
     /// for a specified total lenght.
     /// </summary>
@@ -986,4 +1000,15 @@ public static class StringExtensions
     }
 
     #endregion
+
+    private static bool StringContainsEquivalence(string inputValue, string comparisonValue)
+    {
+        return (inputValue.IsNotEmptyOrWhiteSpace() && inputValue.Contains(comparisonValue, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private static bool BothStringsAreEmpty(string inputValue, string comparisonValue)
+    {
+        return (inputValue.IsEmptyOrWhiteSpace() && comparisonValue.IsEmptyOrWhiteSpace());
+    }
+
 }

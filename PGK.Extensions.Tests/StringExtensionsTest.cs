@@ -222,6 +222,23 @@ namespace PGK.Extensions.Tests
         }
 
         [TestMethod]
+        public void ContainsEquivalenceTo()
+        {
+            string value;
+
+            value = null;
+            value.ContainsEquivalenceTo("something else").Should().Be.False();
+            value.ContainsEquivalenceTo(null).Should().Be.True();
+
+            value = "string containting the VaLuE with different case for each letter";
+            value.ContainsEquivalenceTo("value").Should().Be.True();
+            value.ContainsEquivalenceTo("VALUE").Should().Be.True();
+            value.ContainsEquivalenceTo("VaLuE").Should().Be.True();
+
+            value.ContainsEquivalenceTo("Not value").Should().Be.False();
+        }
+
+        [TestMethod]
         public void EquivalentTo()
         {
             string value;
