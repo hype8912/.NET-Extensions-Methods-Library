@@ -318,4 +318,170 @@ public static class EnumerableExtensions
 	{
 		return (source.IsNotEmpty() ? source.First() : defaultValue);
 	}
+
+    /// <summary>
+    ///     Appends an element to the end of the current collection and returns the new collection.
+    /// </summary>
+    /// <typeparam name="T">The enumerable data type</typeparam>
+    /// <param name="source">The data values.</param>
+    /// <param name="item">The element to append the current collection with.</param>
+    /// <returns>
+    ///     The modified collection.
+    /// </returns>
+    /// <example>
+    ///     var integers = Enumerable.Range(0, 3);  // 0, 1, 2
+    ///     integers = integers.Append(3);          // 0, 1, 2, 3
+    /// </example>
+    public static IEnumerable<T> Append<T>(this IEnumerable<T> source, T item)
+    {
+        foreach (var i in source)
+            yield return i;
+
+        yield return item;
+    }
+
+    /// <summary>
+    ///     Prepends an element to the start of the current collection and returns the new collection.
+    /// </summary>
+    /// <typeparam name="T">The enumerable data type</typeparam>
+    /// <param name="source">The data values.</param>
+    /// <param name="item">The element to prepend the current collection with.</param>
+    /// <returns>
+    ///     The modified collection.
+    /// </returns>
+    /// <example>
+    ///     var integers = Enumerable.Range(1, 3);  // 1, 2, 3
+    ///     integers = integers.Prepend(0);         // 0, 1, 2, 3
+    /// </example>
+    public static IEnumerable<T> Prepend<T>(this IEnumerable<T> source, T item)
+    {
+        yield return item;
+
+        foreach (var i in source)
+            yield return i;
+    }
+
+    /// <summary>
+    ///     Creates an Array from an IEnumerable&lt;T&gt; using the specified transform function.
+    /// </summary>
+    /// <typeparam name="TSource">The source data type</typeparam>
+    /// <typeparam name="TResult">The target data type</typeparam>
+    /// <param name="source">The source data.</param>
+    /// <param name="selector">A transform function to apply to each element.</param>
+    /// <returns>An Array of the target data type</returns>
+    /// <example>
+    ///     var integers = Enumerable.Range(1, 3);
+    ///     var intStrings = values.ToArray(i => i.ToString());
+    /// </example>
+    /// <remarks>
+    ///     This method is a shorthand for the frequently use pattern IEnumerable&lt;T&gt;.Select(Func).ToArray()
+    /// </remarks>
+    public static TResult[] ToArray<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    {
+        return source.Select(selector).ToArray();
+    }
+
+    /// <summary>
+    ///     Creates a List&lt;T&gt; from an IEnumerable&lt;T&gt; using the specified transform function.
+    /// </summary>
+    /// <typeparam name="TSource">The source data type</typeparam>
+    /// <typeparam name="TResult">The target data type</typeparam>
+    /// <param name="source">The source data.</param>
+    /// <param name="selector">A transform function to apply to each element.</param>
+    /// <returns>An IEnumerable&lt;T&gt; of the target data type</returns>
+    /// <example>
+    ///     var integers = Enumerable.Range(1, 3);
+    ///     var intStrings = values.ToList(i => i.ToString());
+    /// </example>
+    /// <remarks>
+    ///     This method is a shorthand for the frequently use pattern IEnumerable&lt;T&gt;.Select(Func).ToList()
+    /// </remarks>
+    public static List<TResult> ToList<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    {
+        return source.Select(selector).ToList();
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of UInt32 values.
+    /// </summary>
+    /// <param name="source">A sequence of UInt32 values to calculate the sum of.</param>
+    /// <returns>The sum of the values in the sequence.</returns>
+    public static uint Sum(this IEnumerable<uint> source)
+    {
+        return source.Aggregate(0U, (current, number) => current + number);
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of UInt64 values.
+    /// </summary>
+    /// <param name="source">A sequence of UInt64 values to calculate the sum of.</param>
+    /// <returns>The sum of the values in the sequence.</returns>
+    public static ulong Sum(this IEnumerable<ulong> source)
+    {
+        return source.Aggregate(0UL, (current, number) => current + number);
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of nullable UInt32 values.
+    /// </summary>
+    /// <param name="source">A sequence of nullable UInt32 values to calculate the sum of.</param>
+    /// <returns>The sum of the values in the sequence.</returns>
+    public static uint? Sum(this IEnumerable<uint?> source)
+    {
+        return source.Where(nullable => nullable.HasValue).Aggregate(0U, (current, nullable) => current + nullable.GetValueOrDefault());
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of nullable UInt64 values.
+    /// </summary>
+    /// <param name="source">A sequence of nullable UInt64 values to calculate the sum of.</param>
+    /// <returns>The sum of the values in the sequence.</returns>
+    public static ulong? Sum(this IEnumerable<ulong?> source)
+    {
+        return source.Where(nullable => nullable.HasValue).Aggregate(0UL, (current, nullable) => current + nullable.GetValueOrDefault());
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of UInt32 values that are obtained by invoking a transformation function on each element of the intput sequence.
+    /// </summary>
+    /// <param name="source">A sequence of values that are used to calculate a sum.</param>
+    /// <param name="selector">A transformation function to apply to each element.</param>
+    /// <returns>The sum of the projected values.</returns>
+    public static uint Sum<T>(this IEnumerable<T> source, Func<T, uint> selector)
+    {
+        return source.Select(selector).Sum();
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of nullable UInt32 values that are obtained by invoking a transformation function on each element of the intput sequence.
+    /// </summary>
+    /// <param name="source">A sequence of values that are used to calculate a sum.</param>
+    /// <param name="selector">A transformation function to apply to each element.</param>
+    /// <returns>The sum of the projected values.</returns>
+    public static uint? Sum<T>(this IEnumerable<T> source, Func<T, uint?> selector)
+    {
+        return source.Select(selector).Sum();
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of UInt64 values that are obtained by invoking a transformation function on each element of the intput sequence.
+    /// </summary>
+    /// <param name="source">A sequence of values that are used to calculate a sum.</param>
+    /// <param name="selector">A transformation function to apply to each element.</param>
+    /// <returns>The sum of the projected values.</returns>
+    public static ulong Sum<T>(this IEnumerable<T> source, Func<T, ulong> selector)
+    {
+        return source.Select(selector).Sum();
+    }
+
+    /// <summary>
+    /// Computes the sum of a sequence of nullable UInt64 values that are obtained by invoking a transformation function on each element of the intput sequence.
+    /// </summary>
+    /// <param name="source">A sequence of values that are used to calculate a sum.</param>
+    /// <param name="selector">A transformation function to apply to each element.</param>
+    /// <returns>The sum of the projected values.</returns>
+    public static ulong? Sum<T>(this IEnumerable<T> source, Func<T, ulong?> selector)
+    {
+        return source.Select(selector).Sum();
+    }
 }

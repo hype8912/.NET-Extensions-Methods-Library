@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PGK.Extensions.SystemDependencies;
 using Should.Fluent;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace PGK.Extensions.Tests
 {
@@ -75,6 +73,26 @@ namespace PGK.Extensions.Tests
 
             Assert.IsTrue(dtR.IsEaster());
             Assert.IsFalse(dtW.IsEaster());
+        }
+
+        [TestMethod]
+        public void TestIsBefore()
+        {
+            var source = DateTime.Now;
+            var other = source.AddMilliseconds(1);
+
+            source.IsBefore(other).Should().Be.True();
+            other.IsBefore(source).Should().Be.False();
+        }
+
+        [TestMethod]
+        public void TestIsAfter()
+        {
+            var source = DateTime.Now;
+            var other = source.AddMilliseconds(1);
+
+            source.IsAfter(other).Should().Be.False();
+            other.IsAfter(source).Should().Be.True();
         }
 	}
 }

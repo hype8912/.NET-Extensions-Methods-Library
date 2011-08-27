@@ -417,4 +417,26 @@ public static class DateTimeExtensions {
 
         return date == dtEasterSunday;
     }
+
+    /// <summary>
+    ///     Indicates whether the source DateTime is before the supplied DateTime.
+    /// </summary>
+    /// <param name="source">The source DateTime.</param>
+    /// <param name="other">The compared DateTime.</param>
+    /// <returns>True if the source is before the other DateTime, False otherwise</returns>
+    public static bool IsBefore(this DateTime source, DateTime other)
+    {
+        return source.CompareTo(other) < 0;
+    }
+
+    /// <summary>
+    ///     Indicates whether the source DateTime is before the supplied DateTime.
+    /// </summary>
+    /// <param name="source">The source DateTime.</param>
+    /// <param name="other">The compared DateTime.</param>
+    /// <returns>True if the source is before the other DateTime, False otherwise</returns>
+    public static bool IsAfter(this DateTime source, DateTime other)
+    {
+        return source.CompareTo(other) > 0;
+    }
 }

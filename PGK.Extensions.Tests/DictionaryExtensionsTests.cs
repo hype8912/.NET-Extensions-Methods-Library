@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should.Fluent;
 
@@ -128,5 +126,31 @@ namespace PGK.Extensions.Tests
 			result.Should().Equal(ht);
 			result.Should().Not.Equal(dic);
 		}
+
+        [TestMethod]
+        public void TestGetOrDefault()
+        {
+            var dictionary = new Dictionary<string, string> { { "foo", "bar" } };
+            var bar = dictionary.GetOrDefault("foo");
+            bar.Should().Be.Equals("bar");
+
+            var noBar = dictionary.GetOrDefault("foo?");
+            noBar.Should().Be.Equals(default(string));
+        }
+
+        [TestMethod]
+        public void TestGetOrThrowKeyIsFound()
+        {
+            var dictionary = new Dictionary<string, string> { { "foo", "bar" } };
+            dictionary.GetOrThrow("foo", new ApplicationException());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestGetOrThrowKeyIsNotFound()
+        {
+            var dictionary = new Dictionary<string, string> { { "foo", "bar" } };
+            dictionary.GetOrThrow("foo?", new ApplicationException());
+        }
 	}
 }
