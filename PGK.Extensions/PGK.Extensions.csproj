@@ -72,6 +72,7 @@
     <Compile Include="CombinedException.cs" />
     <Compile Include="ComparableExtensions.cs" />
     <Compile Include="ComponentExtensions.cs" />
+    <Compile Include="ConstructorExtensions.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="LongExtensions.cs" />
     <Compile Include="StringBuilderExtensions.cs" />
