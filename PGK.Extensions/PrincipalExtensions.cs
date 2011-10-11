@@ -15,7 +15,8 @@ public static class PrincipalExtensions {
     public static object GetProperty(this Principal principal, string name) {
         var directoryEntry = (principal.GetUnderlyingObject() as DirectoryEntry);
         if (directoryEntry.Properties.Contains(name)) {
-            return directoryEntry.Properties[name];
+            var property = directoryEntry.Properties[name];
+            if(property != null) return property.Value;
         }
         return null;
     }
