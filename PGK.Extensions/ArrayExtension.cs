@@ -3,15 +3,14 @@
 /// <summary>
 /// 	Extension methods for the array data type
 /// </summary>
-public static class ArrayExtension
-{
+public static class ArrayExtension {
+
     ///<summary>
     ///	Check if the array is null or empty
     ///</summary>
     ///<param name = "source"></param>
     ///<returns></returns>
-    public static bool IsNullOrEmpty(this Array source)
-    {
+    public static bool IsNullOrEmpty(this Array source) {
         return source != null ? source.Length <= 0 : false;
     }
 
@@ -24,8 +23,7 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static bool WithinIndex(this Array source, int index)
-    {
+    public static bool WithinIndex(this Array source, int index) {
         return source != null && index >= 0 && index < source.Length;
     }
 
@@ -39,8 +37,7 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static bool WithinIndex(this Array source, int index, int dimension = 0)
-    {
+    public static bool WithinIndex(this Array source, int index, int dimension = 0) {
         return source != null && index >= source.GetLowerBound(dimension) && index <= source.GetUpperBound(dimension);
     }
 
@@ -62,10 +59,8 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
     /// </remarks>
-    public static T[] CombineArray<T>(this T[] combineWith, T[] arrayToCombine)
-    {
-        if (combineWith != default(T[]) && arrayToCombine != default(T[]))
-        {
+    public static T[] CombineArray<T>(this T[] combineWith, T[] arrayToCombine) {
+        if (combineWith != default(T[]) && arrayToCombine != default(T[])) {
             int initialSize = combineWith.Length;
             Array.Resize<T>(ref combineWith, initialSize + arrayToCombine.Length);
             Array.Copy(arrayToCombine, arrayToCombine.GetLowerBound(0), combineWith, initialSize, arrayToCombine.Length);
@@ -88,8 +83,7 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
     /// </remarks>
-    public static Array ClearAll(this Array clear)
-    {
+    public static Array ClearAll(this Array clear) {
         if (clear != null)
             Array.Clear(clear, 0, clear.Length);
         return clear;
@@ -109,8 +103,7 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
     /// </remarks>
-    public static T[] ClearAll<T>(this T[] arrayToClear)
-    {
+    public static T[] ClearAll<T>(this T[] arrayToClear) {
         if (arrayToClear != null)
             for (int i = arrayToClear.GetLowerBound(0); i <= arrayToClear.GetUpperBound(0); ++i)
                 arrayToClear[i] = default(T);
@@ -133,10 +126,8 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
     /// </remarks>
-    public static Array ClearAt(this Array arrayToClear, int at)
-    {
-        if (arrayToClear != null)
-        {
+    public static Array ClearAt(this Array arrayToClear, int at) {
+        if (arrayToClear != null) {
             int arrayIndex = at.GetArrayInedx();
             if (arrayIndex.IsIndexInArray(arrayToClear))
                 Array.Clear(arrayToClear, arrayIndex, 1);
@@ -159,10 +150,8 @@ public static class ArrayExtension
     /// <remarks>
     /// 	Contributed by Mohammad Rahman, http://mohammad-rahman.blogspot.com/
     /// </remarks>
-    public static T[] ClearAt<T>(this T[] arrayToClear, int at)
-    {
-        if (arrayToClear != null)
-        {
+    public static T[] ClearAt<T>(this T[] arrayToClear, int at) {
+        if (arrayToClear != null) {
             int arrayIndex = at.GetArrayInedx();
             if (arrayIndex.IsIndexInArray(arrayToClear))
                 arrayToClear[arrayIndex] = default(T);
