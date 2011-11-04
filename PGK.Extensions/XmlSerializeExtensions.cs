@@ -67,7 +67,7 @@ namespace PGK.Extensions
         }
 
         /// <summary>
-        ///     Xml Serialize an instance of specific type.
+        ///     Xml Serialize an instance of specific type to stream.
         /// </summary>
         /// <typeparam name="T">Type of instance to Xml serialize.</typeparam>
         /// <param name="instance">Instance to Xml serialize.</param>
@@ -77,10 +77,28 @@ namespace PGK.Extensions
         {
             var serializer = new XmlSerializer(typeof(T));
             serializer.Serialize(stream, instance);
+            // return to begin of file.
+            stream.Position = 0;
         }
 
         /// <summary>
-        ///     Xml Deserialize this stream as object of <typeparamref name="T"/>.
+        ///     Xml Serialize an instance of specific type to file.
+        /// </summary>
+        /// <typeparam name="T">Type of instance to Xml serialize.</typeparam>
+        /// <param name="instance">Instance to Xml serialize.</param>
+        /// <param name="filename">File name to create and store Xml serialized data.</param>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        public static void XmlSerialize<T>(this T instance, string filename) where T : class, new()
+        {
+            var serializer = new XmlSerializer(typeof(T));
+            using (var stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
+            {
+                serializer.Serialize(stream, instance);
+            }
+        }
+
+        /// <summary>
+        ///     Xml Deserialize this stream as object of <typeparamref name="T"/> from stream.
         /// </summary>
         /// <typeparam name="T">Type of instance to Xml Deserialize.</typeparam>
         /// <param name="stream">Stream to get Xml serialized data.</param>
@@ -88,11 +106,9 @@ namespace PGK.Extensions
         /// <exception cref="System.InvalidOperationException"></exception>
         public static T XmlDeserialize<T>(this Stream stream) where T : class, new()
         {
-            var serializer = new XmlSerializer(typeof(T));
-            if (stream.CanXmlDeserialize<T>())
-                return serializer.Deserialize(stream) as T;
-            else
-                throw new System.InvalidOperationException("this stream can not Xml Deserialize.");
+            stream.Position = 0;
+            var serializer = new XmlSerializer(typeof(T));            
+            return serializer.Deserialize(stream) as T;            
         }
     }
 }
