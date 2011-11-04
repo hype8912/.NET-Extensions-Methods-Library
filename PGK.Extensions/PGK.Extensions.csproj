@@ -107,6 +107,7 @@
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ValueTypeExtensions.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
+    <Compile Include="XmlSerializeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PGK.Extensions.snk" />
