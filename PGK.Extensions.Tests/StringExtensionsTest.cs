@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Globalization;
 using System.Security;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Should.Fluent;
@@ -274,6 +277,74 @@ namespace PGK.Extensions.Tests
 
             copy.NumberFormat.NumberDecimalSeparator = ".";
             Thread.CurrentThread.CurrentCulture = copy;
+        }
+
+        [TestMethod]
+        public void TestReplaceAll()
+        {
+            var str = "White Red Blue Green Yellow Black Gray";
+            var achromaticColors = new[] {"White", "Black", "Gray"};
+            str = str.ReplaceAll(achromaticColors, v => "[" + v + "]");
+            Assert.AreEqual(str, "[White] Red Blue Green Yellow [Black] [Gray]");
+        }
+
+        [TestMethod]
+        public void Test2ReplaceAll()
+        {
+            var str = "White Red Blue Green Yellow Black Gray";
+            var achromaticColors = new[] { "White", "Black", "Gray" };
+            str = str.ReplaceAll(achromaticColors, "[AchromaticColor]");
+            Assert.AreEqual(str, "[AchromaticColor] Red Blue Green Yellow [AchromaticColor] [AchromaticColor]");
+        }
+
+        [TestMethod]
+        public void Test3ReplaceAll()
+        {
+            var str = "White Red Blue Green Yellow Black Gray";
+            var achromaticColors = new[] {"White", "Black", "Gray"};
+            var exquisiteColors = new[] {"FloralWhite", "Bistre", "DavyGrey"};
+            str = str.ReplaceAll(achromaticColors, exquisiteColors);
+            Assert.AreEqual(str, "FloralWhite Red Blue Green Yellow Bistre DavyGrey");
+        }
+
+        [TestMethod]
+        public void TestExtractArguments()
+        {
+            var str = "My name is Aleksey Nagovitsyn. I'm from Russia.";
+            IEnumerable<string> args;
+
+            args = str.ExtractArguments(@"My name is {1} {0}. I'm from {2}.");
+            
+            Assert.AreEqual(args.Count(), 3);
+            Assert.AreEqual(args.ElementAt(0), "Nagovitsyn");
+            Assert.AreEqual(args.ElementAt(1), "Aleksey");
+            Assert.AreEqual(args.ElementAt(2), "Russia");
+
+            args = str.ExtractArguments(@"My name is {1} {0}. I'm from {2}.", StringExtensions.ComparsionTemplateOptions.Whole);
+            Assert.AreEqual(args.Count(), 3);
+            Assert.AreEqual(args.ElementAt(0), "Nagovitsyn");
+            Assert.AreEqual(args.ElementAt(1), "Aleksey");
+            Assert.AreEqual(args.ElementAt(2), "Russia");
+
+            args = str.ExtractArguments(@"My name is {1} {0}.");
+            Assert.AreEqual(args.Count(), 2);
+            Assert.AreEqual(args.ElementAt(0), "Nagovitsyn");
+            Assert.AreEqual(args.ElementAt(1), "Aleksey");
+
+            args = str.ExtractArguments(@"I'm from {0}.");
+            Assert.AreEqual(args.Count(), 1);
+            Assert.AreEqual(args.ElementAt(0), "Russia");
+
+            args = str.ExtractArguments(@"I'm FROM {0}.", StringExtensions.ComparsionTemplateOptions.Default, RegexOptions.IgnoreCase);
+            Assert.AreEqual(args.Count(), 1);
+            Assert.AreEqual(args.ElementAt(0), "Russia");
+
+            args = str.ExtractArguments(@"I'm from {0}.", StringExtensions.ComparsionTemplateOptions.FromStart);
+            Assert.AreEqual(args.Count(), 0);
+
+            args = str.ExtractArguments(@"I'm from {0}.", StringExtensions.ComparsionTemplateOptions.AtTheEnd);
+            Assert.AreEqual(args.Count(), 1);
+            Assert.AreEqual(args.ElementAt(0), "Russia");
         }
     }
 }

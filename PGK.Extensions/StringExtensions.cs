@@ -605,6 +605,91 @@ public static class StringExtensions
         return string.Equals(s, whateverCaseString, StringComparison.InvariantCultureIgnoreCase);
     }
 
+    /// <summary>
+    /// Replace all values in string
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="oldValues">List of old values, which must be replaced</param>
+    /// <param name="replacePredicate">Function for replacement old values</param>
+    /// <returns>Returns new string with the replaced values</returns>
+    /// <example>
+    /// 	<code>
+    ///         var str = "White Red Blue Green Yellow Black Gray";
+    ///         var achromaticColors = new[] {"White", "Black", "Gray"};
+    ///         str = str.ReplaceAll(achromaticColors, v => "[" + v + "]");
+    ///         // str == "[White] Red Blue Green Yellow [Black] [Gray]"
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by nagits, http://about.me/AlekseyNagovitsyn
+    /// </remarks>
+    public static string ReplaceAll(this string value, IEnumerable<string> oldValues, Func<string, string> replacePredicate)
+    {
+        var sbStr = new StringBuilder(value);
+        foreach (var oldValue in oldValues)
+        {
+            var newValue = replacePredicate(oldValue);
+            sbStr.Replace(oldValue, newValue);
+        }
+
+        return sbStr.ToString();
+    }
+
+    /// <summary>
+    /// Replace all values in string
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="oldValues">List of old values, which must be replaced</param>
+    /// <param name="newValue">New value for all old values</param>
+    /// <returns>Returns new string with the replaced values</returns>
+    /// <example>
+    /// 	<code>
+    ///         var str = "White Red Blue Green Yellow Black Gray";
+    ///         var achromaticColors = new[] {"White", "Black", "Gray"};
+    ///         str = str.ReplaceAll(achromaticColors, "[AchromaticColor]");
+    ///         // str == "[AchromaticColor] Red Blue Green Yellow [AchromaticColor] [AchromaticColor]"
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by nagits, http://about.me/AlekseyNagovitsyn
+    /// </remarks>
+    public static string ReplaceAll(this string value, IEnumerable<string> oldValues, string newValue)
+    {
+        var sbStr = new StringBuilder(value);
+        foreach (var oldValue in oldValues)
+            sbStr.Replace(oldValue, newValue);
+
+        return sbStr.ToString();
+    }
+
+    /// <summary>
+    /// Replace all values in string
+    /// </summary>
+    /// <param name="value">The input string.</param>
+    /// <param name="oldValues">List of old values, which must be replaced</param>
+    /// <param name="newValues">List of new values</param>
+    /// <returns>Returns new string with the replaced values</returns>
+    /// <example>
+    /// 	<code>
+    ///         var str = "White Red Blue Green Yellow Black Gray";
+    ///         var achromaticColors = new[] {"White", "Black", "Gray"};
+    ///         var exquisiteColors = new[] {"FloralWhite", "Bistre", "DavyGrey"};
+    ///         str = str.ReplaceAll(achromaticColors, exquisiteColors);
+    ///         // str == "FloralWhite Red Blue Green Yellow Bistre DavyGrey"
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by nagits, http://about.me/AlekseyNagovitsyn
+    /// </remarks> 
+    public static string ReplaceAll(this string value, IEnumerable<string> oldValues, IEnumerable<string> newValues)
+    {
+        var sbStr = new StringBuilder(value);
+        for (int i = 0; i < oldValues.Count(); i++)
+            sbStr.Replace(oldValues.ElementAt(i), newValues.ElementAt(i));
+
+        return sbStr.ToString();
+    }
+
     #endregion
     #region Regex based extension methods
 
@@ -879,6 +964,121 @@ public static class StringExtensions
     {
         return Regex.Replace(value, "([A-Z])(?=[a-z])|(?<=[a-z])([A-Z]|[0-9]+)", " $1$2").TrimStart();
     }
+
+    #region ExtractArguments extension
+
+    /// <summary>
+    /// Options to match the template with the original string
+    /// </summary>
+    public enum ComparsionTemplateOptions
+    {
+        /// <summary>
+        /// Free template comparsion
+        /// </summary>
+        Default,
+
+        /// <summary>
+        /// Template compared from beginning of input string
+        /// </summary>
+        FromStart,
+
+        /// <summary>
+        /// Template compared with the end of input string
+        /// </summary>
+        AtTheEnd,
+
+        /// <summary>
+        /// Template compared whole with input string
+        /// </summary>
+        Whole,
+    }
+
+    private const RegexOptions _defaultRegexOptions = RegexOptions.None;
+    private const ComparsionTemplateOptions _defaultComparsionTemplateOptions = ComparsionTemplateOptions.Default;
+    private static readonly string[] _reservedRegexOperators = new[] { @"\", "^", "$", "*", "+", "?", ".", "(", ")" };
+
+    private static string GetRegexPattern(string template, ComparsionTemplateOptions compareTemplateOptions)
+    {
+        template = template.ReplaceAll(_reservedRegexOperators, v => @"\" + v);
+
+        bool comparingFromStart = compareTemplateOptions == ComparsionTemplateOptions.FromStart ||
+                                  compareTemplateOptions == ComparsionTemplateOptions.Whole;
+        bool comparingAtTheEnd = compareTemplateOptions == ComparsionTemplateOptions.AtTheEnd ||
+                                 compareTemplateOptions == ComparsionTemplateOptions.Whole;
+        var pattern = new StringBuilder();
+
+        if (comparingFromStart)
+            pattern.Append("^");
+
+        pattern.Append(Regex.Replace(template, @"\{[0-9]+\}",
+                                        delegate(Match m)
+                                        {
+                                            var argNum = m.ToString().Replace("{", "").Replace("}", "");
+                                            return String.Format("(?<{0}>.*?)", int.Parse(argNum) + 1);
+                                        }
+                      ));
+
+        if (comparingAtTheEnd || (template.LastOrDefault() == '}' && compareTemplateOptions == ComparsionTemplateOptions.Default))
+            pattern.Append("$");
+
+        return pattern.ToString();
+    }
+
+    /// <summary>
+    /// Extract arguments from string by template
+    /// </summary>
+    /// <param name="value">The input string. For example, "My name is Aleksey".</param>
+    /// <param name="template">Template with arguments in the format {№}. For example, "My name is {0} {1}.".</param>
+    /// <param name="compareTemplateOptions">Template options for compare with input string.</param>
+    /// <param name="regexOptions">Regex options.</param>
+    /// <returns>Returns parsed arguments.</returns>
+    /// <example>
+    /// 	<code>
+    /// 		var str = "My name is Aleksey Nagovitsyn. I'm from Russia.";
+    /// 		var args = str.ExtractArguments(@"My name is {1} {0}. I'm from {2}.");
+    ///         // args[i] is [Nagovitsyn, Aleksey, Russia]
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by nagits, http://about.me/AlekseyNagovitsyn
+    /// </remarks>
+    public static IEnumerable<string> ExtractArguments(this string value, string template,
+                                                       ComparsionTemplateOptions compareTemplateOptions = _defaultComparsionTemplateOptions,
+                                                       RegexOptions regexOptions = _defaultRegexOptions)
+    {
+        return ExtractGroupArguments(value, template, compareTemplateOptions, regexOptions).Select(g => g.Value);
+    }
+
+    /// <summary>
+    /// Extract arguments as regex groups from string by template
+    /// </summary>
+    /// <param name="value">The input string. For example, "My name is Aleksey".</param>
+    /// <param name="template">Template with arguments in the format {№}. For example, "My name is {0} {1}.".</param>
+    /// <param name="compareTemplateOptions">Template options for compare with input string.</param>
+    /// <param name="regexOptions">Regex options.</param>
+    /// <returns>Returns parsed arguments as regex groups.</returns>
+    /// <example>
+    /// 	<code>
+    /// 		var str = "My name is Aleksey Nagovitsyn. I'm from Russia.";
+    /// 		var groupArgs = str.ExtractGroupArguments(@"My name is {1} {0}. I'm from {2}.");
+    ///         // groupArgs[i].Value is [Nagovitsyn, Aleksey, Russia]
+    /// 	</code>
+    /// </example>
+    /// <remarks>
+    /// 	Contributed by nagits, http://about.me/AlekseyNagovitsyn
+    /// </remarks>
+    public static IEnumerable<Group> ExtractGroupArguments(this string value, string template,
+                                                           ComparsionTemplateOptions compareTemplateOptions = _defaultComparsionTemplateOptions,
+                                                           RegexOptions regexOptions = _defaultRegexOptions)
+    {
+        var pattern = GetRegexPattern(template, compareTemplateOptions);
+        var regex = new Regex(pattern, regexOptions);
+        var match = regex.Match(value);
+
+        return match.Groups.Cast<Group>().Skip(1);
+    }
+
+    #endregion ExtractArguments extension
 
     #endregion
     #region Bytes & Base64
