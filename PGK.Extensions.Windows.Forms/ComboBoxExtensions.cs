@@ -41,8 +41,21 @@ public static class ComboBoxExtensions
 
         float measureWidth = 0;
         foreach (object item in comboBox.Items)
-            measureWidth = Math.Max(measureWidth, graphics.MeasureString(item.ToString(), comboBox.Font).Width);
-        
+        {
+            string text;
+            if (comboBox.DataSource == null || string.IsNullOrEmpty(comboBox.DisplayMember))
+            {
+                text = item.ToString();
+            }
+            else
+            {
+                var propertyInfo = item.GetType().GetProperty(comboBox.DisplayMember);
+                text = propertyInfo != null ? propertyInfo.GetValue(item, null).ToString() : item.ToString();
+            }
+
+            measureWidth = Math.Max(measureWidth, graphics.MeasureString(text, comboBox.Font).Width);
+        }
+
         var newWidth = (int)Math.Round(measureWidth);
         newWidth += rightSpaceWidth;
         newWidth = Math.Min(newWidth, Screen.GetWorkingArea(comboBox).Width);
