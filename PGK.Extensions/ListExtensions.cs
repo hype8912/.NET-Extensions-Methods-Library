@@ -11,21 +11,21 @@ using System.Text;
 /// </summary>
 public static class ListExtensions
 {
-    [Obsolete("Wrong orthography.  Use InsertUnique")]
-    public static bool InsertUnqiue<T>(this IList<T> list, int index, T item)
+	[Obsolete("Wrong orthography.  Use InsertUnique")]
+	public static bool InsertUnqiue<T>(this IList<T> list, int index, T item)
 	{
 		return list.InsertUnique(index, item);
 	}
 
-    /// <summary>
-    /// 	Inserts an item uniquely to to a list and returns a value whether the item was inserted or not.
-    /// </summary>
-    /// <typeparam name = "T">The generic list item type.</typeparam>
-    /// <param name = "list">The list to be inserted into.</param>
-    /// <param name = "index">The index to insert the item at.</param>
-    /// <param name = "item">The item to be added.</param>
-    /// <returns>Indicates whether the item was inserted or not</returns>
-    public static bool InsertUnique<T>(this IList<T> list, int index, T item)
+	/// <summary>
+	/// 	Inserts an item uniquely to to a list and returns a value whether the item was inserted or not.
+	/// </summary>
+	/// <typeparam name = "T">The generic list item type.</typeparam>
+	/// <param name = "list">The list to be inserted into.</param>
+	/// <param name = "index">The index to insert the item at.</param>
+	/// <param name = "item">The item to be added.</param>
+	/// <returns>Indicates whether the item was inserted or not</returns>
+	public static bool InsertUnique<T>(this IList<T> list, int index, T item)
 	{
 		if (list.Contains(item) == false)
 		{
@@ -104,35 +104,35 @@ public static class ListExtensions
 	/// </returns>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://about.me/MichaelTran
-    /// 	Optimised by Mario Majcica
+	/// 	Optimised by Mario Majcica
 	/// </remarks>
 	public static string Join<T>(this IList<T> list, string joinString)
 	{
-        StringBuilder result = new StringBuilder();
+		if (list == null || !list.Any())
+			return String.Empty;
 
-        int listCount = list.Count;
-        int listCountMinusOne = listCount - 1;
+		StringBuilder result = new StringBuilder();
 
-        if (list != null && listCount > 0)
-        {
-            if (listCount > 1)
-            {
-                for (var i = 0; i < listCount; i++)
-                {
-                    if (i != listCountMinusOne)
-                    {
-                        result.Append(list[i]);
-                        result.Append(joinString);
-                    }
-                    else
-                        result.Append(list[i]);
-                }
-            }
-            else
-                result.Append(list[0]);
-        }
+		int listCount = list.Count;
+		int listCountMinusOne = listCount - 1;
 
-        return result.ToString();
+			if (listCount > 1)
+			{
+				for (var i = 0; i < listCount; i++)
+				{
+					if (i != listCountMinusOne)
+					{
+						result.Append(list[i]);
+						result.Append(joinString);
+					}
+					else
+						result.Append(list[i]);
+				}
+			}
+			else
+				result.Append(list[0]);
+
+		return result.ToString();
 	}
 
 	/// <summary>

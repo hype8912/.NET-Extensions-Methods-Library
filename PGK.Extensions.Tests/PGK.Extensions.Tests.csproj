@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteArrayExtensionsTest.cs" />
+    <Compile Include="CollectionExtensionsTest.cs" />
+    <Compile Include="ComparableExtensionsTests.cs" />
+    <Compile Include="DirectoryInfoExtensionsTest.cs" />
     <Compile Include="EnumExtensionsTest.cs" />
     <Compile Include="LongExtensionsTest.cs" />
     <Compile Include="FileInfoExtensionsTest.cs" />
@@ -85,6 +88,8 @@
     <Compile Include="ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionsTest.cs" />
+    <Compile Include="TestObjects\Box.cs" />
+    <Compile Include="TextReaderExtensionsTest.cs" />
     <Compile Include="XmlSerializeExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Used_for_testing.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

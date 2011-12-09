@@ -24,7 +24,7 @@ public static class ComparableExtensions
 	/// </example>
 	public static bool IsBetween<T>(this T value, T minValue, T maxValue) where T : IComparable<T>
 	{
-		return IsBetween(value, minValue, maxValue, null);
+		return IsBetween(value, minValue, maxValue, Comparer<T>.Default);
 	}
 
 	/// <summary>
@@ -44,15 +44,21 @@ public static class ComparableExtensions
 	/// 	// ...
 	/// 	}
 	/// </example>
+	/// <remarks>
+	/// Note that this does an "inclusive" comparison:  The high & low values themselves are considered "in between".  
+	/// However, in some context, a exclusive comparion -- only values greater than the low end and lesser than the high end 
+	/// are "in between" -- is desired; in other contexts, values can be greater or equal to the low end, but only less than the high end.
+	/// </remarks>
 	public static bool IsBetween<T>(this T value, T minValue, T maxValue, IComparer<T> comparer) where T : IComparable<T>
 	{
-		comparer = comparer ?? Comparer<T>.Default;
+		if (comparer == null)
+			throw new ArgumentNullException("comparer");
 
 		var minMaxCompare = comparer.Compare(minValue, maxValue);
 		if (minMaxCompare < 0)
 			return ((comparer.Compare(value, minValue) >= 0) && (comparer.Compare(value, maxValue) <= 0));
-		else if (minMaxCompare == 0)
-			return (comparer.Compare(value, minValue) == 0);
+		//else if (minMaxCompare == 0)				// unnecessary  'else' below handles this case.
+		//    return (comparer.Compare(value, minValue) == 0);
 		else
 			return ((comparer.Compare(value, maxValue) >= 0) && (comparer.Compare(value, minValue) <= 0));
 	}

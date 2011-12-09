@@ -34,6 +34,29 @@ namespace PGK.Extensions.Tests
             Assert.AreEqual(list.Join<int>(", "), expected);
         }
 
+		[TestMethod]
+		public void JoinT_Single()
+		{
+			var list = new List<int>();
+			list.Add(50);
+			Assert.AreEqual("50", list.Join(","));
+		}
+
+		[TestMethod]
+		public void JoinT_Null()
+		{
+			// NOTE: This test the implementation as originally written.
+			// However, it probably not correct.  We probably want to throw a ArgumentNullExecption
+			List<int> list = null;
+			Assert.AreEqual("", list.Join(","));
+		}
+
+		[TestMethod]
+		public void JoinT_Empty()
+		{
+			var list = new List<int>();
+			Assert.AreEqual("", list.Join(","));
+		}
         /// <summary>
         ///A test for InsertUnique
         ///</summary>

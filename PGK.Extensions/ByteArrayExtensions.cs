@@ -1,6 +1,7 @@
 ﻿/// <summary>
 /// 	Extension methods for byte-Arrays
 /// </summary>
+using System;
 public static class ByteArrayExtensions
 {
 	/// <summary>
@@ -14,17 +15,27 @@ public static class ByteArrayExtensions
 	/// </remarks>
 	public static int FindArrayInArray(this byte[] buf1, byte[] buf2)
 	{
-		int i, j;
-		for (j = 0; j < buf1.Length - buf2.Length; j++)
-		{
-			for (i = 0; i < buf2.Length; i++)
+		if (buf2 == null)
+			throw new ArgumentNullException("buf2");
+
+		if (buf1 == null)
+			throw new ArgumentNullException("buf1");
+
+		if (buf2.Length == 0)
+			return 0;		// by definition empty sets match immediately
+
+		int  j=-1;
+		int end = buf1.Length - buf2.Length;
+		while ( (j = Array.IndexOf(buf1, buf2[0], j+1)) <= end && j != -1)
+		{ 
+			int i = 1;
+			while (buf1[j + i] == buf2[i])
 			{
-				if (buf1[j + i] != buf2[i])
-					break;
+				if (++i == buf2.Length)
+					return j;
 			}
-			if (i == buf2.Length)
-				return j;
 		}
 		return -1;
 	}
+
 }

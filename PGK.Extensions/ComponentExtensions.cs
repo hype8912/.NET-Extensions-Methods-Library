@@ -15,12 +15,8 @@ public static class ComponentExtensions
 	/// </remarks>
 	public static bool IsInDesignMode(this IComponent target)
 	{
-		var ret = false;
 		var site = target.Site;
-		if (false == ReferenceEquals(site, null))
-			ret = site.DesignMode;
-
-		return ret;
+		return ReferenceEquals(site, null) ? false : site.DesignMode;
 	}
 
 	/// <summary>
@@ -33,11 +29,6 @@ public static class ComponentExtensions
 	/// </remarks>
 	public static bool IsInRuntimeMode(this IComponent target)
 	{
-		var ret = true;
-		var site = target.Site;
-		if (false == ReferenceEquals(site, null))
-			ret = !site.DesignMode;
-
-		return ret;
+		return !IsInDesignMode(target);
 	}
 }

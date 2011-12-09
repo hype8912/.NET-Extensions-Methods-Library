@@ -6,7 +6,8 @@ using System.Linq;
 /// <summary>
 /// 	Extension methods for the DirectoryInfo class
 /// </summary>
-public static class DirectoryInfoExtensions {
+public static class DirectoryInfoExtensions 
+{
     /// <summary>
     /// 	Gets all files in the directory matching one of the several (!) supplied patterns (instead of just one in the regular implementation).
     /// </summary>
@@ -21,7 +22,8 @@ public static class DirectoryInfoExtensions {
     /// 		var files = directory.GetFiles("*.txt", "*.xml");
     /// 	</code>
     /// </example>
-    public static FileInfo[] GetFiles(this DirectoryInfo directory, params string[] patterns) {
+    public static FileInfo[] GetFiles(this DirectoryInfo directory, params string[] patterns) 
+	{
         var files = new List<FileInfo>();
         foreach (var pattern in patterns)
             files.AddRange(directory.GetFiles(pattern));
@@ -40,12 +42,14 @@ public static class DirectoryInfoExtensions {
     /// 		var file = directory.FindFileRecursive("win.ini");
     /// 	</code>
     /// </example>
-    public static FileInfo FindFileRecursive(this DirectoryInfo directory, string pattern) {
+    public static FileInfo FindFileRecursive(this DirectoryInfo directory, string pattern)
+	{
         var files = directory.GetFiles(pattern);
         if (files.Length > 0)
             return files[0];
 
-        foreach (var subDirectory in directory.GetDirectories()) {
+        foreach (var subDirectory in directory.GetDirectories()) 
+		{
             var foundFile = subDirectory.FindFileRecursive(pattern);
             if (foundFile != null)
                 return foundFile;
@@ -65,13 +69,16 @@ public static class DirectoryInfoExtensions {
     /// 		var file = directory.FindFileRecursive(f => f.Extension == ".ini");
     /// 	</code>
     /// </example>
-    public static FileInfo FindFileRecursive(this DirectoryInfo directory, Func<FileInfo, bool> predicate) {
-        foreach (var file in directory.GetFiles()) {
+    public static FileInfo FindFileRecursive(this DirectoryInfo directory, Func<FileInfo, bool> predicate)
+	{
+        foreach (var file in directory.GetFiles()) 
+		{
             if (predicate(file))
                 return file;
         }
 
-        foreach (var subDirectory in directory.GetDirectories()) {
+        foreach (var subDirectory in directory.GetDirectories())
+		{
             var foundFile = subDirectory.FindFileRecursive(predicate);
             if (foundFile != null)
                 return foundFile;
@@ -94,13 +101,15 @@ public static class DirectoryInfoExtensions {
     /// 		var files = directory.FindFilesRecursive("*.ini");
     /// 	</code>
     /// </example>
-    public static FileInfo[] FindFilesRecursive(this DirectoryInfo directory, string pattern) {
+    public static FileInfo[] FindFilesRecursive(this DirectoryInfo directory, string pattern) 
+	{
         var foundFiles = new List<FileInfo>();
         FindFilesRecursive(directory, pattern, foundFiles);
         return foundFiles.ToArray();
     }
 
-    static void FindFilesRecursive(DirectoryInfo directory, string pattern, List<FileInfo> foundFiles) {
+    static void FindFilesRecursive(DirectoryInfo directory, string pattern, List<FileInfo> foundFiles)
+	{
         foundFiles.AddRange(directory.GetFiles(pattern));
         directory.GetDirectories().ForEach(d => FindFilesRecursive(d, pattern, foundFiles));
     }
@@ -120,13 +129,15 @@ public static class DirectoryInfoExtensions {
     /// 		var files = directory.FindFilesRecursive(f => f.Extension == ".ini");
     /// 	</code>
     /// </example>
-    public static FileInfo[] FindFilesRecursive(this DirectoryInfo directory, Func<FileInfo, bool> predicate) {
+    public static FileInfo[] FindFilesRecursive(this DirectoryInfo directory, Func<FileInfo, bool> predicate)
+	{
         var foundFiles = new List<FileInfo>();
         FindFilesRecursive(directory, predicate, foundFiles);
         return foundFiles.ToArray();
     }
 
-    static void FindFilesRecursive(DirectoryInfo directory, Func<FileInfo, bool> predicate, List<FileInfo> foundFiles) {
+    static void FindFilesRecursive(DirectoryInfo directory, Func<FileInfo, bool> predicate, List<FileInfo> foundFiles)
+	{
         foundFiles.AddRange(directory.GetFiles().Where(predicate));
         directory.GetDirectories().ForEach(d => FindFilesRecursive(d, predicate, foundFiles));
     }
@@ -137,7 +148,8 @@ public static class DirectoryInfoExtensions {
     /// <param name="sourceDirectory">The source directory.</param>
     /// <param name="targetDirectoryPath">The target directory path.</param>
     /// <returns></returns>
-    public static DirectoryInfo CopyTo(this DirectoryInfo sourceDirectory, string targetDirectoryPath) {
+    public static DirectoryInfo CopyTo(this DirectoryInfo sourceDirectory, string targetDirectoryPath)
+	{
         var targetDirectory = new DirectoryInfo(targetDirectoryPath);
         CopyTo(sourceDirectory, targetDirectory);
         return targetDirectory;
@@ -148,14 +160,17 @@ public static class DirectoryInfoExtensions {
     /// </summary>
     /// <param name="sourceDirectory">The source directory.</param>
     /// <param name="targetDirectory">The target directory.</param>
-    public static void CopyTo(this DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory) {
+    public static void CopyTo(this DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory) 
+	{
         if(targetDirectory.Exists == false) targetDirectory.Create();
 
-        foreach(var childDirectory in sourceDirectory.GetDirectories()) {
+        foreach(var childDirectory in sourceDirectory.GetDirectories()) 
+		{
             CopyTo(childDirectory, Path.Combine(targetDirectory.FullName, childDirectory.Name));
         }
 
-        foreach(var file in sourceDirectory.GetFiles()) {
+        foreach(var file in sourceDirectory.GetFiles())
+		{
             file.CopyTo(Path.Combine(targetDirectory.FullName, file.Name));
         }
     }

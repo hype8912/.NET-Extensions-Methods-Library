@@ -60,19 +60,19 @@ public static class ObjectExtensions
 
 	/// <summary>
 	/// 	Converts an object to the specified target type or returns the default value.
-    ///     <para>Any exceptions are ignored. </para>
+	///     <para>Any exceptions are ignored. </para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
 	/// <returns>The target type</returns>
 	public static T ConvertToAndIgnoreException<T>(this object value)
 	{
-        return value.ConvertToAndIgnoreException(default(T));
+		return value.ConvertToAndIgnoreException(default(T));
 	}
 
 	/// <summary>
 	/// 	Converts an object to the specified target type or returns the default value.
-    ///     <para>Any exceptions are ignored. </para>
+	///     <para>Any exceptions are ignored. </para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
@@ -80,15 +80,15 @@ public static class ObjectExtensions
 	/// <returns>The target type</returns>
 	public static T ConvertToAndIgnoreException<T>(this object value, T defaultValue)
 	{
-	    return value.ConvertTo(defaultValue, true);
+		return value.ConvertTo(defaultValue, true);
 	}
 
 	/// <summary>
-    /// 	Converts an object to the specified target type or returns the default value if
-    ///     those 2 types are not convertible.
-    ///     <para>
-    ///     If the <paramref name="value"/> can't be convert even if the types are 
-    ///     convertible with each other, an exception is thrown.</para>
+	/// 	Converts an object to the specified target type or returns the default value if
+	///     those 2 types are not convertible.
+	///     <para>
+	///     If the <paramref name="value"/> can't be convert even if the types are 
+	///     convertible with each other, an exception is thrown.</para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
@@ -120,12 +120,12 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-    /// 	Converts an object to the specified target type or returns the default value if
-    ///     those 2 types are not convertible.
-    ///     <para>Any exceptions are optionally ignored (<paramref name="ignoreException"/>).</para>
-    ///     <para>
-    ///     If the exceptions are not ignored and the <paramref name="value"/> can't be convert even if 
-    ///     the types are convertible with each other, an exception is thrown.</para>
+	/// 	Converts an object to the specified target type or returns the default value if
+	///     those 2 types are not convertible.
+	///     <para>Any exceptions are optionally ignored (<paramref name="ignoreException"/>).</para>
+	///     <para>
+	///     If the exceptions are not ignored and the <paramref name="value"/> can't be convert even if 
+	///     the types are convertible with each other, an exception is thrown.</para>
 	/// </summary>
 	/// <typeparam name = "T"></typeparam>
 	/// <param name = "value">The value.</param>
@@ -241,7 +241,7 @@ public static class ObjectExtensions
 	public static T InvokeMethod<T>(this object obj, string methodName, params object[] parameters)
 	{
 		var type = obj.GetType();
-		var method = type.GetMethod(methodName);
+		var method = type.GetMethod(methodName, parameters.Select(o=>o.GetType()).ToArray());
 
 		if (method == null)
 			throw new ArgumentException(string.Format("Method '{0}' not found.", methodName), methodName);
@@ -366,9 +366,7 @@ public static class ObjectExtensions
 	{
 		var type = (obj as Type ?? obj.GetType());
 		var attributes = type.GetCustomAttributes(typeof(T), includeInherited);
-		if ((attributes.Length > 0))
-			return (attributes[0] as T);
-		return null;
+		return attributes.FirstOrDefault() as T;
 	}
 
 	/// <summary>
@@ -379,7 +377,7 @@ public static class ObjectExtensions
 	/// <returns>The found attributes</returns>
 	public static IEnumerable<T> GetAttributes<T>(this object obj) where T : Attribute
 	{
-		return GetAttributes<T>(obj);
+		return GetAttributes<T>(obj, false);
 	}
 
 	/// <summary>
@@ -395,7 +393,7 @@ public static class ObjectExtensions
 	}
 
 	/// <summary>
-	/// 	Determines whether the object is excactly of the passed generic type.
+	/// 	Determines whether the object is exactly of the passed generic type.
 	/// </summary>
 	/// <typeparam name = "T">The target type.</typeparam>
 	/// <param name = "obj">The object to check.</param>
@@ -517,8 +515,8 @@ public static class ObjectExtensions
 	/// </remarks>
 	public static T CastTo<T>(this object value)
 	{
-        if (value == null || !(value is T))
-            return default(T);
+		if (value == null || !(value is T))
+			return default(T);
 
 		return (T)value;
 	}
@@ -741,7 +739,7 @@ public static class ObjectExtensions
 	/// <returns></returns>
 	public static string ToStringDump(this object o, BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, int maxArrayElements = 5)
 	{
-		return ToStringDumpInternal(o.ToXElement(flags, maxArrayElements)).Aggregate(String.Empty, (str, el) => str + el);
+		return ToStringDumpInternal(o.ToXElement(flags, maxArrayElements)).Aggregate(new StringBuilder(), (sb, el) => sb.Append(el)).ToString();
 	}
 
 	static IEnumerable<string> ToStringDumpInternal(XContainer toXElement)

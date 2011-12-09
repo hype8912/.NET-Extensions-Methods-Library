@@ -22,12 +22,12 @@ public static class CollectionExtensions
 	/// </example>
 	public static bool AddUnique<T>(this ICollection<T> collection, T value)
 	{
-		if (collection.Contains(value) == false)
+		var alreadyHas = collection.Contains(value) ;
+		if (!alreadyHas)
 		{
 			collection.Add(value);
-			return true;
 		}
-		return false;
+		return alreadyHas;
 	}
 
 	/// <summary>
@@ -57,8 +57,9 @@ public static class CollectionExtensions
 	///<exception cref = "ArgumentNullException"></exception>
 	/// <remarks>
 	/// 	Contributed by Michael T, http://about.me/MichaelTran
+	/// 	Renamed by James Curran, to match corresponding HashSet.RemoveWhere()
 	/// </remarks>
-	public static void RemoveAll<T>(this ICollection<T> collection, Predicate<T> predicate)
+	public static void RemoveWhere<T>(this ICollection<T> collection, Predicate<T> predicate)
 	{
 		if (collection == null)
 			throw new ArgumentNullException("collection");

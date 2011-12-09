@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using PGK.Extensions;
 
 /// <summary>
@@ -112,30 +113,38 @@ public static class FileInfoExtensions
 	/// </example>
 	public static void Delete(this FileInfo[] files, bool consolidateExceptions)
 	{
-		List<Exception> exceptions = null;
 
-		foreach (var file in files)
+		if (consolidateExceptions)
 		{
-			try
+			List<Exception> exceptions = new List<Exception>();
+
+			foreach (var file in files)
 			{
-				file.Delete();
-			}
-			catch (Exception e)
-			{
-				if (consolidateExceptions)
+				try
 				{
-					if (exceptions == null)
-						exceptions = new List<Exception>();
+					file.Delete();
+				}
+				catch (Exception e)
+				{
 					exceptions.Add(e);
 				}
-				else
-					throw;
+			}
+			if (exceptions.Any())
+				throw CombinedException.Combine("Error while deleting one or several files, see InnerExceptions array for details.", exceptions);
+		}
+		else
+		{
+			foreach (var file in files)
+			{
+					file.Delete();
 			}
 		}
 
-		if ((exceptions != null) && (exceptions.Count > 0))
-			throw new CombinedException("Error while deleting one or several files, see InnerExceptions array for details.", exceptions.ToArray());
+
+
+
 	}
+
 
 	/// <summary>
 	/// 	Copies several files to a new folder at once and consolidates any exceptions.
