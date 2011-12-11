@@ -106,6 +106,7 @@
     <Compile Include="SystemDependencies\Clock.cs" />
     <Compile Include="SystemDependencies\SubstituteForSystemDate.cs" />
     <Compile Include="TextReaderExtensions.cs" />
+    <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="ValueTypeExtensions.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
