@@ -15,7 +15,8 @@ public static class ExceptionExtensions
 	/// <remarks>
 	///   Contributed by Kenneth Scott
 	/// </remarks>
-	public static Exception GetOriginalException(this Exception exception)
+    [Obsolete("Use GetBaseException instead")]
+    public static Exception GetOriginalException(this Exception exception)
 	{
 		if (exception.InnerException == null) return exception;
 
