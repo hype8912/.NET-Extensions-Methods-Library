@@ -227,6 +227,48 @@ public static class ListExtensions
 		return list;
 	}
 
+    /// <summary>
+    /// Get's an random item from list.
+    /// </summary>
+    /// <typeparam name="T">Type of list item.</typeparam>
+    /// <param name="source">Source list.</param>
+    /// <param name="random">Random instance to get random index.</param>
+    /// <returns>A random item from list.</returns>
+    public static T GetRandomItem<T>(this IList<T> source, Random random)
+    {
+        if (source.Count > 0)
+            // The maxValue for the upper-bound in the Next() method is exclusive, see: http://stackoverflow.com/q/5063269/375958
+            return source[random.Next(0, source.Count)];
+        else
+            throw new InvalidOperationException("Could not get item from empty list.");
+    }
+
+    /// <summary>
+    /// Get's an random item from list.
+    /// </summary>
+    /// <typeparam name="T">Type of list item.</typeparam>
+    /// <param name="source">Source list.</param>
+    /// <param name="seed">MSDN: A number used to calculate a starting value for the pseudo-random number 
+    /// sequence. If a negative number is specified, the absolute value of the number is used..</param>
+    /// <returns>A random item from list.</returns>
+    public static T GetRandomItem<T>(this IList<T> source, int seed)
+    {
+        var random = new Random(seed);
+        return source.GetRandomItem(random);
+    }
+
+    /// <summary>
+    /// Get's an random item from list.
+    /// </summary>
+    /// <typeparam name="T">Type of list item.</typeparam>
+    /// <param name="source">Source list.</param>
+    /// <returns>A random item from list.</returns>
+    public static T GetRandomItem<T>(this IList<T> source)
+    {
+        var random = new Random(DateTime.Now.Millisecond);
+        return source.GetRandomItem(random);
+    }
+
 	#region Merge
 
 	/// <summary>The merge.</summary>
@@ -297,4 +339,6 @@ public static class ListExtensions
 	}
 
 	#endregion
+
+    
 }
