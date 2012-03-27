@@ -73,7 +73,9 @@
     <Compile Include="CollectionExtensionsTest.cs" />
     <Compile Include="ComparableExtensionsTests.cs" />
     <Compile Include="DirectoryInfoExtensionsTest.cs" />
+    <Compile Include="DoubleExtensionsTest.cs" />
     <Compile Include="EnumExtensionsTest.cs" />
+    <Compile Include="FloatExtensionsTest.cs" />
     <Compile Include="LongExtensionsTest.cs" />
     <Compile Include="FileInfoExtensionsTest.cs" />
     <Compile Include="RhinoMocks\MethodOptionsExtensionsTest.cs" />

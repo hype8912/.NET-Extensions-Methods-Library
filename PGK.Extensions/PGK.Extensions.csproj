@@ -76,8 +76,10 @@
     <Compile Include="ComponentExtensions.cs" />
     <Compile Include="ConstructorExtensions.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="DoubleExtensions.cs" />
     <Compile Include="DisplayStringAttribute.cs" />
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="FloatExtensions.cs" />
     <Compile Include="LongExtensions.cs" />
     <Compile Include="PrincipalExtensions.cs" />
     <Compile Include="StringBuilderExtensions.cs" />

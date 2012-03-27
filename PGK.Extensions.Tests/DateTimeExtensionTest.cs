@@ -13,11 +13,11 @@ namespace PGK.Extensions.Tests
 		public void TestGetDaysInYear()
 		{
 			/* positive testing */
-			var testValue = new DateTime(2010);
+			var testValue = new DateTime(2010, 1, 1);
 			var resultValue = 365;
 			Assert.AreEqual(testValue.GetDays(), resultValue);
 			/* negative testing */
-			testValue = DateTime.Now.AddYears(1);
+			testValue = new DateTime(2012, 1, 1);
 			Assert.AreNotEqual(testValue.GetDays(), resultValue);
 		}
 
