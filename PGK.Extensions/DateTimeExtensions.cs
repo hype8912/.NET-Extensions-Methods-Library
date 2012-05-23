@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using PGK.Extensions.SystemDependencies;
 
 /// <summary>
 /// 	Extension methods for the DateTimeOffset data type.
 /// </summary>
-public static class DateTimeExtensions {
+public static class DateTimeExtensions
+{
     const int EveningEnds = 2;
     const int MorningEnds = 12;
     const int AfternoonEnds = 6;
@@ -14,7 +16,8 @@ public static class DateTimeExtensions {
     ///<summary>
     ///	Return System UTC Offset
     ///</summary>
-    public static double UtcOffset {
+    public static double UtcOffset
+    {
         get { return DateTime.Now.Subtract(DateTime.UtcNow).TotalHours; }
     }
 
@@ -23,7 +26,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "dateOfBirth">The date of birth.</param>
     /// <returns>The calculated age.</returns>
-    public static int CalculateAge(this DateTime dateOfBirth) {
+    public static int CalculateAge(this DateTime dateOfBirth)
+    {
         return CalculateAge(dateOfBirth, Clock.Now.Date);
     }
 
@@ -33,7 +37,8 @@ public static class DateTimeExtensions {
     /// <param name = "dateOfBirth">The date of birth.</param>
     /// <param name = "referenceDate">The reference date to calculate on.</param>
     /// <returns>The calculated age.</returns>
-    public static int CalculateAge(this DateTime dateOfBirth, DateTime referenceDate) {
+    public static int CalculateAge(this DateTime dateOfBirth, DateTime referenceDate)
+    {
         var years = referenceDate.Year - dateOfBirth.Year;
         if (referenceDate.Month < dateOfBirth.Month || (referenceDate.Month == dateOfBirth.Month && referenceDate.Day < dateOfBirth.Day))
             --years;
@@ -45,7 +50,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The number of days.</returns>
-    public static int GetCountDaysOfMonth(this DateTime date) {
+    public static int GetCountDaysOfMonth(this DateTime date)
+    {
         var nextMonth = date.AddMonths(1);
         return new DateTime(nextMonth.Year, nextMonth.Month, 1).AddDays(-1).Day;
     }
@@ -55,7 +61,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The first day of the month</returns>
-    public static DateTime GetFirstDayOfMonth(this DateTime date) {
+    public static DateTime GetFirstDayOfMonth(this DateTime date)
+    {
         return new DateTime(date.Year, date.Month, 1);
     }
 
@@ -65,7 +72,8 @@ public static class DateTimeExtensions {
     /// <param name = "date">The date.</param>
     /// <param name = "dayOfWeek">The desired day of week.</param>
     /// <returns>The first day of the month</returns>
-    public static DateTime GetFirstDayOfMonth(this DateTime date, DayOfWeek dayOfWeek) {
+    public static DateTime GetFirstDayOfMonth(this DateTime date, DayOfWeek dayOfWeek)
+    {
         var dt = date.GetFirstDayOfMonth();
         while (dt.DayOfWeek != dayOfWeek)
             dt = dt.AddDays(1);
@@ -77,7 +85,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The last day of the month.</returns>
-    public static DateTime GetLastDayOfMonth(this DateTime date) {
+    public static DateTime GetLastDayOfMonth(this DateTime date)
+    {
         return new DateTime(date.Year, date.Month, GetCountDaysOfMonth(date));
     }
 
@@ -87,7 +96,8 @@ public static class DateTimeExtensions {
     /// <param name = "date">The date.</param>
     /// <param name = "dayOfWeek">The desired day of week.</param>
     /// <returns>The date time</returns>
-    public static DateTime GetLastDayOfMonth(this DateTime date, DayOfWeek dayOfWeek) {
+    public static DateTime GetLastDayOfMonth(this DateTime date, DayOfWeek dayOfWeek)
+    {
         var dt = date.GetLastDayOfMonth();
         while (dt.DayOfWeek != dayOfWeek)
             dt = dt.AddDays(-1);
@@ -101,7 +111,8 @@ public static class DateTimeExtensions {
     /// <returns>
     /// 	<c>true</c> if the specified date is today; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsToday(this DateTime dt) {
+    public static bool IsToday(this DateTime dt)
+    {
         return (dt.Date == DateTime.Today);
     }
 
@@ -113,8 +124,24 @@ public static class DateTimeExtensions {
     /// <param name = "minutes">The minutes to be set.</param>
     /// <param name = "seconds">The seconds to be set.</param>
     /// <returns>The DateTime including the new time value</returns>
-    public static DateTime SetTime(this DateTime date, int hours, int minutes, int seconds) {
+    public static DateTime SetTime(this DateTime date, int hours, int minutes, int seconds)
+    {
         return date.SetTime(new TimeSpan(hours, minutes, seconds));
+    }
+
+    /// <summary>
+    /// 	Sets the time on the specified DateTime value.
+    /// </summary>
+    /// <param name = "date">The base date.</param>
+    /// <param name="hours">The hour</param>
+    /// <param name="minutes">The minute</param>
+    /// <param name="seconds">The second</param>
+    /// <param name="milliseconds">The millisecond</param>
+    /// <returns>The DateTime including the new time value</returns>
+    /// <remarks>Added overload for milliseconds - jtolar</remarks>
+    public static DateTime SetTime(this DateTime date, int hours, int minutes, int seconds, int milliseconds)
+    {
+        return date.SetTime(new TimeSpan(0, hours, minutes, seconds, milliseconds));
     }
 
     /// <summary>
@@ -125,7 +152,8 @@ public static class DateTimeExtensions {
     /// <returns>
     /// 	The DateTime including the new time value
     /// </returns>
-    public static DateTime SetTime(this DateTime date, TimeSpan time) {
+    public static DateTime SetTime(this DateTime date, TimeSpan time)
+    {
         return date.Date.Add(time);
     }
 
@@ -134,7 +162,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "localDateTime">The local DateTime.</param>
     /// <returns>The converted DateTimeOffset</returns>
-    public static DateTimeOffset ToDateTimeOffset(this DateTime localDateTime) {
+    public static DateTimeOffset ToDateTimeOffset(this DateTime localDateTime)
+    {
         return localDateTime.ToDateTimeOffset(null);
     }
 
@@ -144,7 +173,8 @@ public static class DateTimeExtensions {
     /// <param name = "localDateTime">The local DateTime.</param>
     /// <param name = "localTimeZone">The local time zone.</param>
     /// <returns>The converted DateTimeOffset</returns>
-    public static DateTimeOffset ToDateTimeOffset(this DateTime localDateTime, TimeZoneInfo localTimeZone) {
+    public static DateTimeOffset ToDateTimeOffset(this DateTime localDateTime, TimeZoneInfo localTimeZone)
+    {
         localTimeZone = (localTimeZone ?? TimeZoneInfo.Local);
 
         if (localDateTime.Kind != DateTimeKind.Unspecified)
@@ -158,7 +188,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The first day of the week</returns>
-    public static DateTime GetFirstDayOfWeek(this DateTime date) {
+    public static DateTime GetFirstDayOfWeek(this DateTime date)
+    {
         return date.GetFirstDayOfWeek(null);
     }
 
@@ -168,7 +199,8 @@ public static class DateTimeExtensions {
     /// <param name = "date">The date.</param>
     /// <param name = "cultureInfo">The culture to determine the first weekday of a week.</param>
     /// <returns>The first day of the week</returns>
-    public static DateTime GetFirstDayOfWeek(this DateTime date, CultureInfo cultureInfo) {
+    public static DateTime GetFirstDayOfWeek(this DateTime date, CultureInfo cultureInfo)
+    {
         cultureInfo = (cultureInfo ?? CultureInfo.CurrentCulture);
 
         var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
@@ -183,7 +215,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The first day of the week</returns>
-    public static DateTime GetLastDayOfWeek(this DateTime date) {
+    public static DateTime GetLastDayOfWeek(this DateTime date)
+    {
         return date.GetLastDayOfWeek(null);
     }
 
@@ -193,7 +226,8 @@ public static class DateTimeExtensions {
     /// <param name = "date">The date.</param>
     /// <param name = "cultureInfo">The culture to determine the first weekday of a week.</param>
     /// <returns>The first day of the week</returns>
-    public static DateTime GetLastDayOfWeek(this DateTime date, CultureInfo cultureInfo) {
+    public static DateTime GetLastDayOfWeek(this DateTime date, CultureInfo cultureInfo)
+    {
         return date.GetFirstDayOfWeek(cultureInfo).AddDays(6);
     }
 
@@ -208,7 +242,8 @@ public static class DateTimeExtensions {
     /// 		var thisWeeksMonday = DateTime.Now.GetWeekday(DayOfWeek.Monday);
     /// 	</code>
     /// </example>
-    public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday) {
+    public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday)
+    {
         return date.GetWeeksWeekday(weekday, null);
     }
 
@@ -224,7 +259,8 @@ public static class DateTimeExtensions {
     /// 		var thisWeeksMonday = DateTime.Now.GetWeekday(DayOfWeek.Monday);
     /// 	</code>
     /// </example>
-    public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday, CultureInfo cultureInfo) {
+    public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday, CultureInfo cultureInfo)
+    {
         var firstDayOfWeek = date.GetFirstDayOfWeek(cultureInfo);
         return firstDayOfWeek.GetNextWeekday(weekday);
     }
@@ -240,7 +276,8 @@ public static class DateTimeExtensions {
     /// 		var lastMonday = DateTime.Now.GetNextWeekday(DayOfWeek.Monday);
     /// 	</code>
     /// </example>
-    public static DateTime GetNextWeekday(this DateTime date, DayOfWeek weekday) {
+    public static DateTime GetNextWeekday(this DateTime date, DayOfWeek weekday)
+    {
         while (date.DayOfWeek != weekday)
             date = date.AddDays(1);
         return date;
@@ -257,7 +294,8 @@ public static class DateTimeExtensions {
     /// 		var lastMonday = DateTime.Now.GetPreviousWeekday(DayOfWeek.Monday);
     /// 	</code>
     /// </example>
-    public static DateTime GetPreviousWeekday(this DateTime date, DayOfWeek weekday) {
+    public static DateTime GetPreviousWeekday(this DateTime date, DayOfWeek weekday)
+    {
         while (date.DayOfWeek != weekday)
             date = date.AddDays(-1);
         return date;
@@ -271,7 +309,8 @@ public static class DateTimeExtensions {
     /// <returns>
     /// 	<c>true</c> if both date values are equal; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsDateEqual(this DateTime date, DateTime dateToCompare) {
+    public static bool IsDateEqual(this DateTime date, DateTime dateToCompare)
+    {
         return (date.Date == dateToCompare.Date);
     }
 
@@ -283,7 +322,8 @@ public static class DateTimeExtensions {
     /// <returns>
     /// 	<c>true</c> if both time values are equal; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsTimeEqual(this DateTime time, DateTime timeToCompare) {
+    public static bool IsTimeEqual(this DateTime time, DateTime timeToCompare)
+    {
         return (time.TimeOfDay == timeToCompare.TimeOfDay);
     }
 
@@ -295,7 +335,8 @@ public static class DateTimeExtensions {
     /// <remarks>
     /// 	Contributed by blaumeister, http://www.codeplex.com/site/users/view/blaumeiser
     /// </remarks>
-    public static long GetMillisecondsSince1970(this DateTime datetime) {
+    public static long GetMillisecondsSince1970(this DateTime datetime)
+    {
         var ts = datetime.Subtract(Date1970);
         return (long)ts.TotalMilliseconds;
     }
@@ -307,7 +348,8 @@ public static class DateTimeExtensions {
     /// <returns>
     /// 	<c>true</c> if the specified date is a weekend; otherwise, <c>false</c>.
     /// </returns>
-    public static bool IsWeekend(this DateTime date) {
+    public static bool IsWeekend(this DateTime date)
+    {
         return date.DayOfWeek.EqualsAny(DayOfWeek.Saturday, DayOfWeek.Sunday);
     }
 
@@ -317,7 +359,8 @@ public static class DateTimeExtensions {
     /// <param name = "date">The origin date.</param>
     /// <param name = "value">The amount of weeks to be added.</param>
     /// <returns>The enw date value</returns>
-    public static DateTime AddWeeks(this DateTime date, int value) {
+    public static DateTime AddWeeks(this DateTime date, int value)
+    {
         return date.AddDays(value * 7);
     }
 
@@ -329,7 +372,8 @@ public static class DateTimeExtensions {
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static int GetDays(int year) {
+    public static int GetDays(int year)
+    {
         var first = new DateTime(year, 1, 1);
         var last = new DateTime(year + 1, 1, 1);
         return GetDays(first, last);
@@ -343,7 +387,8 @@ public static class DateTimeExtensions {
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static int GetDays(this DateTime date) {
+    public static int GetDays(this DateTime date)
+    {
         return GetDays(date.Year);
     }
 
@@ -356,7 +401,8 @@ public static class DateTimeExtensions {
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static int GetDays(this DateTime fromDate, DateTime toDate) {
+    public static int GetDays(this DateTime fromDate, DateTime toDate)
+    {
         return Convert.ToInt32(toDate.Subtract(fromDate).TotalDays);
     }
 
@@ -368,7 +414,8 @@ public static class DateTimeExtensions {
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
     /// </remarks>
-    public static string GetPeriodOfDay(this DateTime date) {
+    public static string GetPeriodOfDay(this DateTime date)
+    {
         var hour = date.Hour;
         if (hour < EveningEnds)
             return "evening";
@@ -382,7 +429,8 @@ public static class DateTimeExtensions {
     /// </summary>
     /// <param name="dateTime">The date time.</param>
     /// <returns>The week number</returns>
-    public static int GetWeekOfYear(this DateTime dateTime) {
+    public static int GetWeekOfYear(this DateTime dateTime)
+    {
         var culture = CultureInfo.CurrentUICulture;
         var calendar = culture.Calendar;
         var dateTimeFormat = culture.DateTimeFormat;
@@ -439,4 +487,100 @@ public static class DateTimeExtensions {
     {
         return source.CompareTo(other) > 0;
     }
+
+    /// <summary>
+    /// Gets a DateTime representing Next Day
+    /// </summary>
+    /// <param name="date">The current day</param>
+    /// <returns></returns>
+    public static DateTime Tomorrow(this DateTime date)
+    {
+        return date.AddDays(1);
+    }
+
+    /// <summary>
+    /// Gets a DateTime representing Previous Day
+    /// </summary>
+    /// <param name="date">The current day</param>
+    /// <returns></returns>
+    public static DateTime Yesterday(this DateTime date)
+    {
+        return date.AddDays(-1);
+    }
+
+    /// <summary>
+    /// The ToFriendlyString() method represents dates in a user friendly way. 
+    /// For example, when displaying a news article on a webpage, you might want 
+    /// articles that were published one day ago to have their publish dates 
+    /// represented as "yesterday at 12:30 PM". Or if the article was publish today, 
+    /// show the date as "Today, 3:33 PM".
+    /// </summary>
+    /// <param name="date">The date.</param>
+    /// <returns>string</returns>
+    /// <remarks></remarks>
+    public static string ToFriendlyDateString(this DateTime date)
+    {
+        var sbFormattedDate = new StringBuilder();
+        if (date.Date == DateTime.Today)
+        {
+            sbFormattedDate.Append("Today");
+        }
+        else if (date.Date == DateTime.Today.AddDays(-1))
+        {
+            sbFormattedDate.Append("Yesterday");
+        }
+        else if (date.Date > DateTime.Today.AddDays(-6))
+        {
+            // *** Show the Day of the week
+            sbFormattedDate.Append(date.ToString("dddd").ToString(CultureInfo.InvariantCulture));
+        }
+        else
+        {
+            sbFormattedDate.Append(date.ToString("MMMM dd, yyyy").ToString(CultureInfo.InvariantCulture));
+        }
+
+        //append the time portion to the output
+        sbFormattedDate.Append(" at ").Append(date.ToString("t").ToLower());
+        return sbFormattedDate.ToString();
+    }
+
+    /// <summary>
+    /// Returns the date at 23:59.59.999 for the specified DateTime
+    /// </summary>
+    /// <param name="date">The DateTime to be processed</param>
+    /// <returns>The date at 23:50.59.999</returns>
+    public static DateTime EndOfDay(this DateTime date)
+    {
+        return date.SetTime(23, 59, 59, 999);
+    }
+
+    /// <summary>
+    /// Returns the date at 12:00:00 for the specified DateTime
+    /// </summary>
+    /// <param name="time">The current date</param>
+    public static DateTime Noon(this DateTime time)
+    {
+        return time.SetTime(12, 0, 0);
+    }
+
+    /// <summary>
+    /// Returns the date at 00:00:00 for the specified DateTime
+    /// </summary>
+    /// <param name="time">The current date</param>
+    public static DateTime Midnight(this DateTime time)
+    {
+        return time.SetTime(0, 0, 0, 0);
+    }
+
+    /// <summary>
+    /// Returns whether the DateTime falls on a weekday
+    /// </summary>
+    /// <param name="date">The date to be processed</param>
+    /// <returns>Whether the specified date occurs on a weekday</returns>
+    public static bool IsWeekDay(this DateTime date)
+    {
+        return !date.IsWeekend();
+    }
+
+   
 }
