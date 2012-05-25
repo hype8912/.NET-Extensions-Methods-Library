@@ -269,7 +269,7 @@ public static class EnumerableExtensions
 	public static string ToCSV<T>(this IEnumerable<T> source, char separator)
 	{
 		if (source == null)
-			return string.Empty;
+			return String.Empty;
 
 		var csv = new StringBuilder();
 		source.ForEach(value => csv.AppendFormat("{0}{1}", value, separator));
@@ -319,8 +319,8 @@ public static class EnumerableExtensions
 		foreach (var item in source)
 		{
 			var select = selector(item);
-			if (allowNull || !Equals(select, default(TSource)))
-				yield return select;
+			if (allowNull || !Equals(@select, default(TSource)))
+				yield return @select;
 		}
 	}
 
@@ -524,6 +524,55 @@ public static class EnumerableExtensions
 	/// <returns>A dictionary of groupings such that the key of the dictionary is TKey type and the value is List of TValue type.</returns>
 	public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
 	{
-		return groupings.ToDictionary(group => group.Key, group => group.ToList());
+		return groupings.ToDictionary(group => @group.Key, group => @group.ToList());
 	}
+
+    /// <summary>
+    ///   Returns whether the sequence contains a certain amount of elements.
+    /// </summary>
+    /// <typeparam name = "T">The type of the elements of the input sequence.</typeparam>
+    /// <param name = "source">The source for this extension method.</param>
+    /// <param name = "count">The amount of elements the sequence should contain.</param>
+    /// <returns>True when the sequence contains the specified amount of elements, false otherwise.</returns>
+    public static bool HasCountOf<T>(this IEnumerable<T> source, int count)
+    {
+        return source.Take(count + 1).Count() == count;
+    }
+
+    /// <summary>
+    /// Allows you to create Enumerable List of the Enum's Values.
+    /// </summary>
+    /// <typeparam name="T">Enum Type to enumerate</typeparam>
+    /// <returns></returns>
+    public static IEnumerable<T> EnumValuesToList<T>(this IEnumerable<T> collection)
+    {
+        Type enumType = typeof(T);
+
+        // Can't use generic type constraints on value types,
+        // so have to do check like this
+        if (enumType.BaseType != typeof(Enum))
+            throw new ArgumentException("T must be of type System.Enum");
+
+        Array enumValArray = Enum.GetValues(enumType);
+        var enumValList = new List<T>(enumValArray.Length);
+        enumValList.AddRange(from int val in enumValArray select (T) Enum.Parse(enumType, val.ToString()));
+
+        return enumValList;
+    }
+
+    /// <summary>
+    /// Allows you to create a enumerable string list of the items name in the Enum.
+    /// </summary>
+    /// <typeparam name="T">Enum Type to enumerate</typeparam>
+    /// <returns></returns>
+    public static IEnumerable<string> EnumNamesToList<T>(this IEnumerable<T> collection)
+    {
+        Type cls = typeof(T);
+
+        Type[] enumArrayList = cls.GetInterfaces();
+
+        return (from objType in enumArrayList where objType.IsEnum select objType.Name).ToList();
+    }
+
+    
 }

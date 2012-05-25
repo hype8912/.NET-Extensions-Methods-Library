@@ -147,4 +147,34 @@ public static class DictionaryExtensions
 
 		throw exception;
 	}
+
+    /// <summary>
+    /// Tests if the collection is empty.
+    /// </summary>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty(this IDictionary collection)
+    {
+        collection.ExceptionIfNullOrEmpty("The collection cannot be null.", "collection");
+
+        return collection.Count == 0;
+    }
+
+    /// <summary>
+    /// Tests if the IDictionary is empty.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key of 
+    /// the IDictionary.</typeparam>
+    /// <typeparam name="TValue">The type of the values
+    /// of the IDictionary.</typeparam>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty<TKey, TValue>(this IDictionary<TKey, TValue> collection)
+    {
+        collection.ExceptionIfNullOrEmpty(
+            "The collection cannot be null.",
+            "collection");
+
+        return collection.Count == 0;
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -20,5 +21,40 @@ public static class BitmapSourceExtensions {
             // Nested construction required to prevent issues from closing the underlying stream
             return new Bitmap(new Bitmap(stream));
         }
+    }
+
+    public static BitmapImage ToBitmapImage(this Bitmap bitmap)
+    {
+        var memoryStream = new MemoryStream();
+        bitmap.Save(memoryStream, ImageFormat.Png);
+
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.StreamSource = memoryStream;
+        bitmapImage.EndInit();
+
+        return bitmapImage;
+    }
+
+    public static BitmapImage ToBitmapImage(this byte[] byteArray)
+    {
+        var memoryStream = new MemoryStream(byteArray);
+
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.StreamSource = memoryStream;
+        bitmapImage.EndInit();
+
+        return bitmapImage;
+    }
+
+    public static BitmapSource ToBitmapSource(this byte[] byteArray)
+    {
+        var memoryStream = new MemoryStream(byteArray);
+        var decoder = new PngBitmapDecoder(memoryStream,
+                                            BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+        var bitmapSource = decoder.Frames[0];
+
+        return bitmapSource;
     }
 }

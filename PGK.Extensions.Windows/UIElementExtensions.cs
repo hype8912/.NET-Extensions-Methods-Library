@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -39,4 +40,16 @@ public static class UIElementExtensions {
 
         return renderTarget;
     }
+
+    /// <summary>
+    /// Brings  the control in the control collection to top
+    /// </summary>
+    /// <param name="collection">UI Collection</param>
+    /// <param name="control">Element to be brought to front</param>
+    public static void SendToFront(this UIElementCollection collection, UIElement control)
+    {
+        collection.Remove(control);
+        collection.Add(control);
+    }
+
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 /// <summary>
@@ -66,4 +68,62 @@ public static class CollectionExtensions
 		var deleteList = collection.Where(child => predicate(child)).ToList();
 		deleteList.ForEach(t => collection.Remove(t));
 	}
+
+    /// <summary>
+    /// Tests if the collection is empty.
+    /// </summary>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty(this ICollection collection)
+    {
+        collection.ExceptionIfNullOrEmpty("The collection cannot be null.","collection");
+
+        return collection.Count == 0;
+    }
+
+    /// <summary>
+    /// Tests if the collection is empty.
+    /// </summary>
+    /// <typeparam name="T">The type of the items in 
+    /// the collection.</typeparam>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty<T>(this ICollection<T> collection)
+    {
+        collection.ExceptionIfNullOrEmpty(
+            "The collection cannot be null.",
+            "collection");
+
+        return collection.Count == 0;
+    }
+
+    /// <summary>
+    /// Tests if the collection is empty.
+    /// </summary>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty(this IList collection)
+    {
+        collection.ExceptionIfNullOrEmpty(
+            "The collection cannot be null.",
+            "collection");
+
+        return collection.Count == 0;
+    }
+
+    /// <summary>
+    /// Tests if the collection is empty.
+    /// </summary>
+    /// <typeparam name="T">The type of the items in 
+    /// the collection.</typeparam>
+    /// <param name="collection">The collection to test.</param>
+    /// <returns>True if the collection is empty.</returns>
+    public static bool IsEmpty<T>(this IList<T> collection)
+    {
+        collection.ExceptionIfNullOrEmpty(
+            "The collection cannot be null.",
+            "collection");
+
+        return collection.Count == 0;
+    }
 }

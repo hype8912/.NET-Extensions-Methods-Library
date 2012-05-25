@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Web;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using PGK.Extensions;
 
 /// <summary>
@@ -1023,4 +1024,197 @@ public static class ObjectExtensions
 			return (T)formatter.Deserialize(stream);
 		}
 	}
+
+    /// <summary>
+    /// Casts the specified object to the specified type.
+    /// </summary>
+    /// <typeparam name="T">The type to cast to</typeparam>
+    /// <param name="o">The Object being casted</param>
+    /// <returns>returns the object as casted type.</returns>
+    public static T Cast<T>(this object o)
+    {
+        if (o == null)
+            throw new NullReferenceException();
+        return (T)Convert.ChangeType(o, typeof(T));
+    }
+
+    /// <summary>
+    /// Casts the specified object. If the object is null a return type can be specified.
+    /// </summary>
+    /// <typeparam name="T">The type to cast to.</typeparam>
+    /// <param name="o">The Object being casted</param>
+    /// <param name="defaultValue">The default Type.</param>
+    /// <returns>returns the object as casted type. If null the default type is returned.</returns>
+    public static T Cast<T>(this object o, T defaultValue)
+    {
+        if (o == null)
+            return defaultValue;
+        return (T)Convert.ChangeType(o, typeof(T));
+    }
+
+    /// <summary>
+    /// Copies the readable and writable public property values from the source object to the target
+    /// </summary>
+    /// <remarks>The source and target objects must be of the same type.</remarks>
+    /// <param name="target">The target object</param>
+    /// <param name="source">The source object</param>
+    public static void CopyPropertiesFrom(this object target, object source)
+    {
+        CopyPropertiesFrom(target, source, string.Empty);
+    }
+
+    /// <summary>
+    /// Copies the readable and writable public property values from the source object to the target
+    /// </summary>
+    /// <remarks>The source and target objects must be of the same type.</remarks>
+    /// <param name="target">The target object</param>
+    /// <param name="source">The source object</param>
+    /// <param name="ignoreProperty">A single property name to ignore</param>
+    public static void CopyPropertiesFrom(this object target, object source, string ignoreProperty)
+    {
+        CopyPropertiesFrom(target, source, new[] { ignoreProperty });
+    }
+
+    /// <summary>
+    /// Copies the readable and writable public property values from the source object to the target
+    /// </summary>
+    /// <remarks>The source and target objects must be of the same type.</remarks>
+    /// <param name="target">The target object</param>
+    /// <param name="source">The source object</param>
+    /// <param name="ignoreProperties">An array of property names to ignore</param>
+    public static void CopyPropertiesFrom(this object target, object source, string[] ignoreProperties)
+    {
+        // Get and check the object types
+        Type type = source.GetType();
+        if (target.GetType() != type)
+        {
+            throw new ArgumentException("The source type must be the same as the target");
+        }
+
+        // Build a clean list of property names to ignore
+        var ignoreList = new List<string>();
+        foreach (string item in ignoreProperties)
+        {
+            if (!string.IsNullOrEmpty(item) && !ignoreList.Contains(item))
+            {
+                ignoreList.Add(item);
+            }
+        }
+
+        // Copy the properties
+        foreach (PropertyInfo property in type.GetProperties())
+        {
+            if (property.CanWrite
+                && property.CanRead
+                && !ignoreList.Contains(property.Name))
+            {
+                object val = property.GetValue(source, null);
+                property.SetValue(target, val, null);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns a string representation of the objects property values
+    /// </summary>
+    /// <param name="source">The object for the string representation</param>
+    /// <returns>A string</returns>
+    public static string ToPropertiesString(this object source)
+    {
+        return ToPropertiesString(source, Environment.NewLine);
+    }
+
+    /// <summary>
+    /// Returns a string representation of the objects property values
+    /// </summary>
+    /// <param name="source">The object for the string representation</param>
+    /// <param name="delimiter">The line terminstor string to use between properties</param>
+    /// <returns>A string</returns>
+    public static string ToPropertiesString(this object source, string delimiter)
+    {
+        if (source == null)
+        {
+            return string.Empty;
+        }
+
+        Type type = source.GetType();
+
+        var sb = new StringBuilder(type.Name);
+        sb.Append(delimiter);
+
+        foreach (PropertyInfo property in type.GetProperties())
+        {
+            if (property.CanWrite
+                && property.CanRead)
+            {
+                object val = property.GetValue(source, null);
+                sb.Append(property.Name);
+                sb.Append(": ");
+                sb.Append(val == null ? "[NULL]" : val.ToString());
+                sb.Append(delimiter);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+   /// <summary>
+    /// Serializes the object into an XML string, using the encoding method specified in
+    /// <see cref="ExtensionMethodsSettings.DefaultEncoding"/>
+    /// </summary>
+    /// <remarks>
+    /// The object to be serialized should be decorated with the 
+    /// <see cref="SerializableAttribute"/>, or implement the <see cref="ISerializable"/> interface.
+    /// </remarks>
+    /// <param name="source">The object to serialize</param>
+    /// <returns>An XML encoded string representation of the source object</returns>
+    public static string ToXml(this object source)
+    {
+        return ToXml(source, ExtensionMethodSetting.DefaultEncoding);
+    }
+
+    /// <summary>
+    /// Serializes the object into an XML string
+    /// </summary>
+    /// <remarks>
+    /// The object to be serialized should be decorated with the 
+    /// <see cref="SerializableAttribute"/>, or implement the <see cref="ISerializable"/> interface.
+    /// </remarks>
+    /// <param name="source">The object to serialize</param>
+    /// <param name="encoding">The Encoding scheme to use when serializing the data to XML</param>
+    /// <returns>An XML encoded string representation of the source object</returns>
+    public static string ToXml(this object source, Encoding encoding)
+    {
+        if (source == null)
+        {
+            throw new ArgumentException("The source object cannot be null.");
+        }
+
+        if (encoding == null)
+        {
+            throw new Exception("You must specify an encoder to use for serialization.");
+        }
+
+        using (var stream = new MemoryStream())
+        {
+            var serializer = new XmlSerializer(source.GetType());
+            serializer.Serialize(stream, source);
+            stream.Position = 0;
+            return encoding.GetString(stream.ToArray());
+        }
+    }
+
+    /// <summary>
+    /// Throws an <see cref="System.ArgumentNullException"/> 
+    /// if the the value is null.
+    /// </summary>
+    /// <param name="value">The value to test.</param>
+    /// <param name="message">The message to display if the value is null.</param>
+    /// <param name="name">The name of the parameter being tested.</param>
+    public static void ExceptionIfNullOrEmpty(this object value, string message, string name)
+    {
+        if (value == null)
+            throw new ArgumentNullException(name, message);
+    }
+    
 }

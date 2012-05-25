@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -101,7 +103,7 @@ public static class StringExtensions
 	}
 
 	/// <summary>
-	/// 	Determines whether the comparison value strig is contained within the input value string without any
+	/// 	Determines whether the comparison value string is contained within the input value string without any
 	///     consideration about the case (<see cref="StringComparison.InvariantCultureIgnoreCase"/>).
 	/// </summary>
 	/// <param name = "inputValue">The input value.</param>
@@ -541,8 +543,15 @@ public static class StringExtensions
 	/// <remarks>UppperCase characters is the source string after the first of each word are lowered, unless the word is exactly 2 characters</remarks>
 	public static string ToTitleCase(this string value)
 	{
-		return CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(value);
+	    return ToTitleCase(value, ExtensionMethodSetting.DefaultCulture);
 	}
+
+    /// <summary>Convert text's case to a title case</summary>
+    /// <remarks>UppperCase characters is the source string after the first of each word are lowered, unless the word is exactly 2 characters</remarks>
+    public static string ToTitleCase(this string value, CultureInfo culture)
+    {
+        return culture.TextInfo.ToTitleCase(value);
+    }
 
 	public static string ToPlural(this string singular)
 	{
@@ -884,9 +893,10 @@ public static class StringExtensions
 	/// </example>
 	public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern, RegexOptions options)
 	{
-		return from Match match in GetMatches(value, regexPattern, options)
-			   where match.Success
-			   select match.Value;
+        foreach (Match match in GetMatches(value, regexPattern, options))
+        {
+            if (match.Success) yield return match.Value;
+        }
 	}
 
 	/// <summary>
@@ -1096,7 +1106,7 @@ public static class StringExtensions
 		var regex = new Regex(pattern, regexOptions);
 		var match = regex.Match(value);
 
-		return match.Groups.Cast<Group>().Skip(1);
+	    return match.Groups.Cast<IEnumerable<Group>>().Skip(1);
 	}
 
 	#endregion ExtractArguments extension
@@ -1231,5 +1241,391 @@ public static class StringExtensions
 	{
 		return (inputValue.IsEmptyOrWhiteSpace() && comparisonValue.IsEmptyOrWhiteSpace());
 	}
+
+    /// <summary>
+    /// Return the string with the leftmost number_of_characters characters removed.
+    /// </summary>
+    /// <param name="str">The string being extended</param>
+    /// <param name="number_of_characters">The number of characters to remove.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String RemoveLeft(this String str, int number_of_characters)
+    {
+        if (str.Length <= number_of_characters) return "";
+        return str.Substring(number_of_characters);
+    }
+
+    /// <summary>
+    /// Return the string with the rightmost number_of_characters characters removed.
+    /// </summary>
+    /// <param name="str">The string being extended</param>
+    /// <param name="number_of_characters">The number of characters to remove.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String RemoveRight(this String str, int number_of_characters)
+    {
+        if (str.Length <= number_of_characters) return "";
+        return str.Substring(0, str.Length - number_of_characters);
+    }
+
+    /// <summary>
+    /// Encrypt this string into a byte array.
+    /// </summary>
+    /// <param name="plain_text">The string being extended and that will be encrypted.</param>
+    /// <param name="password">The password to use then encrypting the string.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static byte[] EncryptToByteArray(this String plain_text, String password)
+    {
+        var ascii_encoder = new ASCIIEncoding();
+        byte[] plain_bytes = ascii_encoder.GetBytes(plain_text);
+        return CryptBytes(password, plain_bytes, true);
+    }
+
+    /// <summary>
+    /// Decrypt the encryption stored in this byte array.
+    /// </summary>
+    /// <param name="encrypted_bytes">The byte array to decrypt.</param>
+    /// <param name="password">The password to use when decrypting.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String DecryptFromByteArray(this byte[] encrypted_bytes, String password)
+    {
+        byte[] decrypted_bytes = CryptBytes(password, encrypted_bytes, false);
+        var ascii_encoder = new ASCIIEncoding();
+        return new String(ascii_encoder.GetChars(decrypted_bytes));
+    }
+
+    /// <summary>
+    /// Encrypt this string and return the result as a string of hexadecimal characters.
+    /// </summary>
+    /// <param name="plain_text">The string being extended and that will be encrypted.</param>
+    /// <param name="password">The password to use then encrypting the string.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String EncryptToString(this String plain_text, String password)
+    {
+        return plain_text.EncryptToByteArray(password).BytesToHexString();
+    }
+
+    /// <summary>
+    /// Decrypt the encryption stored in this string of hexadecimal values.
+    /// </summary>
+    /// <param name="encrypted_bytes_string">The hexadecimal string to decrypt.</param>
+    /// <param name="password">The password to use then encrypting the string.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String DecryptFromString(this String encrypted_bytes_string, String password)
+    {
+        return encrypted_bytes_string.HexStringToBytes().DecryptFromByteArray(password);
+    }
+
+    /// <summary>
+    /// Encrypt or decrypt a byte array using the TripleDESCryptoServiceProvider crypto provider and Rfc2898DeriveBytes to build the key and initialization vector.
+    /// </summary>
+    /// <param name="password">The password string to use in encrypting or decrypting.</param>
+    /// <param name="in_bytes">The array of bytes to encrypt.</param>
+    /// <param name="encrypt">True to encrypt, False to decrypt.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    private static byte[] CryptBytes(String password, byte[] in_bytes, bool encrypt)
+    {
+        // Make a triple DES service provider.
+        var des_provider = new TripleDESCryptoServiceProvider();
+
+        // Find a valid key size for this provider.
+        int key_size_bits = 0;
+        for (int i = 1024; i >= 1; i--)
+        {
+            if (des_provider.ValidKeySize(i))
+            {
+                key_size_bits = i;
+                break;
+            }
+        }
+
+        // Get the block size for this provider.
+        int block_size_bits = des_provider.BlockSize;
+
+        // Generate the key and initialization vector.
+        byte[] key = null;
+        byte[] iv = null;
+        byte[] salt = { 0x10, 0x20, 0x12, 0x23, 0x37, 0xA4, 0xC5, 0xA6, 0xF1, 0xF0, 0xEE, 0x21, 0x22, 0x45 };
+        MakeKeyAndIV(password, salt, key_size_bits, block_size_bits, ref key, ref iv);
+
+        // Make the encryptor or decryptor.
+        ICryptoTransform crypto_transform = encrypt
+                                                ? des_provider.CreateEncryptor(key, iv)
+                                                : des_provider.CreateDecryptor(key, iv);
+
+        // Create the output stream.
+        var out_stream = new MemoryStream();
+
+        // Attach a crypto stream to the output stream.
+        var crypto_stream = new CryptoStream(out_stream,
+                                             crypto_transform, CryptoStreamMode.Write);
+
+        // Write the bytes into the CryptoStream.
+        crypto_stream.Write(in_bytes, 0, in_bytes.Length);
+        try
+        {
+            crypto_stream.FlushFinalBlock();
+        }
+        catch (CryptographicException)
+        {
+            // Ignore this one. The password is bad.
+        }
+
+        // Save the result.
+        byte[] result = out_stream.ToArray();
+
+        // Close the stream.
+        try
+        {
+            crypto_stream.Close();
+        }
+        catch (CryptographicException)
+        {
+            // Ignore this one. The password is bad.
+        }
+        out_stream.Close();
+
+        return result;
+    }
+
+    /// <summary>
+    /// Use the password to generate key bytes and an initialization vector with Rfc2898DeriveBytes.
+    /// </summary>
+    /// <param name="password">The input password to use in generating the bytes.</param>
+    /// <param name="salt">The input salt bytes to use in generating the bytes.</param>
+    /// <param name="key_size_bits">The input size of the key to generate.</param>
+    /// <param name="block_size_bits">The input block size used by the crypto provider.</param>
+    /// <param name="key">The output key bytes to generate.</param>
+    /// <param name="iv">The output initialization vector to generate.</param>
+    /// <remarks></remarks>
+    private static void MakeKeyAndIV(String password, byte[] salt, int key_size_bits, int block_size_bits,
+                                     ref byte[] key, ref byte[] iv)
+    {
+        var derive_bytes =
+            new Rfc2898DeriveBytes(password, salt, 1234);
+
+        key = derive_bytes.GetBytes(key_size_bits / 8);
+        iv = derive_bytes.GetBytes(block_size_bits / 8);
+    }
+
+    /// <summary>
+    /// Convert a byte array into a hexadecimal string representation.
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static String BytesToHexString(this byte[] bytes)
+    {
+        String result = "";
+        foreach (byte b in bytes)
+        {
+            result += " " + b.ToString("X").PadLeft(2, '0');
+        }
+        if (result.Length > 0) result = result.Substring(1);
+        return result;
+    }
+
+    /// <summary>
+    /// Convert this string containing hexadecimal into a byte array.
+    /// </summary>
+    /// <param name="str">The hexadecimal string to convert.</param>
+    /// <returns></returns>
+    /// <remarks></remarks>
+    public static byte[] HexStringToBytes(this String str)
+    {
+        str = str.Replace(" ", "");
+        int max_byte = str.Length / 2 - 1;
+        var bytes = new byte[max_byte + 1];
+        for (int i = 0; i <= max_byte; i++)
+        {
+            bytes[i] = byte.Parse(str.Substring(2 * i, 2), NumberStyles.AllowHexSpecifier);
+        }
+
+        return bytes;
+    }
+
+    /// <summary>
+    /// Returns a default value if the string is null or empty.
+    /// </summary>
+    /// <param name="s">Original String</param>
+    /// <param name="defaultValue">The default value.</param>
+    /// <returns></returns>
+    public static string DefaultIfNullOrEmpty(this string s, string defaultValue)
+    {
+        return String.IsNullOrEmpty(s) ? defaultValue : s;
+    }
+
+    /// <summary>
+    /// Throws an <see cref="System.ArgumentException"/> if the string value is empty.
+    /// </summary>
+    /// <param name="obj">The value to test.</param>
+    /// <param name="message">The message to display if the value is null.</param>
+    /// <param name="name">The name of the parameter being tested.</param>
+    public static string ExceptionIfNullOrEmpty(this string obj, string message, string name)
+    {
+        if (String.IsNullOrEmpty(obj))
+            throw new ArgumentException(message, name);
+        return obj;
+    }
+
+    /// <summary>
+    /// Joins  the values of a string array if the values are not null or empty.
+    /// </summary>
+    /// <param name="objs">The string array used for joining.</param>
+    /// <param name="separator">The separator to use in the joined string.</param>
+    /// <returns></returns>
+    public static string JoinNotNullOrEmpty(this string[] objs, string separator)
+    {
+        var items = new List<string>();
+        foreach (string s in objs)
+        {
+            if (!String.IsNullOrEmpty(s))
+                items.Add(s);
+        }
+        return String.Join(separator, items.ToArray());
+    }
+
+    /// <summary>
+    /// Parses the commandline params.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>A StringDictionary type object of command line parameters.</returns>
+    public static StringDictionary ParseCommandlineParams(this string[] value)
+    {
+        var parameters = new StringDictionary();
+        var spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        var remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        string parameter = null;
+
+        // Valid parameters forms:
+        // {-,/,--}param{ ,=,:}((",')value(",'))
+        // Examples: -param1 value1 --param2 /param3:"Test-:-work" /param4=happy -param5 '--=nice=--'
+        foreach (string txt in value)
+        {
+            // Look for new parameters (-,/ or --) and a possible enclosed value (=,:)
+            string[] Parts = spliter.Split(txt, 3);
+            switch (Parts.Length)
+            {
+                // Found a value (for the last parameter found (space separator))
+                case 1:
+                    if (parameter != null)
+                    {
+                        if (!parameters.ContainsKey(parameter))
+                        {
+                            Parts[0] = remover.Replace(Parts[0], "$1");
+                            parameters.Add(parameter, Parts[0]);
+                        }
+                        parameter = null;
+                    }
+                    // else Error: no parameter waiting for a value (skipped)
+                    break;
+                // Found just a parameter
+                case 2:
+                    // The last parameter is still waiting. With no value, set it to true.
+                    if (parameter != null)
+                    {
+                        if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
+                    }
+                    parameter = Parts[1];
+                    break;
+                // Parameter with enclosed value
+                case 3:
+                    // The last parameter is still waiting. With no value, set it to true.
+                    if (parameter != null)
+                    {
+                        if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
+                    }
+                    parameter = Parts[1];
+                    // Remove possible enclosing characters (",')
+                    if (!parameters.ContainsKey(parameter))
+                    {
+                        Parts[2] = remover.Replace(Parts[2], "$1");
+                        parameters.Add(parameter, Parts[2]);
+                    }
+                    parameter = null;
+                    break;
+            }
+        }
+        // In case a parameter is still waiting
+        if (parameter != null)
+        {
+            if (!parameters.ContainsKey(parameter)) parameters.Add(parameter, "true");
+        }
+
+        return parameters;
+    }
+
+    /// <summary>
+    /// Encodes the email address so that the link is still valid, but the email address is useless for email harvsters.
+    /// </summary>
+    /// <param name="emailAddress">The email address.</param>
+    /// <returns></returns>
+    public static string EncodeEmailAddress(this string emailAddress)
+    {
+        int i;
+        string repl;
+        string tempHtmlEncode = emailAddress;
+        for (i = tempHtmlEncode.Length; i >= 1; i--)
+        {
+            int acode = Convert.ToInt32(tempHtmlEncode[i - 1]);
+            if (acode == 32)
+            {
+                repl = " ";
+            }
+            else if (acode == 34)
+            {
+                repl = "\"";
+            }
+            else if (acode == 38)
+            {
+                repl = "&";
+            }
+            else if (acode == 60)
+            {
+                repl = "<";
+            }
+            else if (acode == 62)
+            {
+                repl = ">";
+            }
+            else if (acode >= 32 && acode <= 127)
+            {
+                repl = "&#" + Convert.ToString(acode) + ";";
+            }
+            else
+            {
+                repl = "&#" + Convert.ToString(acode) + ";";
+            }
+            if (repl.Length > 0)
+            {
+                tempHtmlEncode = tempHtmlEncode.Substring(0, i - 1) +
+                                 repl + tempHtmlEncode.Substring(i);
+            }
+        }
+        return tempHtmlEncode;
+    }
+
+    /// <summary>
+    /// Calculates the SHA1 hash of the supplied string and returns a base 64 string.
+    /// </summary>
+    /// <param name="stringToHash">String that must be hashed.</param>
+    /// <returns>The hashed string or null if hashing failed.</returns>
+    /// <exception cref="ArgumentException">Occurs when stringToHash or key is null or empty.</exception>
+    public static string GetSHA1Hash(this string stringToHash)
+    {
+        if (string.IsNullOrEmpty(stringToHash)) return null;
+        //{
+        //    throw new ArgumentException("An empty string value cannot be hashed.");
+        //}
+
+        Byte[] data = Encoding.UTF8.GetBytes(stringToHash);
+        Byte[] hash = new SHA1CryptoServiceProvider().ComputeHash(data);
+        return Convert.ToBase64String(hash);
+    }
 
 }

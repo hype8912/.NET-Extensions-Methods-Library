@@ -170,4 +170,18 @@ public static class ArrayExtension
 		}
 		return arrayToClear;
 	}
+
+    /// <summary>
+    /// Tests if the array is empty.
+    /// </summary>
+    /// <param name="array">The array to test.</param>
+    /// <returns>True if the array is empty.</returns>
+    public static bool IsEmpty(this Array array)
+    {
+        array.ExceptionIfNullOrEmpty(
+            "The array cannot be null.",
+            "array");
+
+        return array.Length == 0;
+    }
 }

@@ -1,11 +1,43 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Web.UI;
 
 /// <summary>
 ///   Extensions for ASP.NET Controls
 /// </summary>
 public static class ControlExtensions {
+
+    
+    /// <summary>
+    /// Tests if the array is empty.
+    /// </summary>
+    /// <param name="array">The array to test.</param>
+    /// <returns>True if the array is empty.</returns>
+    public static bool IsEmpty(this Array array)
+    {
+        array.ExceptionIfNullOrEmpty(
+            "The array cannot be null.",
+            "array");
+
+        return array.Length == 0;
+    }
+
+    /// <summary>
+    ///   Returns whether the sequence contains a certain amount of elements.
+    /// </summary>
+    /// <typeparam name = "T">The type of the elements of the input sequence.</typeparam>
+    /// <param name = "source">The source for this extension method.</param>
+    /// <param name = "count">The amount of elements the sequence should contain.</param>
+    /// <returns>True when the sequence contains the specified amount of elements, false otherwise.</returns>
+    public static bool HasCountOf<T>(this IEnumerable<T> source, int count)
+    {
+        return source.Take(count + 1).Count() == count;
+    }
+
+
     #region Find Controls
 
     /// <summary>
@@ -185,4 +217,24 @@ public static class ControlExtensions {
     }
 
     #endregion
+
+    /// <summary>
+    /// Runs action delegate for all controls and subcontrols in ControlCollection.
+    /// </summary>
+    /// <param name="controlCollection">The control collection.</param>
+    /// <param name="action">The action.</param>
+    /// <remarks></remarks>
+    public static void ForEachControl(this ControlCollection controlCollection, Action<Control> action)
+    {
+        if (controlCollection == null)
+            return;
+        foreach (Control c in controlCollection)
+        {
+            action(c);
+            if (c.HasControls())
+            {
+                ForEachControl(c.Controls, action);
+            }
+        }
+    }
 }

@@ -57,6 +57,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
@@ -75,6 +77,7 @@
     <Compile Include="DirectoryInfoExtensionsTest.cs" />
     <Compile Include="DoubleExtensionsTest.cs" />
     <Compile Include="EnumExtensionsTest.cs" />
+    <Compile Include="ExtensionMethodSettingTest.cs" />
     <Compile Include="FloatExtensionsTest.cs" />
     <Compile Include="LongExtensionsTest.cs" />
     <Compile Include="FileInfoExtensionsTest.cs" />

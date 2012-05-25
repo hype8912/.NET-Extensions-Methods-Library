@@ -188,9 +188,12 @@ public static class DateTimeExtensions
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The first day of the week</returns>
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>
     public static DateTime GetFirstDayOfWeek(this DateTime date)
     {
-        return date.GetFirstDayOfWeek(null);
+        return date.GetFirstDayOfWeek(ExtensionMethodSetting.DefaultCulture);
     }
 
     /// <summary>
@@ -215,9 +218,12 @@ public static class DateTimeExtensions
     /// </summary>
     /// <param name = "date">The date.</param>
     /// <returns>The first day of the week</returns>
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>
     public static DateTime GetLastDayOfWeek(this DateTime date)
     {
-        return date.GetLastDayOfWeek(null);
+        return date.GetLastDayOfWeek(ExtensionMethodSetting.DefaultCulture);
     }
 
     /// <summary>
@@ -230,7 +236,7 @@ public static class DateTimeExtensions
     {
         return date.GetFirstDayOfWeek(cultureInfo).AddDays(6);
     }
-
+    
     /// <summary>
     /// 	Gets the next occurence of the specified weekday within the current week using the current culture.
     /// </summary>
@@ -242,9 +248,12 @@ public static class DateTimeExtensions
     /// 		var thisWeeksMonday = DateTime.Now.GetWeekday(DayOfWeek.Monday);
     /// 	</code>
     /// </example>
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>
     public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday)
     {
-        return date.GetWeeksWeekday(weekday, null);
+        return date.GetWeeksWeekday(weekday, ExtensionMethodSetting.DefaultCulture);
     }
 
     /// <summary>
@@ -342,6 +351,17 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
+    /// Get milliseconds of UNIX area. This is the milliseconds since 1/1/1970
+    /// </summary>
+    /// <param name="dateTime">The date time.</param>
+    /// <returns></returns>
+    /// <remarks>This is the same as GetMillisecondsSince1970 but more descriptive</remarks>
+    public static long ToUnixEpoch(this DateTime dateTime)
+    {
+        return GetMillisecondsSince1970(dateTime);
+    }
+
+    /// <summary>
     /// 	Indicates whether the specified date is a weekend (Saturday or Sunday).
     /// </summary>
     /// <param name = "date">The date.</param>
@@ -371,25 +391,59 @@ public static class DateTimeExtensions
     ///<returns>the number of days within that year</returns>
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
+    ///     Modified by JTolar to implement Culture Settings
     /// </remarks>
     public static int GetDays(int year)
     {
-        var first = new DateTime(year, 1, 1);
-        var last = new DateTime(year + 1, 1, 1);
-        return GetDays(first, last);
+        return GetDays(year, ExtensionMethodSetting.DefaultCulture);
     }
 
     ///<summary>
-    ///	Get the number of days within that date year.
+    ///	Get the number of days within that year. Uses the culture specified.
     ///</summary>
-    ///<param name = "date">The date.</param>
+    ///<param name = "year">The year.</param>
+    ///<param name="culture">Specific culture</param>
     ///<returns>the number of days within that year</returns>
     /// <remarks>
     /// 	Contributed by Michael T, http://about.me/MichaelTran
+    ///     Modified by JTolar to implement Culture Settings
+    /// </remarks>
+    public static int GetDays(int year, CultureInfo culture)
+    {
+        var first = new DateTime(year, 1, 1, culture.Calendar);
+        var last = new DateTime(year + 1, 1, 1, culture.Calendar);
+        return GetDays(first, last);
+    }
+
+
+    ///<summary>
+    ///	Get the number of days within that date year. Allows user to specify culture.
+    ///</summary>
+    ///<param name = "date">The date.</param>
+    ///<param name="culture">Specific culture</param>
+    ///<returns>the number of days within that year</returns>
+    /// <remarks>
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
+    ///     Modified by JTolar to implement Culture Settings 
     /// </remarks>
     public static int GetDays(this DateTime date)
     {
-        return GetDays(date.Year);
+        return GetDays(date.Year, ExtensionMethodSetting.DefaultCulture);
+    }
+
+    ///<summary>
+    ///	Get the number of days within that date year. Allows user to specify culture
+    ///</summary>
+    ///<param name = "date">The date.</param>
+    ///<param name="culture">Specific culture</param>
+    ///<returns>the number of days within that year</returns>
+    /// <remarks>
+    /// 	Contributed by Michael T, http://about.me/MichaelTran
+    ///     Modified by JTolar to implement Culture Settings 
+    /// </remarks>
+    public static int GetDays(this DateTime date, CultureInfo culture)
+    {
+        return GetDays(date.Year, culture);
     }
 
     ///<summary>
@@ -425,17 +479,34 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// Gets the week number for a provided date time value based on the current culture settings.
+    /// Gets the week number for a provided date time value based on a specific culture.
     /// </summary>
     /// <param name="dateTime">The date time.</param>
+    /// <param name="culture">Specific culture</param>
     /// <returns>The week number</returns>
-    public static int GetWeekOfYear(this DateTime dateTime)
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>
+    public static int GetWeekOfYear(this DateTime dateTime, CultureInfo culture)
     {
-        var culture = CultureInfo.CurrentUICulture;
         var calendar = culture.Calendar;
         var dateTimeFormat = culture.DateTimeFormat;
 
         return calendar.GetWeekOfYear(dateTime, dateTimeFormat.CalendarWeekRule, dateTimeFormat.FirstDayOfWeek);
+    }
+
+    /// <summary>
+    /// Gets the week number for a provided date time value based on the current culture settings. 
+    /// Uses DefaultCulture from ExtensionMethodSetting
+    /// </summary>
+    /// <param name="dateTime">The date time.</param>
+    /// <returns>The week number</returns>
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>
+    public static int GetWeekOfYear(this DateTime dateTime)
+    {
+        return GetWeekOfYear(dateTime, ExtensionMethodSetting.DefaultCulture);
     }
 
     /// <summary>
@@ -516,9 +587,12 @@ public static class DateTimeExtensions
     /// show the date as "Today, 3:33 PM".
     /// </summary>
     /// <param name="date">The date.</param>
+    /// <param name="culture">Specific Culture</param>
     /// <returns>string</returns>
-    /// <remarks></remarks>
-    public static string ToFriendlyDateString(this DateTime date)
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>/// <remarks></remarks>
+    public static string ToFriendlyDateString(this DateTime date, CultureInfo culture)
     {
         var sbFormattedDate = new StringBuilder();
         if (date.Date == DateTime.Today)
@@ -532,16 +606,33 @@ public static class DateTimeExtensions
         else if (date.Date > DateTime.Today.AddDays(-6))
         {
             // *** Show the Day of the week
-            sbFormattedDate.Append(date.ToString("dddd").ToString(CultureInfo.InvariantCulture));
+            sbFormattedDate.Append(date.ToString("dddd").ToString(culture));
         }
         else
         {
-            sbFormattedDate.Append(date.ToString("MMMM dd, yyyy").ToString(CultureInfo.InvariantCulture));
+            sbFormattedDate.Append(date.ToString("MMMM dd, yyyy").ToString(culture));
         }
 
         //append the time portion to the output
         sbFormattedDate.Append(" at ").Append(date.ToString("t").ToLower());
         return sbFormattedDate.ToString();
+    }
+    
+    ///<summary>
+    /// The ToFriendlyString() method represents dates in a user friendly way. 
+    /// For example, when displaying a news article on a webpage, you might want 
+    /// articles that were published one day ago to have their publish dates 
+    /// represented as "yesterday at 12:30 PM". Or if the article was publish today, 
+    /// show the date as "Today, 3:33 PM". Uses DefaultCulture from ExtensionMethodSetting.
+    /// </summary>
+    /// <param name="date">The date.</param>
+    /// <returns>string</returns>
+    /// <remarks>
+    ///     modified by jtolar to implement culture settings
+    /// </remarks>/// <remarks></remarks>
+    public static string ToFriendlyDateString(this DateTime date)
+    {
+        return ToFriendlyDateString(date, ExtensionMethodSetting.DefaultCulture);
     }
 
     /// <summary>
