@@ -28,8 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGK.Extensions4", "PGK.Exte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGK.Extensions.Test4", "PGK.Extensions.Test4\PGK.Extensions.Test4.csproj", "{12031EE3-0471-42BA-92DA-BE088DE4B8FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGK.Extensions.Benchmark", "PGK.Extensions.Benchmark\PGK.Extensions.Benchmark.csproj", "{02DDA5ED-7506-4221-8C41-609A9676AAB5}"
-EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PGK.Extensions.vsmdi

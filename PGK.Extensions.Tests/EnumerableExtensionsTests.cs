@@ -94,7 +94,7 @@ namespace PGK.Extensions.Tests
 		Box box1 = new Box(1, 1, 1);   // height length, width
 		Box box2 = new Box(2, 2, 4);
 		Box box3 = new Box(3, 5, 3);
-		Box box4 = new Box(5,4,2);
+		Box box4 = new Box(5, 4, 2);
 
 		[TestMethod]
 	  public void MaxItem()
@@ -173,20 +173,69 @@ namespace PGK.Extensions.Tests
 			var expected = "";
 			Assert.AreEqual(expected, csv);
 		}
-		[TestMethod]
-		public void Sum_Simple()
+
+        [TestMethod]
+		public void Sum_For_ULong()
 		{
 			var boxes = new Box[] { box1, box2, box3, box4 };
-			var widths = boxes.Sum(b => b.Width);
-			Assert.AreEqual(10, widths);
+			var widths = boxes.Sum(b => b.WidthAsULong);
+			Assert.AreEqual((ulong)10, widths);
 		}
 
-		[TestMethod, Ignore]   // This is not actually testing the right thing.
-		public void Sum_Nullable()
+        [TestMethod]
+		public void Sum_For_Nullable_ULong()
+		{
+			var boxes = new Box[] { box1, box2, box3, box4 };
+			var widths = boxes.Sum(b => b.WidthAsNullableULong);
+			Assert.AreEqual((ulong)10, widths);
+		}
+
+        [TestMethod]
+		public void Sum_For_UInt()
+		{
+			var boxes = new Box[] { box1, box2, box3, box4 };
+			var widths = boxes.Sum(b => b.WidthAsUInt);
+			Assert.AreEqual((uint)10, widths);
+		}
+
+        [TestMethod]
+		public void Sum_For_Nullable_UInt()
+		{
+			var boxes = new Box[] { box1, box2, box3, box4 };
+			var widths = boxes.Sum(b => b.WidthAsNullableUInt);
+			Assert.AreEqual((uint)10, widths);
+		}
+        
+        [TestMethod]
+		public void Sum_For_ULong_Ignore_Null_Value()
 		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
-			var widths = boxes.Sum(b => b.Width);
-			Assert.AreEqual(10, widths);
+            var widths = boxes.Sum(b => b.WidthAsULong);
+			Assert.AreEqual((ulong)10, widths);
+		}
+        
+        [TestMethod]
+		public void Sum_For_Nullable_ULong_Ignore_Null_Value()
+		{
+			var boxes = new Box[] { box1, box2, null, box3, box4 };
+            var widths = boxes.Sum(b => b.WidthAsNullableULong);
+			Assert.AreEqual((ulong)10, widths);
+		}
+        
+        [TestMethod]
+		public void Sum_For_UInt_Ignore_Null_Value()
+		{
+			var boxes = new Box[] { box1, box2, null, box3, box4 };
+            var widths = boxes.Sum(b => b.WidthAsUInt);
+			Assert.AreEqual((uint)10, widths);
+		}
+        
+        [TestMethod]
+		public void Sum_For_Nullable_UInt_Ignore_Null_Value()
+		{
+			var boxes = new Box[] { box1, box2, null, box3, box4 };
+            var widths = boxes.Sum(b => b.WidthAsNullableUInt);
+			Assert.AreEqual((uint)10, widths);
 		}
 
 

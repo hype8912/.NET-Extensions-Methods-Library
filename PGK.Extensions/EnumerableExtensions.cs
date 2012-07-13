@@ -479,10 +479,15 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static uint Sum<T>(this IEnumerable<T> source, Func<T, uint> selection)
 	{
-		return source.Select(selection).Sum();
+		return ElementsNotNullFrom(source).Select(selection).Sum();
 	}
 
-	/// <summary>
+    private static IEnumerable<T> ElementsNotNullFrom<T>(IEnumerable<T> source)
+    {
+        return source.Where(x => x.IsNotNull());
+    }
+
+    /// <summary>
 	/// Computes the sum of a sequence of nullable UInt32 values that are obtained by invoking a transformation function on each element of the intput sequence.
 	/// </summary>
 	/// <param name="source">A sequence of values that are used to calculate a sum.</param>
@@ -490,7 +495,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static uint? Sum<T>(this IEnumerable<T> source, Func<T, uint?> selection)
 	{
-		return source.Select(selection).Sum();
+        return ElementsNotNullFrom(source).Select(selection).Sum();
 	}
 
 	/// <summary>
@@ -501,7 +506,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static ulong Sum<T>(this IEnumerable<T> source, Func<T, ulong> selector)
 	{
-		return source.Select(selector).Sum();
+        return ElementsNotNullFrom(source).Select(selector).Sum();
 	}
 
 	/// <summary>
@@ -512,7 +517,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static ulong? Sum<T>(this IEnumerable<T> source, Func<T, ulong?> selector)
 	{
-		return source.Select(selector).Sum();
+        return ElementsNotNullFrom(source).Select(selector).Sum();
 	}
 
 	/// <summary>

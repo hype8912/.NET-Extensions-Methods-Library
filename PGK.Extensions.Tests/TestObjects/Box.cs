@@ -17,6 +17,23 @@ namespace PGK.Extensions.Tests.TestObjects
 		public int Height { get; private set; }
 		public int Length { get; private set; }
 		public int Width { get; private set; }
+        // some extensions we're testing works for uInt or uLong and not integer.  This is the sole purpose of those properties
+        public uint WidthAsUInt 
+        {
+            get { return this.Width.ConvertTo<uint>(); }
+        }
+        public uint? WidthAsNullableUInt 
+        {
+            get { return this.WidthAsUInt; }
+        }
+        public ulong WidthAsULong 
+        {
+            get { return this.Width.ConvertTo<ulong>(); }
+        }
+        public ulong? WidthAsNullableULong 
+        {
+            get { return this.WidthAsULong; }
+        }
 
 		public int CompareTo(Box other)
 		{
