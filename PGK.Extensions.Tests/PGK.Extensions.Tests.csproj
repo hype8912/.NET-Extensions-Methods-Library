@@ -108,9 +108,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FilesForTestingPurpose\PGK.Extensions.suo" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="FilesForTestingPurpose\PGK.Extensions.sln.docstates.suo" />
+    <Content Include="FilesForTestingPurpose\AnotherFile.txt" />
+    <Content Include="FilesForTestingPurpose\PGK.Extensions.sln" />
     <Content Include="Used_for_testing.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

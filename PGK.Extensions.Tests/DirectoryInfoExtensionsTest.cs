@@ -13,9 +13,10 @@ namespace PGK.Extensions.Tests
 		[TestMethod]
 		public void GetFiles()
 		{
-			var testValue = new DirectoryInfo(@"..\..\..");		// that should point to the rott "dnpextensions" directory
+            var testValue = new DirectoryInfo(@"..\..\FilesForTestingPurpose");		// that should point to the rott "dnpextensions" directory
 			var results = testValue.GetFiles("*.sln", "*.suo");
 			Assert.IsNotNull(results);
+
 			Assert.AreEqual(3, results.Length);
 			Assert.AreEqual(1, results.Count(fi => fi.Name == "PGK.Extensions.sln"));
 			Assert.AreEqual(1, results.Count(fi => fi.Name == "PGK.Extensions.sln.docstates.suo"));

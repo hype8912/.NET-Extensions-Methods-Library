@@ -1106,7 +1106,7 @@ public static class StringExtensions
 		var regex = new Regex(pattern, regexOptions);
 		var match = regex.Match(value);
 
-	    return match.Groups.Cast<IEnumerable<Group>>().Skip(1);
+        return Enumerable.Cast<Group>(match.Groups).Skip(1);
 	}
 
 	#endregion ExtractArguments extension

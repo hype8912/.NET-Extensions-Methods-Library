@@ -49,9 +49,6 @@
     <AssemblyOriginatorKeyFile>PGK.Extensions.Web.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PGK.Extensions">
-      <HintPath>..\PGK.Extensions\bin\Debug\PGK.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -77,6 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PGK.Extensions.Web.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PGK.Extensions\PGK.Extensions.csproj">
+      <Project>{1ca53630-fe88-4618-ba42-78cf7f9fc1b3}</Project>
+      <Name>PGK.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
