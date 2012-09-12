@@ -579,5 +579,16 @@ public static class EnumerableExtensions
         return (from objType in enumArrayList where objType.IsEnum select objType.Name).ToList();
     }
 
-    
+    /// <summary>
+    /// Concatenate a list of strings using the provided separator.
+    /// </summary>
+    /// <param name="strings">An enumerable collection of strings to concatenate.</param>
+    /// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
+    /// <returns>The enumerable collection of strings concatenated into a single string.</returns>
+    public static string ConcatWith(this IEnumerable<string> strings, string separator = ",")
+    {
+        if (strings == null) throw new ArgumentNullException("strings");
+        if (separator == null) throw new ArgumentNullException("separator");
+        return string.Join(separator, strings.ToArray());
+    }
 }

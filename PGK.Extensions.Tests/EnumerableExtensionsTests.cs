@@ -321,5 +321,19 @@ namespace PGK.Extensions.Tests
 			nullableUlongs = new ulong?[] { null };
 			nullableUlongs.Sum().Should().Equal(0UL);
 		}
+
+        [TestMethod]
+        public void TestContactWith()
+        {
+            List<string> strings = new List<string> { "1", "2", "3", "4", "5" };
+            
+            // Test default separator
+            string concatenatedComma = "1,2,3,4,5";
+            concatenatedComma.Should().Equal(strings.ConcatWith());
+
+            // Test non-default separaor
+            string concatenatedQuestion = "1?2?3?4?5";
+            concatenatedQuestion.Should().Equal(strings.ConcatWith("?"));
+        }
 	}
 }
