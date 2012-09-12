@@ -89,8 +89,8 @@ public static class EnumerableExtensions
 	/// 		var oldestPerson = persons.MaxItem(p =&gt; p.Age, out age);
 	/// 	</code>
 	/// </example>
-	public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue maxValue) 
-		where TItem : class 
+	public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue maxValue)
+		where TItem : class
 		where TValue : IComparable
 	{
 		TItem maxItem = null;
@@ -126,8 +126,8 @@ public static class EnumerableExtensions
 	/// 		var oldestPerson = persons.MaxItem(p =&gt; p.Age);
 	/// 	</code>
 	/// </example>
-	public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector) 
-		where TItem : class 
+	public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector)
+		where TItem : class
 		where TValue : IComparable
 	{
 		TValue maxValue;
@@ -150,7 +150,9 @@ public static class EnumerableExtensions
 	/// 		var youngestPerson = persons.MinItem(p =&gt; p.Age, out age);
 	/// 	</code>
 	/// </example>
-	public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue minValue) where TItem : class where TValue : IComparable
+	public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector, out TValue minValue)
+		where TItem : class
+		where TValue : IComparable
 	{
 		TItem minItem = null;
 		minValue = default(TValue);
@@ -183,7 +185,9 @@ public static class EnumerableExtensions
 	/// 		var youngestPerson = persons.MinItem(p =&gt; p.Age);
 	/// 	</code>
 	/// </example>
-	public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector) where TItem : class where TValue : IComparable
+	public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector)
+		where TItem : class
+		where TValue : IComparable
 	{
 		TValue minValue;
 
@@ -482,12 +486,12 @@ public static class EnumerableExtensions
 		return ElementsNotNullFrom(source).Select(selection).Sum();
 	}
 
-    private static IEnumerable<T> ElementsNotNullFrom<T>(IEnumerable<T> source)
-    {
-        return source.Where(x => x.IsNotNull());
-    }
+	private static IEnumerable<T> ElementsNotNullFrom<T>(IEnumerable<T> source)
+	{
+		return source.Where(x => x.IsNotNull());
+	}
 
-    /// <summary>
+	/// <summary>
 	/// Computes the sum of a sequence of nullable UInt32 values that are obtained by invoking a transformation function on each element of the intput sequence.
 	/// </summary>
 	/// <param name="source">A sequence of values that are used to calculate a sum.</param>
@@ -495,7 +499,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static uint? Sum<T>(this IEnumerable<T> source, Func<T, uint?> selection)
 	{
-        return ElementsNotNullFrom(source).Select(selection).Sum();
+		return ElementsNotNullFrom(source).Select(selection).Sum();
 	}
 
 	/// <summary>
@@ -506,7 +510,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static ulong Sum<T>(this IEnumerable<T> source, Func<T, ulong> selector)
 	{
-        return ElementsNotNullFrom(source).Select(selector).Sum();
+		return ElementsNotNullFrom(source).Select(selector).Sum();
 	}
 
 	/// <summary>
@@ -517,7 +521,7 @@ public static class EnumerableExtensions
 	/// <returns>The sum of the projected values.</returns>
 	public static ulong? Sum<T>(this IEnumerable<T> source, Func<T, ulong?> selector)
 	{
-        return ElementsNotNullFrom(source).Select(selector).Sum();
+		return ElementsNotNullFrom(source).Select(selector).Sum();
 	}
 
 	/// <summary>
@@ -532,63 +536,94 @@ public static class EnumerableExtensions
 		return groupings.ToDictionary(group => @group.Key, group => @group.ToList());
 	}
 
-    /// <summary>
-    ///   Returns whether the sequence contains a certain amount of elements.
-    /// </summary>
-    /// <typeparam name = "T">The type of the elements of the input sequence.</typeparam>
-    /// <param name = "source">The source for this extension method.</param>
-    /// <param name = "count">The amount of elements the sequence should contain.</param>
-    /// <returns>True when the sequence contains the specified amount of elements, false otherwise.</returns>
-    public static bool HasCountOf<T>(this IEnumerable<T> source, int count)
-    {
-        return source.Take(count + 1).Count() == count;
-    }
+	/// <summary>
+	///   Returns whether the sequence contains a certain amount of elements.
+	/// </summary>
+	/// <typeparam name = "T">The type of the elements of the input sequence.</typeparam>
+	/// <param name = "source">The source for this extension method.</param>
+	/// <param name = "count">The amount of elements the sequence should contain.</param>
+	/// <returns>True when the sequence contains the specified amount of elements, false otherwise.</returns>
+	public static bool HasCountOf<T>(this IEnumerable<T> source, int count)
+	{
+		return source.Take(count + 1).Count() == count;
+	}
 
-    /// <summary>
-    /// Allows you to create Enumerable List of the Enum's Values.
-    /// </summary>
-    /// <typeparam name="T">Enum Type to enumerate</typeparam>
-    /// <returns></returns>
-    public static IEnumerable<T> EnumValuesToList<T>(this IEnumerable<T> collection)
-    {
-        Type enumType = typeof(T);
+	/// <summary>
+	/// Allows you to create Enumerable List of the Enum's Values.
+	/// </summary>
+	/// <typeparam name="T">Enum Type to enumerate</typeparam>
+	/// <returns></returns>
+	public static IEnumerable<T> EnumValuesToList<T>(this IEnumerable<T> collection)
+	{
+		Type enumType = typeof(T);
 
-        // Can't use generic type constraints on value types,
-        // so have to do check like this
-        if (enumType.BaseType != typeof(Enum))
-            throw new ArgumentException("T must be of type System.Enum");
+		// Can't use generic type constraints on value types,
+		// so have to do check like this
+		if (enumType.BaseType != typeof(Enum))
+			throw new ArgumentException("T must be of type System.Enum");
 
-        Array enumValArray = Enum.GetValues(enumType);
-        var enumValList = new List<T>(enumValArray.Length);
-        enumValList.AddRange(from int val in enumValArray select (T) Enum.Parse(enumType, val.ToString()));
+		Array enumValArray = Enum.GetValues(enumType);
+		var enumValList = new List<T>(enumValArray.Length);
+		enumValList.AddRange(from int val in enumValArray select (T)Enum.Parse(enumType, val.ToString()));
 
-        return enumValList;
-    }
+		return enumValList;
+	}
 
-    /// <summary>
-    /// Allows you to create a enumerable string list of the items name in the Enum.
-    /// </summary>
-    /// <typeparam name="T">Enum Type to enumerate</typeparam>
-    /// <returns></returns>
-    public static IEnumerable<string> EnumNamesToList<T>(this IEnumerable<T> collection)
-    {
-        Type cls = typeof(T);
+	/// <summary>
+	/// Allows you to create a enumerable string list of the items name in the Enum.
+	/// </summary>
+	/// <typeparam name="T">Enum Type to enumerate</typeparam>
+	/// <returns></returns>
+	public static IEnumerable<string> EnumNamesToList<T>(this IEnumerable<T> collection)
+	{
+		Type cls = typeof(T);
 
-        Type[] enumArrayList = cls.GetInterfaces();
+		Type[] enumArrayList = cls.GetInterfaces();
 
-        return (from objType in enumArrayList where objType.IsEnum select objType.Name).ToList();
-    }
+		return (from objType in enumArrayList where objType.IsEnum select objType.Name).ToList();
+	}
 
-    /// <summary>
-    /// Concatenate a list of strings using the provided separator.
-    /// </summary>
-    /// <param name="strings">An enumerable collection of strings to concatenate.</param>
-    /// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
-    /// <returns>The enumerable collection of strings concatenated into a single string.</returns>
-    public static string ConcatWith(this IEnumerable<string> strings, string separator = ",")
-    {
-        if (strings == null) throw new ArgumentNullException("strings");
-        if (separator == null) throw new ArgumentNullException("separator");
-        return string.Join(separator, strings.ToArray());
-    }
+	/// <summary>
+	/// Concatenate a list of strings using the provided separator.
+	/// </summary>
+	/// <param name="strings">An enumerable collection of strings to concatenate.</param>
+	/// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
+	/// <returns>The enumerable collection of strings concatenated into a single string.</returns>
+	/// <example>
+	/// 	<code>
+	/// 		List&lt;string&gt; strings = new List&lt;string&gt;() { "1", "2", "3", "4", "5" };
+	/// 		string concatenated = strings.ConcatWith(":");  // concatenated = 1:2:3:4:5
+	/// 	</code>
+	/// </example>
+	/// <remarks>
+	///     Contributed by Joseph Eddy, http://www.codeplex.com/site/users/view/jceddy
+	/// </remarks>
+	public static string ConcatWith(this IEnumerable<string> strings, string separator = ",")
+	{
+		if (strings == null) throw new ArgumentNullException("strings");
+		if (separator == null) throw new ArgumentNullException("separator");
+		return string.Join(separator, strings.ToArray());
+	}
+
+	/// <summary>
+	/// Concatenate a list of items using the provided separator.
+	/// </summary>
+	/// <param name="items">An enumerable collection of items to concatenate.</param>
+	/// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
+	/// <returns>The enumerable collection of items concatenated into a single string.</returns>
+	/// <example>
+	/// 	<code>
+	/// 		List&lt;int&gt; ints = new List&lt;int&gt;() { 1, 2, 3, 4, 5 };
+	/// 		string concatenated = ints.ConcatWith(":");  // concatenated = 1:2:3:4:5
+	/// 	</code>
+	/// </example>
+	/// <remarks>
+	///     Contributed by Joseph Eddy, http://www.codeplex.com/site/users/view/jceddy
+	/// </remarks>
+	public static string ConcatWith<T>(this IEnumerable<T> items, string separator = ",")
+	{
+		if (items == null) throw new ArgumentNullException("items");
+		if (separator == null) throw new ArgumentNullException("separator");
+		return string.Join(separator, items.Select(x => x.ToString()).ToArray());
+	}
 }

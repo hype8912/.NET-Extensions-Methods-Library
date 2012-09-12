@@ -31,12 +31,12 @@ namespace PGK.Extensions.Tests
 		[TestMethod]
 		public void ConvertList_Empty()
 		{
-			var values = new string[] {};
+			var values = new string[] { };
 			var converted = values.ConvertList<string, int>();
 			var expected = new int[] { };
 			Assert.IsFalse(converted.Any());
 			Assert.IsTrue(expected.SequenceEqual(converted));
-			
+
 		}
 
 		[TestMethod]
@@ -97,31 +97,31 @@ namespace PGK.Extensions.Tests
 		Box box4 = new Box(5, 4, 2);
 
 		[TestMethod]
-	  public void MaxItem()
-	  {
+		public void MaxItem()
+		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
 			int width;
 			var maxItem = boxes.MaxItem(b => b.Width, out width);
 			Assert.AreEqual(box2, maxItem);
 			Assert.AreEqual(4, width);
-	  }
+		}
 		[TestMethod]
 		public void MinItem()
 		{
-		  var boxes = new Box[] { box1, box2, null, box3, box4 };
+			var boxes = new Box[] { box1, box2, null, box3, box4 };
 			int width;
 			var minItem = boxes.MinItem(b => b.Width, out width);
 			Assert.AreEqual(box1, minItem);
 			Assert.AreEqual(1, width);
 		}
 
-		 // Skipping Distinct, since I can't figure out how it hows
+		// Skipping Distinct, since I can't figure out how it hows
 
 		[TestMethod]
 		public void RemoveAll_Simple()
 		{
 			var values = new int[] { 1, 2, 3, 4, 5 };
-			var expected = new int [] { 2, 4 };
+			var expected = new int[] { 2, 4 };
 
 			var results = values.AsEnumerable().RemoveAll(v => (v & 1) == 1);
 			Assert.IsTrue(expected.SequenceEqual(results));
@@ -141,12 +141,12 @@ namespace PGK.Extensions.Tests
 		public void WhereNot_Null()
 		{
 			int[] values = null;
-			var expected = new int[] {};
+			var expected = new int[] { };
 
 			var results = values.AsEnumerable().RemoveWhere(v => (v & 1) == 1);
 			Assert.IsTrue(expected.SequenceEqual(results));
 		}
-	
+
 		[TestMethod]
 		public void ToCSV_Simple()
 		{
@@ -174,7 +174,7 @@ namespace PGK.Extensions.Tests
 			Assert.AreEqual(expected, csv);
 		}
 
-        [TestMethod]
+		[TestMethod]
 		public void Sum_For_ULong()
 		{
 			var boxes = new Box[] { box1, box2, box3, box4 };
@@ -182,7 +182,7 @@ namespace PGK.Extensions.Tests
 			Assert.AreEqual((ulong)10, widths);
 		}
 
-        [TestMethod]
+		[TestMethod]
 		public void Sum_For_Nullable_ULong()
 		{
 			var boxes = new Box[] { box1, box2, box3, box4 };
@@ -190,7 +190,7 @@ namespace PGK.Extensions.Tests
 			Assert.AreEqual((ulong)10, widths);
 		}
 
-        [TestMethod]
+		[TestMethod]
 		public void Sum_For_UInt()
 		{
 			var boxes = new Box[] { box1, box2, box3, box4 };
@@ -198,43 +198,43 @@ namespace PGK.Extensions.Tests
 			Assert.AreEqual((uint)10, widths);
 		}
 
-        [TestMethod]
+		[TestMethod]
 		public void Sum_For_Nullable_UInt()
 		{
 			var boxes = new Box[] { box1, box2, box3, box4 };
 			var widths = boxes.Sum(b => b.WidthAsNullableUInt);
 			Assert.AreEqual((uint)10, widths);
 		}
-        
-        [TestMethod]
+
+		[TestMethod]
 		public void Sum_For_ULong_Ignore_Null_Value()
 		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
-            var widths = boxes.Sum(b => b.WidthAsULong);
+			var widths = boxes.Sum(b => b.WidthAsULong);
 			Assert.AreEqual((ulong)10, widths);
 		}
-        
-        [TestMethod]
+
+		[TestMethod]
 		public void Sum_For_Nullable_ULong_Ignore_Null_Value()
 		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
-            var widths = boxes.Sum(b => b.WidthAsNullableULong);
+			var widths = boxes.Sum(b => b.WidthAsNullableULong);
 			Assert.AreEqual((ulong)10, widths);
 		}
-        
-        [TestMethod]
+
+		[TestMethod]
 		public void Sum_For_UInt_Ignore_Null_Value()
 		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
-            var widths = boxes.Sum(b => b.WidthAsUInt);
+			var widths = boxes.Sum(b => b.WidthAsUInt);
 			Assert.AreEqual((uint)10, widths);
 		}
-        
-        [TestMethod]
+
+		[TestMethod]
 		public void Sum_For_Nullable_UInt_Ignore_Null_Value()
 		{
 			var boxes = new Box[] { box1, box2, null, box3, box4 };
-            var widths = boxes.Sum(b => b.WidthAsNullableUInt);
+			var widths = boxes.Sum(b => b.WidthAsNullableUInt);
 			Assert.AreEqual((uint)10, widths);
 		}
 
@@ -322,18 +322,26 @@ namespace PGK.Extensions.Tests
 			nullableUlongs.Sum().Should().Equal(0UL);
 		}
 
-        [TestMethod]
-        public void TestContactWith()
-        {
-            List<string> strings = new List<string> { "1", "2", "3", "4", "5" };
-            
-            // Test default separator
-            string concatenatedComma = "1,2,3,4,5";
-            concatenatedComma.Should().Equal(strings.ConcatWith());
+		[TestMethod]
+		public void TestContactWith()
+		{
+			List<string> strings = new List<string> { "1", "2", "3", "4", "5" };
+			List<int> ints = new List<int> { 1, 2, 3, 4, 5 };
 
-            // Test non-default separaor
-            string concatenatedQuestion = "1?2?3?4?5";
-            concatenatedQuestion.Should().Equal(strings.ConcatWith("?"));
-        }
+			string concatenatedComma = "1,2,3,4,5";
+			string concatenatedQuestion = "1?2?3?4?5";
+
+			// Test default separator (string-specific)
+			concatenatedComma.Should().Equal(strings.ConcatWith());
+
+			// Test non-default separator (string-specific)
+			concatenatedQuestion.Should().Equal(strings.ConcatWith("?"));
+
+			// Test default separator (generic)
+			concatenatedComma.Should().Equal(ints.ConcatWith());
+
+			// Test non-default separator (generic)
+			concatenatedQuestion.Should().Equal(ints.ConcatWith("?"));
+		}
 	}
 }
