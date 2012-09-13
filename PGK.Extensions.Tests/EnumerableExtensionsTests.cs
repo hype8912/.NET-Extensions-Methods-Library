@@ -326,22 +326,25 @@ namespace PGK.Extensions.Tests
 		public void TestContactWith()
 		{
 			List<string> strings = new List<string> { "1", "2", "3", "4", "5" };
-			List<int> ints = new List<int> { 1, 2, 3, 4, 5 };
+			List<double> doubles = new List<double> { 123.4567, 123.4, 123.0, 4, 5 };
+			List<string> stringsWithNull = new List<string> { "1", "2", null, "4", "5" };
+			List<double?> doublesWithNull = new List<double?> { 123.4567, 123.4, null, 4, 5 };
 
-			string concatenatedComma = "1,2,3,4,5";
-			string concatenatedQuestion = "1?2?3?4?5";
-
-			// Test default separator (string-specific)
-			concatenatedComma.Should().Equal(strings.ConcatWith());
+			// Test default separator (strings)
+			"1,2,3,4,5".Should().Equal(strings.ConcatWith());
+			"1,2,,4,5".Should().Equal(stringsWithNull.ConcatWith());
 
 			// Test non-default separator (string-specific)
-			concatenatedQuestion.Should().Equal(strings.ConcatWith("?"));
+			"1?2?3?4?5".Should().Equal(strings.ConcatWith("?"));
+			"1?2??4?5".Should().Equal(stringsWithNull.ConcatWith("?"));
 
-			// Test default separator (generic)
-			concatenatedComma.Should().Equal(ints.ConcatWith());
+			// Test default separator (doubles)
+			"123.46,123.40,123.00,4.00,5.00".Should().Equal(doubles.ConcatWith(formatString: "0.00"));
+			"123.46,123.40,,4.00,5.00".Should().Equal(doublesWithNull.ConcatWith(formatString: "0.00"));
 
-			// Test non-default separator (generic)
-			concatenatedQuestion.Should().Equal(ints.ConcatWith("?"));
+			// Test non-default separator (doubles)
+			"123.46?123.40?123.00?4.00?5.00".Should().Equal(doubles.ConcatWith("?", "0.00"));
+			"123.46?123.40??4.00?5.00".Should().Equal(doublesWithNull.ConcatWith("?", "0.00"));
 		}
 	}
 }

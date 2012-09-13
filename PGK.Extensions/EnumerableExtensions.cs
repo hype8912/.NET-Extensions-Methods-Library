@@ -584,46 +584,41 @@ public static class EnumerableExtensions
 	}
 
 	/// <summary>
-	/// Concatenate a list of strings using the provided separator.
-	/// </summary>
-	/// <param name="strings">An enumerable collection of strings to concatenate.</param>
-	/// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
-	/// <returns>The enumerable collection of strings concatenated into a single string.</returns>
-	/// <example>
-	/// 	<code>
-	/// 		List&lt;string&gt; strings = new List&lt;string&gt;() { "1", "2", "3", "4", "5" };
-	/// 		string concatenated = strings.ConcatWith(":");  // concatenated = 1:2:3:4:5
-	/// 	</code>
-	/// </example>
-	/// <remarks>
-	///     Contributed by Joseph Eddy, http://www.codeplex.com/site/users/view/jceddy
-	/// </remarks>
-	public static string ConcatWith(this IEnumerable<string> strings, string separator = ",")
-	{
-		if (strings == null) throw new ArgumentNullException("strings");
-		if (separator == null) throw new ArgumentNullException("separator");
-		return string.Join(separator, strings.ToArray());
-	}
-
-	/// <summary>
 	/// Concatenate a list of items using the provided separator.
 	/// </summary>
 	/// <param name="items">An enumerable collection of items to concatenate.</param>
 	/// <param name="separator">The separator to use for the concatenation (defaults to ",").</param>
+	/// <param name="formatString">An optional string formatter for the items in the output list.</param>
 	/// <returns>The enumerable collection of items concatenated into a single string.</returns>
 	/// <example>
 	/// 	<code>
-	/// 		List&lt;int&gt; ints = new List&lt;int&gt;() { 1, 2, 3, 4, 5 };
-	/// 		string concatenated = ints.ConcatWith(":");  // concatenated = 1:2:3:4:5
+	/// 		List&lt;double&gt; doubles = new List&lt;double&gt;() { 123.4567, 123.4, 123.0, 4, 5 };
+	/// 		string concatenated = doubles.ConcatWith(":", "0.00");  // concatenated = 123.46:123.40:123.00:4.00:5.00
 	/// 	</code>
 	/// </example>
 	/// <remarks>
 	///     Contributed by Joseph Eddy, http://www.codeplex.com/site/users/view/jceddy
 	/// </remarks>
-	public static string ConcatWith<T>(this IEnumerable<T> items, string separator = ",")
+	public static string ConcatWith<T>(this IEnumerable<T> items, string separator = ",", string formatString = "")
 	{
 		if (items == null) throw new ArgumentNullException("items");
 		if (separator == null) throw new ArgumentNullException("separator");
-		return string.Join(separator, items.Select(x => x.ToString()).ToArray());
+
+		// shortcut for string enumerable
+		if (typeof(T) == typeof(string))
+		{
+			return string.Join(separator, ((IEnumerable<string>)items).ToArray());
+		}
+
+		if (string.IsNullOrEmpty(formatString))
+		{
+			formatString = "{0}";
+		}
+		else
+		{
+			formatString = string.Format("{{0:{0}}}", formatString);
+		}
+
+		return string.Join(separator, items.Select(x => string.Format(formatString, x)).ToArray());
 	}
 }
