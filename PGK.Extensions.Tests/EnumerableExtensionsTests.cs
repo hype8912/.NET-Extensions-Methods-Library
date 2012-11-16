@@ -345,6 +345,45 @@ namespace PGK.Extensions.Tests
 			// Test non-default separator (doubles)
 			"123.46?123.40?123.00?4.00?5.00".Should().Equal(doubles.ConcatWith("?", "0.00"));
 			"123.46?123.40??4.00?5.00".Should().Equal(doublesWithNull.ConcatWith("?", "0.00"));
-		}
-	}
+        }
+
+        #region BlockCopy
+
+        [TestMethod]
+        public void BlockCopy()
+        {
+            string[] source = new string[15];
+            for (int i = 0; i < source.Length; i++)
+            {
+                source[i] = "string " + i.ToString();
+            }
+
+            int n = 0;
+            foreach (string[] block in source.BlockCopy(10))
+            {
+                for (int i = 0; i < block.Length; i++)
+                {
+                    Assert.AreEqual(string.Format("string {0}", i + n), block[i]);
+                }
+                n += 10;
+            }
+        }
+
+        [TestMethod]
+        public void BlockCopyWithPadding()
+        {
+            string[] source = new string[15];
+            for (int i = 0; i < source.Length; i++)
+            {
+                source[i] = "string " + i.ToString();
+            }
+
+            foreach (string[] block in source.BlockCopy(10, true))
+            {
+                Assert.AreEqual(10, block.Length);
+            }
+        }
+
+        #endregion
+    }
 }

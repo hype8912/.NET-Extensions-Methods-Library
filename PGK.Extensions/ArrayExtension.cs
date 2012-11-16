@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// 	Extension methods for the array data type
@@ -184,4 +185,60 @@ public static class ArrayExtension
 
         return array.Length == 0;
     }
+
+    #region BlockCopy
+
+    /// <summary>
+    /// Returns a block of items from an array
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this"></param>
+    /// <param name="index"></param>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    /// <remarks>Contributed by Chris Gessler</remarks>
+    public static T[] BlockCopy<T>(this T[] @this, int index, int length)
+    {
+        return BlockCopy(@this, index, length, false);
+    }
+
+    /// <summary>
+    /// Returns a block of items from an array
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this"></param>
+    /// <param name="index"></param>
+    /// <param name="length"></param>
+    /// <param name="padToLength"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Test results prove that Array.Copy is many times faster than Skip/Take and LINQ
+    /// Item count: 1,000,000
+    /// Array.Copy:     15 ms 
+    /// Skip/Take:  42,464 ms - 42.5 seconds
+    /// LINQ:          881 ms
+    /// 
+    /// Contributed by Chris Gessler</remarks>
+    public static T[] BlockCopy<T>(this T[] @this, int index, int length, bool padToLength)
+    {
+        int n = length;
+        T[] b = null;
+
+        if (@this.Length < index + length)
+        {
+            n = @this.Length - index;
+            if (padToLength)
+            {
+                b = new T[length];
+            }
+        }
+
+        if (b == null) b = new T[n];
+        Array.Copy(@this, index, b, 0, n);
+        return b;
+    }
+
+    
+
+    #endregion
 }

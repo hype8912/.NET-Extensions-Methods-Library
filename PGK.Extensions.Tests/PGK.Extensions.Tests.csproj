@@ -95,6 +95,7 @@
     <Compile Include="StringExtensionsTest.cs" />
     <Compile Include="TestObjects\Box.cs" />
     <Compile Include="TextReaderExtensionsTest.cs" />
+    <Compile Include="ArrayExtensionTest.cs" />
     <Compile Include="XmlSerializeExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
