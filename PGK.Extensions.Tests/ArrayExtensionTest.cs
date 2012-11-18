@@ -9,7 +9,7 @@ namespace PGK.Extensions.Tests
         #region BlockCopy
 
         [TestMethod]
-        public void BlockCopy()
+        public void BlockCopyTest()
         {
             string[] source = new string[15];
             for (int i = 0; i < source.Length; i++)
