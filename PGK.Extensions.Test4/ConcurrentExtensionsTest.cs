@@ -11,7 +11,7 @@ namespace PGK.Extensions.Test4
     public class ConcurrentExtensionsTest
     {
         [TestMethod]
-        public void ConcurrentDictionary_GetOrAddLazyTest()
+        public void ConcurrentDictionary_GetOrAddTest()
         {
             ConcurrentDictionary<int, Lazy<string>> cd = new ConcurrentDictionary<int,Lazy<string>>();
 
@@ -40,7 +40,7 @@ namespace PGK.Extensions.Test4
         }
 
         [TestMethod]
-        public void ConcurrentDictionary_AddOrUpdateLazyTest()
+        public void ConcurrentDictionary_AddOrUpdateTest()
         {
             ConcurrentDictionary<int, Lazy<string>> cd = new ConcurrentDictionary<int, Lazy<string>>();
 
