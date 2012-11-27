@@ -1205,6 +1205,25 @@ public static class ObjectExtensions
     }
 
     /// <summary>
+    /// Serializes the object into an XML string
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this"></param>
+    /// <returns></returns>
+    public static string ToXml<T>(this T @this)
+    {
+        if (@this == null) throw new NullReferenceException();
+
+        XmlSerializer ser = new XmlSerializer(typeof(T));
+
+        using (StringWriter writer = new StringWriter())
+        {
+            ser.Serialize(writer, @this);
+            return writer.ToString();
+        }
+    }
+
+    /// <summary>
     /// Throws an <see cref="System.ArgumentNullException"/> 
     /// if the the value is null.
     /// </summary>

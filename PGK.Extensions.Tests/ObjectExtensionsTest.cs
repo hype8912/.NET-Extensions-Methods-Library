@@ -358,6 +358,22 @@ namespace PGK.Extensions.Tests
 			Assert.IsFalse(result.Any());
       }
 
+        [TestMethod]
+        public void ToXmlTest()
+        {
+            TestEntity test = new TestEntity();
+            test.Property1 = "this";
+            test.Property2 = "that";
 
+            string xml = test.ToXml();
+            Console.WriteLine(xml);
+        }
+
+        [TestClass]
+        public class TestEntity
+        {
+            public string Property1 { get; set; }
+            public string Property2 { get; set; }
+        }
 	}
 }
