@@ -1628,4 +1628,73 @@ public static class StringExtensions
         return Convert.ToBase64String(hash);
     }
 
+    /// <summary>
+    /// Determines whether the string contains any of the provided values.
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    public static bool ContainsAny(this string @this, params string[] values)
+    {
+        return @this.ContainsAny(StringComparison.CurrentCulture, values);
+    }
+
+    /// <summary>
+    /// Determines whether the string contains any of the provided values.
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="comparisonType"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    public static bool ContainsAny(this string @this, StringComparison comparisonType, params string[] values)
+    {
+        foreach (string value in values)
+        {
+            if (@this.IndexOf(value, comparisonType) > -1) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Determines whether the string contains all of the provided values.
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    public static bool ContainsAll(this string @this, params string[] values)
+    {
+        return @this.ContainsAll(StringComparison.CurrentCulture, values);
+    }
+
+    /// <summary>
+    /// Determines whether the string contains all of the provided values.
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="comparisonType"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    public static bool ContainsAll(this string @this, StringComparison comparisonType, params string[] values)
+    {
+        foreach (string value in values)
+        {
+            if (@this.IndexOf(value, comparisonType) == -1) return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Determines whether the string is equal to any of the provided values.
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="comparisonType"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    public static bool EqualsAny(this string @this, StringComparison comparisonType, params string[] values)
+    {
+        foreach (string value in values)
+        {
+            if (@this.Equals(value, comparisonType)) return true;
+        }
+        return false;
+    }
 }

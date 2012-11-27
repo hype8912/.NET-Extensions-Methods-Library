@@ -25,6 +25,10 @@ namespace PGK.Extensions.Tests
 			/* negative testing */
 			testValue = "non empty";
 			Assert.IsFalse(testValue.IsEmpty());
+
+            /* null testing */
+            testValue = null;
+            Assert.IsTrue(testValue.IsEmpty());
 		}
 
 		[TestMethod]
@@ -918,5 +922,57 @@ namespace PGK.Extensions.Tests
 			Assert.AreEqual(args.Count(), 1);
 			Assert.AreEqual(args.ElementAt(0), "Russia");
 		}
+
+        [TestMethod]
+        public void ContainsAnyTest()
+        {
+            string test = "abc";
+
+            if(test.ContainsAny("x", "y", "z"))
+                Assert.Fail("The string 'abc' does not contain 'x', 'y' or 'z'");
+
+            if (!test.ContainsAny("a", "y", "z"))
+                Assert.Fail("The string 'abc' does contain 'a'");
+
+            if(!test.ContainsAny(StringComparison.CurrentCultureIgnoreCase, "A", "y", "z"))
+                Assert.Fail("The string 'abc' does contain 'a'");
+
+            if (!test.ContainsAny(string.Empty))
+                Assert.Fail("A non-null string will always contain empty string");
+
+        }
+
+        [TestMethod]
+        public void ContainsAllTest()
+        {
+            string test = "abc";
+
+            if (test.ContainsAll("x", "y", "z"))
+                Assert.Fail("The string 'abc' does not contain 'x', 'y' and 'z'");
+
+            if (!test.ContainsAll("a", "b", "c"))
+                Assert.Fail("The string 'abc' does contain 'a', 'b' and 'c'");
+
+            if(!test.ContainsAll(StringComparison.CurrentCultureIgnoreCase, "A", "B", "C"))
+                Assert.Fail("The string 'abc' does contain 'a', 'b' and 'c'");
+        }
+
+        [TestMethod]
+        public void EqualsAnyTest()
+        {
+            string test = "a";
+
+            if (test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "x", "y", "z"))
+                Assert.Fail("The string 'a' does not equal 'x', 'y' or 'z'");
+
+            if (!test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "a", "y", "z"))
+                Assert.Fail("The string 'a' is equal to 'a'");
+
+            if (!test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "A", "y", "z"))
+                Assert.Fail("The string 'a' is equal to 'a'");
+        }
+
+
 	}
+
 }
