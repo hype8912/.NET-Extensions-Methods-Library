@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Contains extension methods for the <see cref="System.Decimal"/> class
@@ -24,5 +26,26 @@ public static class DecimalExtenders
     public static decimal RoundToTwoDecimalPoints(this decimal val)
     {
         return Math.Round(val, 2);
+    }
+
+    /// <summary>
+    /// Returns the absolute value of a System.Decimal number
+    /// </summary>
+    /// <param name="this"></param>
+    /// <returns></returns>
+    public static decimal Abs(this decimal @this)
+    {
+        return Math.Abs(@this);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="this"></param>
+    /// <returns></returns>
+    public static IEnumerable<decimal> Abs(this IEnumerable<decimal> @this)
+    {
+        foreach (decimal d in @this)
+            yield return d.Abs();
     }
 }
