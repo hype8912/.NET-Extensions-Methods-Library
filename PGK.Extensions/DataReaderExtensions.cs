@@ -401,4 +401,19 @@ public static class DataReaderExtensions {
         }
         return count;
     }
+
+    /// <summary>
+    /// Returns the index of a column by name (case insensitive) or -1
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static int IndexOf(this IDataRecord @this, string name)
+    {
+        for (int i = 0; i < @this.FieldCount; i++)
+        {
+            if (string.Compare(@this.GetName(i), name, true) == 0) return i;
+        }
+        return -1;
+    }
 }

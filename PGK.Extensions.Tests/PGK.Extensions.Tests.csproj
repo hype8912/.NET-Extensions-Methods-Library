@@ -74,6 +74,7 @@
     <Compile Include="ByteArrayExtensionsTest.cs" />
     <Compile Include="CollectionExtensionsTest.cs" />
     <Compile Include="ComparableExtensionsTests.cs" />
+    <Compile Include="DataReaderExtensionsTests.cs" />
     <Compile Include="DirectoryInfoExtensionsTest.cs" />
     <Compile Include="DoubleExtensionsTest.cs" />
     <Compile Include="EnumExtensionsTest.cs" />
