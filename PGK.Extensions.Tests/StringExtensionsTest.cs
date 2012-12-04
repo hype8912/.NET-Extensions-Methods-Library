@@ -972,6 +972,17 @@ namespace PGK.Extensions.Tests
                 Assert.Fail("The string 'a' is equal to 'a'");
         }
 
+        [TestMethod]
+        public void IsLikeTest()
+        {
+            string test = "This is my string";
+
+            Assert.IsTrue(test.IsLike("This*"));
+            Assert.IsTrue(test.IsLike("*string"));
+            Assert.IsTrue(test.IsLike("This*string"));
+            Assert.IsFalse(test.IsLike("string*"));
+        }
+
 
 	}
 

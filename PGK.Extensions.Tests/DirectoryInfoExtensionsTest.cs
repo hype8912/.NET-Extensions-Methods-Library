@@ -11,9 +11,10 @@ namespace PGK.Extensions.Tests
 	public class DirectoryInfoExtensionsTest
 	{
 		[TestMethod]
+        [DeploymentItem(@"..\..\FilesForTestingPurpose", @".\FilesForTestingPurpose")]
 		public void GetFiles()
 		{
-            var testValue = new DirectoryInfo(@"..\..\FilesForTestingPurpose");		// that should point to the rott "dnpextensions" directory
+            var testValue = new DirectoryInfo(@".\FilesForTestingPurpose");
 			var results = testValue.GetFiles("*.sln", "*.suo");
 			Assert.IsNotNull(results);
 

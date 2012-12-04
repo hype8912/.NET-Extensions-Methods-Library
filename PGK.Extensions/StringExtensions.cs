@@ -1697,4 +1697,35 @@ public static class StringExtensions
         }
         return false;
     }
+
+    /// <summary>
+    /// Wildcard comparison
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="pattern"></param>
+    /// <returns></returns>
+    public static bool IsLike(this string @this, string pattern)
+    {
+        if (@this == pattern) return true;
+        if (string.IsNullOrEmpty(@this)) return false;
+
+        if (pattern[0] == '*' && pattern.Length > 1)
+        {
+            for (int index = 0; index < @this.Length; index++)
+            {
+                if (@this.Substring(index).IsLike(pattern.Substring(1)))
+                    return true;
+            }
+        }
+        else if (pattern[0] == '*')
+        {
+            return true;
+        }
+        else if (pattern[0] == @this[0])
+        {
+            return @this.Substring(1).IsLike(pattern.Substring(1));
+        }
+        return false;
+    }
+
 }

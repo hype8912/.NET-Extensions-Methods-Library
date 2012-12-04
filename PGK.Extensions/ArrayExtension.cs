@@ -238,7 +238,33 @@ public static class ArrayExtension
         return b;
     }
 
-    
+    /// <summary>
+    /// Allows enumeration over an Array in blocks
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    /// <remarks>Contributed by Chris Gessler</remarks>
+    public static IEnumerable<T[]> BlockCopy<T>(this T[] @this, int count)
+    {
+        return BlockCopy(@this, count, false);
+    }
+
+    /// <summary>
+    /// Allows enumeration over an Array in blocks
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="this"></param>
+    /// <param name="count"></param>
+    /// <param name="padToLength"></param>
+    /// <returns></returns>
+    /// <remarks>Contributed by Chris Gessler</remarks>
+    public static IEnumerable<T[]> BlockCopy<T>(this T[] @this, int count, bool padToLength)
+    {
+        for (int i = 0; i < @this.Length; i += count)
+            yield return @this.BlockCopy(i, count, padToLength);
+    }
 
     #endregion
 }
