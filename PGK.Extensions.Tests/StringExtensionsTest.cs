@@ -983,7 +983,38 @@ namespace PGK.Extensions.Tests
             Assert.IsFalse(test.IsLike("string*"));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TruncateTest()
+        {
+            string test = "abcdefghijklmnopqrstuvwxyz";
+            string t = test.Truncate(10, true);
+            Assert.AreEqual(t, "abcdefg...");
 
+            test = "abcdefghij";
+            t = test.Truncate(10, true);
+            Assert.AreEqual(t, test);
+
+            test = null;
+            t = test.Truncate(10, true);
+            Assert.AreEqual(t, test);
+
+            test = string.Empty;
+            t = test.Truncate(10, true);
+            Assert.AreEqual(t, test);
+
+            test = "a";
+            t = test.Truncate(10, true);
+            Assert.AreEqual(t, test);
+
+            test = "abcd";
+            t = test.Truncate(1, false);
+            Assert.AreEqual(t, "a");
+
+            test = "abc";
+            t = test.Truncate(1, true);
+            Assert.AreEqual(t, "...");
+        }
 	}
 
 }

@@ -1728,4 +1728,14 @@ public static class StringExtensions
         return false;
     }
 
+    public static string Truncate(this string @this, int length, bool useElipses = false)
+    {
+        int e = useElipses ? 3 : 0;
+        if (length - e <= 0) throw new InvalidOperationException(string.Format("Length must be greater than {0}.", e));
+
+        if (string.IsNullOrEmpty(@this) || @this.Length <= length) return @this;
+
+        return @this.Substring(0, length - e) + new String('.', e);
+    }
+
 }
