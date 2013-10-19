@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Should.Fluent;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Globalization;
+using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Should.Fluent;
-using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace PGK.Extensions.Tests
@@ -973,14 +973,35 @@ namespace PGK.Extensions.Tests
         }
 
         [TestMethod]
-        public void IsLikeTest()
+        public void IsLike()
         {
-            string test = "This is my string";
+            // begins with
+            Assert.IsTrue("testing".IsLike("test*"));
 
-            Assert.IsTrue(test.IsLike("This*"));
-            Assert.IsTrue(test.IsLike("*string"));
-            Assert.IsTrue(test.IsLike("This*string"));
-            Assert.IsFalse(test.IsLike("string*"));
+            // ends with
+            Assert.IsTrue("testing".IsLike("*ing"));
+
+            // begins and ends with
+            Assert.IsTrue("testing".IsLike("t*g"));
+
+            // contains
+            Assert.IsTrue("testing".IsLike("*estin*"));
+
+            // Any 
+            Assert.IsTrue("testing".IsLike("*"));
+
+            // multiple contains
+            Assert.IsTrue("testing".IsLike("t*s*i*g"));
+
+            // whole word
+            Assert.IsTrue("testing".IsLike("testing*"));
+            Assert.IsFalse("testing".IsLike("testing*testing"));
+
+            // whole word
+            Assert.IsTrue("testing".IsLike("*testing"));
+
+            // whole word
+            Assert.IsTrue("testing".IsLike("*testing*"));
         }
 
         [TestMethod]

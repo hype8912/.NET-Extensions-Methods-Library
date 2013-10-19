@@ -1699,21 +1699,35 @@ public static class StringExtensions
     }
 
     /// <summary>
+    /// Wildcard comparison for any pattern
+    /// </summary>
+    /// <param name="value">The current <see cref="System.String"/> object</param>
+    /// <param name="patterns">The array of string patterns</param>
+    /// <returns></returns>
+    public static bool IsLikeAny(this string value, params string[] patterns)
+    {
+        foreach (string pattern in patterns)
+        {
+            if (value.IsLike(pattern)) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Wildcard comparison
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    public static bool IsLike(this string @this, string pattern)
+    public static bool IsLike(this string value, string pattern)
     {
-        if (@this == pattern) return true;
-        if (string.IsNullOrEmpty(@this)) return false;
+        if (value == pattern) return true;
 
         if (pattern[0] == '*' && pattern.Length > 1)
         {
-            for (int index = 0; index < @this.Length; index++)
+            for (int index = 0; index < value.Length; index++)
             {
-                if (@this.Substring(index).IsLike(pattern.Substring(1)))
+                if (value.Substring(index).IsLike(pattern.Substring(1)))
                     return true;
             }
         }
@@ -1721,13 +1735,20 @@ public static class StringExtensions
         {
             return true;
         }
-        else if (pattern[0] == @this[0])
+        else if (pattern[0] == value[0])
         {
-            return @this.Substring(1).IsLike(pattern.Substring(1));
+            return value.Substring(1).IsLike(pattern.Substring(1));
         }
         return false;
     }
 
+    /// <summary>
+    /// Truncates a string with optional Elipses added
+    /// </summary>
+    /// <param name="this"></param>
+    /// <param name="length"></param>
+    /// <param name="useElipses"></param>
+    /// <returns></returns>
     public static string Truncate(this string @this, int length, bool useElipses = false)
     {
         int e = useElipses ? 3 : 0;

@@ -192,21 +192,21 @@ public static class ArrayExtension
     /// Returns a block of items from an array
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="this"></param>
+    /// <param name="array"></param>
     /// <param name="index"></param>
     /// <param name="length"></param>
     /// <returns></returns>
     /// <remarks>Contributed by Chris Gessler</remarks>
-    public static T[] BlockCopy<T>(this T[] @this, int index, int length)
+    public static T[] BlockCopy<T>(this T[] array, int index, int length)
     {
-        return BlockCopy(@this, index, length, false);
+        return BlockCopy(array, index, length, false);
     }
 
     /// <summary>
     /// Returns a block of items from an array
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="this"></param>
+    /// <param name="array"></param>
     /// <param name="index"></param>
     /// <param name="length"></param>
     /// <param name="padToLength"></param>
@@ -219,14 +219,16 @@ public static class ArrayExtension
     /// LINQ:          881 ms
     /// 
     /// Contributed by Chris Gessler</remarks>
-    public static T[] BlockCopy<T>(this T[] @this, int index, int length, bool padToLength)
+    public static T[] BlockCopy<T>(this T[] array, int index, int length, bool padToLength)
     {
+        if (array == null) throw new NullReferenceException();
+
         int n = length;
         T[] b = null;
 
-        if (@this.Length < index + length)
+        if (array.Length < index + length)
         {
-            n = @this.Length - index;
+            n = array.Length - index;
             if (padToLength)
             {
                 b = new T[length];
@@ -234,7 +236,7 @@ public static class ArrayExtension
         }
 
         if (b == null) b = new T[n];
-        Array.Copy(@this, index, b, 0, n);
+        Array.Copy(array, index, b, 0, n);
         return b;
     }
 
@@ -242,28 +244,28 @@ public static class ArrayExtension
     /// Allows enumeration over an Array in blocks
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="this"></param>
+    /// <param name="array"></param>
     /// <param name="count"></param>
     /// <returns></returns>
     /// <remarks>Contributed by Chris Gessler</remarks>
-    public static IEnumerable<T[]> BlockCopy<T>(this T[] @this, int count)
+    public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count)
     {
-        return BlockCopy(@this, count, false);
+        return BlockCopy(array, count, false);
     }
 
     /// <summary>
     /// Allows enumeration over an Array in blocks
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="this"></param>
+    /// <param name="array"></param>
     /// <param name="count"></param>
     /// <param name="padToLength"></param>
     /// <returns></returns>
     /// <remarks>Contributed by Chris Gessler</remarks>
-    public static IEnumerable<T[]> BlockCopy<T>(this T[] @this, int count, bool padToLength)
+    public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count, bool padToLength)
     {
-        for (int i = 0; i < @this.Length; i += count)
-            yield return @this.BlockCopy(i, count, padToLength);
+        for (int i = 0; i < array.Length; i += count)
+            yield return array.BlockCopy(i, count, padToLength);
     }
 
     #endregion
