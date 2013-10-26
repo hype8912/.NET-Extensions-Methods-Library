@@ -323,8 +323,8 @@ public static class EnumerableExtensions
 		foreach (var item in source)
 		{
 			var select = selector(item);
-			if (allowNull || !Equals(@select, default(TSource)))
-				yield return @select;
+			if (allowNull || !Equals(select, default(TSource)))
+				yield return select;
 		}
 	}
 
@@ -533,7 +533,7 @@ public static class EnumerableExtensions
 	/// <returns>A dictionary of groupings such that the key of the dictionary is TKey type and the value is List of TValue type.</returns>
 	public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
 	{
-		return groupings.ToDictionary(group => @group.Key, group => @group.ToList());
+		return groupings.ToDictionary(group => group.Key, group => group.ToList());
 	}
 
 	/// <summary>
@@ -559,6 +559,7 @@ public static class EnumerableExtensions
 
 		// Can't use generic type constraints on value types,
 		// so have to do check like this
+        // consider using - enumType.IsEnum()
 		if (enumType.BaseType != typeof(Enum))
 			throw new ArgumentException("T must be of type System.Enum");
 

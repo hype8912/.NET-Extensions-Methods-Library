@@ -23,10 +23,10 @@ namespace PGK.Extensions
         /// <param name="this"></param>
         /// <param name="condition">The conditional expression to evaluate.</param>
         /// <param name="value"></param>
-        public static StringBuilder AppendLineIf(this StringBuilder @this, bool condition, object value)
+        public static StringBuilder AppendLineIf(this StringBuilder sb, bool condition, object value)
         {
-            if (condition) @this.AppendLine(value.ToString());
-            return @this;
+            if (condition) sb.AppendLine(value.ToString());
+            return sb;
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace PGK.Extensions
         /// <param name="condition">The conditional expression to evaluate.</param>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static StringBuilder AppendLineIf(this StringBuilder @this, bool condition, string format, params object[] args)
+        public static StringBuilder AppendLineIf(this StringBuilder sb, bool condition, string format, params object[] args)
         {
-            if (condition) @this.AppendFormat(format, args).AppendLine();
-            return @this;
+            if (condition) sb.AppendFormat(format, args).AppendLine();
+            return sb;
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace PGK.Extensions
         /// <param name="this"></param>
         /// <param name="condition"></param>
         /// <param name="value"></param>
-        public static StringBuilder AppendIf(this StringBuilder @this, bool condition, object value)
+        public static StringBuilder AppendIf(this StringBuilder sb, bool condition, object value)
         {
-            if (condition) @this.Append(value.ToString());
-            return @this;
+            if (condition) sb.Append(value.ToString());
+            return sb;
         }
 
         /// <summary>
@@ -64,10 +64,10 @@ namespace PGK.Extensions
         /// <param name="condition"></param>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static StringBuilder AppendFormatIf(this StringBuilder @this, bool condition, string format, params object[] args)
+        public static StringBuilder AppendFormatIf(this StringBuilder sb, bool condition, string format, params object[] args)
         {
-            if (condition) @this.AppendFormat(format, args);
-            return @this;
+            if (condition) sb.AppendFormat(format, args);
+            return sb;
         }
     }
 }

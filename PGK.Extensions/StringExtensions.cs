@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using PGK.Extensions;
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// 	Extension methods for the string data type
@@ -272,7 +274,11 @@ public static class StringExtensions
 		return float.TryParse(value, out output);
 	}
 
-	/// <summary>
+    #region Extract
+
+
+
+    /// <summary>
 	/// 	Extracts all digits from a string.
 	/// </summary>
 	/// <param name = "value">String containing digits to extract</param>
@@ -287,7 +293,12 @@ public static class StringExtensions
 	{
 		return value.Where(Char.IsDigit).Aggregate(new StringBuilder(value.Length), (sb, c) => sb.Append(c)).ToString();
 	}
-	/// <summary>
+
+    
+
+    #endregion
+
+    /// <summary>
 	/// 	Concatenates the specified string value with the passed additional strings.
 	/// </summary>
 	/// <param name = "value">The original value.</param>

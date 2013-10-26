@@ -67,6 +67,10 @@
       <Project>{0E7BAF97-BD4B-480C-912C-2503875A9053}</Project>
       <Name>PGK.Extensions4</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PGK.Extensions\PGK.Extensions.csproj">
+      <Project>{1ca53630-fe88-4618-ba42-78cf7f9fc1b3}</Project>
+      <Name>PGK.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

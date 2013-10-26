@@ -246,23 +246,10 @@ public static class ArrayExtension
     /// <typeparam name="T"></typeparam>
     /// <param name="array"></param>
     /// <param name="count"></param>
-    /// <returns></returns>
-    /// <remarks>Contributed by Chris Gessler</remarks>
-    public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count)
-    {
-        return BlockCopy(array, count, false);
-    }
-
-    /// <summary>
-    /// Allows enumeration over an Array in blocks
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="array"></param>
-    /// <param name="count"></param>
     /// <param name="padToLength"></param>
     /// <returns></returns>
     /// <remarks>Contributed by Chris Gessler</remarks>
-    public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count, bool padToLength)
+    public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count, bool padToLength = false)
     {
         for (int i = 0; i < array.Length; i += count)
             yield return array.BlockCopy(i, count, padToLength);

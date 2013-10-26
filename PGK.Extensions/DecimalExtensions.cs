@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -29,13 +28,13 @@ public static class DecimalExtenders
     }
 
     /// <summary>
-    /// Returns the absolute value of a System.Decimal number
+    /// Returns the absolute value of a <see cref="System.Decimal"/> number
     /// </summary>
     /// <param name="this"></param>
     /// <returns></returns>
-    public static decimal Abs(this decimal @this)
+    public static decimal Abs(this decimal value)
     {
-        return Math.Abs(@this);
+        return Math.Abs(value);
     }
 
     /// <summary>
@@ -43,9 +42,9 @@ public static class DecimalExtenders
     /// </summary>
     /// <param name="this"></param>
     /// <returns></returns>
-    public static IEnumerable<decimal> Abs(this IEnumerable<decimal> @this)
+    public static IEnumerable<decimal> Abs(this IEnumerable<decimal> value)
     {
-        foreach (decimal d in @this)
+        foreach (decimal d in value)
             yield return d.Abs();
     }
 }
