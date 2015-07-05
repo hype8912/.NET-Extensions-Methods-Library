@@ -1642,71 +1642,60 @@ public static class StringExtensions
     /// <summary>
     /// Determines whether the string contains any of the provided values.
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static bool ContainsAny(this string @this, params string[] values)
+    public static bool ContainsAny(this string value, params string[] values)
     {
-        return @this.ContainsAny(StringComparison.CurrentCulture, values);
+        return value.ContainsAny(StringComparison.CurrentCulture, values);
     }
 
     /// <summary>
     /// Determines whether the string contains any of the provided values.
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="comparisonType"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static bool ContainsAny(this string @this, StringComparison comparisonType, params string[] values)
+    public static bool ContainsAny(this string value, StringComparison comparisonType, params string[] values)
     {
-        foreach (string value in values)
-        {
-            if (@this.IndexOf(value, comparisonType) > -1) return true;
-        }
-        return false;
+        return values.Any(v => value.IndexOf(v, comparisonType) > -1);
+
     }
 
     /// <summary>
     /// Determines whether the string contains all of the provided values.
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static bool ContainsAll(this string @this, params string[] values)
+    public static bool ContainsAll(this string value, params string[] values)
     {
-        return @this.ContainsAll(StringComparison.CurrentCulture, values);
+        return value.ContainsAll(StringComparison.CurrentCulture, values);
     }
 
     /// <summary>
     /// Determines whether the string contains all of the provided values.
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="comparisonType"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static bool ContainsAll(this string @this, StringComparison comparisonType, params string[] values)
+    public static bool ContainsAll(this string value, StringComparison comparisonType, params string[] values)
     {
-        foreach (string value in values)
-        {
-            if (@this.IndexOf(value, comparisonType) == -1) return false;
-        }
-        return true;
+        return values.All(v => value.IndexOf(v, comparisonType) > -1);
     }
 
     /// <summary>
     /// Determines whether the string is equal to any of the provided values.
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="comparisonType"></param>
     /// <param name="values"></param>
     /// <returns></returns>
-    public static bool EqualsAny(this string @this, StringComparison comparisonType, params string[] values)
+    public static bool EqualsAny(this string value, StringComparison comparisonType, params string[] values)
     {
-        foreach (string value in values)
-        {
-            if (@this.Equals(value, comparisonType)) return true;
-        }
-        return false;
+        return values.Any(v => value.Equals(v, comparisonType));
     }
 
     /// <summary>
@@ -1717,11 +1706,7 @@ public static class StringExtensions
     /// <returns></returns>
     public static bool IsLikeAny(this string value, params string[] patterns)
     {
-        foreach (string pattern in patterns)
-        {
-            if (value.IsLike(pattern)) return true;
-        }
-        return false;
+        return patterns.Any(p => value.IsLike(p));
     }
 
     /// <summary>
@@ -1756,18 +1741,18 @@ public static class StringExtensions
     /// <summary>
     /// Truncates a string with optional Elipses added
     /// </summary>
-    /// <param name="this"></param>
+    /// <param name="value"></param>
     /// <param name="length"></param>
     /// <param name="useElipses"></param>
     /// <returns></returns>
-    public static string Truncate(this string @this, int length, bool useElipses = false)
+    public static string Truncate(this string value, int length, bool useElipses = false)
     {
         int e = useElipses ? 3 : 0;
         if (length - e <= 0) throw new InvalidOperationException(string.Format("Length must be greater than {0}.", e));
 
-        if (string.IsNullOrEmpty(@this) || @this.Length <= length) return @this;
+        if (string.IsNullOrEmpty(value) || value.Length <= length) return value;
 
-        return @this.Substring(0, length - e) + new String('.', e);
+        return value.Substring(0, length - e) + new String('.', e);
     }
 
 }

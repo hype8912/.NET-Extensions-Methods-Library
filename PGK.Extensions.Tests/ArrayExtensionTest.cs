@@ -72,5 +72,33 @@ namespace PGK.Extensions.Tests
         }
 
         #endregion
+
+        #region IsNullOrEmpty
+
+        [TestMethod]
+        public void IsNullOrEmpty_NullTest()
+        {
+            string[] array = null;
+
+            Assert.IsTrue(ArrayExtension.IsNullOrEmpty(array));
+        }
+
+        [TestMethod]
+        public void IsNullOrEmpty_EmptyTest()
+        {
+            string[] array = new string[0];
+
+            Assert.IsTrue(ArrayExtension.IsNullOrEmpty(array));
+        }
+
+        [TestMethod]
+        public void IsNullOrEmpty_NotNullOrEmptyTest()
+        {
+            string[] array = new string[1];
+
+            Assert.IsFalse(ArrayExtension.IsNullOrEmpty(array));
+        }
+
+        #endregion
     }
 }

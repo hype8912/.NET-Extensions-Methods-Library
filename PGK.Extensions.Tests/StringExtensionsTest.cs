@@ -958,18 +958,49 @@ namespace PGK.Extensions.Tests
         }
 
         [TestMethod]
-        public void EqualsAnyTest()
+        public void EqualsAny_CaseInsensitiveFalseTest()
+        {
+            string test = "z";
+
+            Assert.IsFalse(test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "a", "b", "c"));
+        }
+
+        [TestMethod]
+        public void EqualsAny_CaseInsensitiveTrueTest()
+        {
+            string test = "A";
+
+            Assert.IsTrue(test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "a", "b", "c"));
+        }
+
+        [TestMethod]
+        public void EqualsAny_CaseSensitiveFalseTest()
+        {
+            string test = "A";
+            Assert.IsFalse(test.EqualsAny("a", "b", "c"));
+        }
+
+        [TestMethod]
+        public void EqualsAny_CaseSensitiveTrueTest()
         {
             string test = "a";
+            Assert.IsTrue(test.EqualsAny("a", "b", "c"));
+        }
 
-            if (test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "x", "y", "z"))
-                Assert.Fail("The string 'a' does not equal 'x', 'y' or 'z'");
+        [TestMethod]
+        public void EqualsAny_NullTest()
+        {
+            string test = null;
 
-            if (!test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "a", "y", "z"))
-                Assert.Fail("The string 'a' is equal to 'a'");
+            Assert.IsTrue(test.EqualsAny("a", "b", "c", null));
+        }
 
-            if (!test.EqualsAny(StringComparison.CurrentCultureIgnoreCase, "A", "y", "z"))
-                Assert.Fail("The string 'a' is equal to 'a'");
+        [TestMethod]
+        public void EqualsAny_EmptyTest()
+        {
+            string test = string.Empty;
+
+            Assert.IsTrue(test.EqualsAny("a", "b", "c", string.Empty));
         }
 
         [TestMethod]

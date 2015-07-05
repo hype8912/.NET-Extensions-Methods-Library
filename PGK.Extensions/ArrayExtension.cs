@@ -14,7 +14,7 @@ public static class ArrayExtension
 	///<returns></returns>
 	public static bool IsNullOrEmpty(this Array source)
 	{
-		return source != null ? source.Length <= 0 : false;
+		return source == null || source.Length == 0;
 	}
 
 	///<summary>
